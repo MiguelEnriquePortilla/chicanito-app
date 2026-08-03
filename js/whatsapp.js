@@ -1,0 +1,42 @@
+// Construye el mensaje de pedido y el link de WhatsApp hacia el número fijo del negocio.
+const WHATSAPP_NUMERO = '527341260080';
+
+function formatoMoneda(valor) {
+  return `$${valor.toFixed(0)}`;
+}
+
+function lineaDeItem(item) {
+  const detalles = item.detalleVariantes ? ` — ${item.detalleVariantes}` : '';
+  return `- ${item.cantidad}x ${item.nombre} (${formatoMoneda(item.precioUnitario)} c/u)${detalles}`;
+}
+
+function buildOrderMessage({ cart, cliente, ubicacionTexto, subtotal, envio, total, metodoPago, notas }) {
+  const lineasPedido = cart.map(lineaDeItem).join('\n');
+  const envioTexto = envio === 0 ? 'Gratis' : formatoMoneda(envio);
+
+  const partes = [
+    '🐔 *Nuevo pedido - Chicanito*',
+    '',
+    `*Cliente:* ${cliente.nombre}`,
+    `*Teléfono:* ${cliente.telefono}`,
+    `*Ubicación:* ${ubicacionTexto}`,
+    '',
+    '*Pedido:*',
+    lineasPedido,
+    '',
+    `*Subtotal:* ${formatoMoneda(subtotal)}`,
+    `*Envío:* ${envioTexto}`,
+    `*Total:* ${formatoMoneda(total)}`,
+    `*Pago:* ${metodoPago}`,
+  ];
+
+  if (notas && notas.trim()) {
+    partes.push('', `*Notas:* ${notas.trim()}`);
+  }
+
+  return partes.join('\n');
+}
+
+function buildWhatsAppUrl(mensaje) {
+  return `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
+}

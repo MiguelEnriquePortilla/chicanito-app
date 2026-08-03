@@ -1,0 +1,292 @@
+// Catálogo de Chicken Chicanito — digitalizado desde App/Menu/*.jpg
+// Cada paquete puede tener "variantes": grupos de opciones obligatorias
+// (ej. "Salsa: Jalapeño o BBQ") que el cliente elige antes de agregar al carrito.
+
+const CATEGORIAS = {
+  rostizados: 'Pollos Rostizados',
+  crujientes: 'Piezas Crujientes',
+  costillas: 'Costillas',
+  complementos: 'Complementos',
+  salsas: 'Salsas',
+};
+
+const PAQUETES = [
+  {
+    id: 'paquete-1',
+    categoria: 'rostizados',
+    nombre: 'Paquete 1 — 1 Pollo Rostizado',
+    descripcionCorta: 'Incluye salsa jalapeño y adobo a elegir.',
+    imagen: 'assets/menu/paquete-1.jpg',
+    precio: 189,
+    variantes: [
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+    ],
+  },
+  {
+    id: 'paquete-2',
+    categoria: 'rostizados',
+    nombre: 'Paquete 2 — 1 Pollo Rostizado',
+    descripcionCorta: 'Incluye arroz, salsa jalapeño y adobo a elegir.',
+    imagen: 'assets/menu/paquete-2.jpg',
+    precio: 209,
+    variantes: [
+      { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+    ],
+  },
+  {
+    id: 'paquete-3',
+    categoria: 'rostizados',
+    nombre: 'Paquete 3 — 1½ Pollo Rostizado',
+    descripcionCorta: 'Incluye arroz, salsa y adobo a elegir.',
+    imagen: 'assets/menu/paquete-3.jpg',
+    precio: 254,
+    variantes: [
+      { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
+      { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+    ],
+  },
+  {
+    id: 'paquete-6',
+    categoria: 'rostizados',
+    nombre: 'Paquete 6 — ½ Pollo Rostizado',
+    descripcionCorta: 'Incluye arroz, salsa y adobo a elegir.',
+    imagen: 'assets/menu/paquete-6.jpg',
+    precio: 110,
+    variantes: [
+      { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
+      { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+    ],
+  },
+  {
+    id: 'paquete-7',
+    categoria: 'rostizados',
+    nombre: 'Paquete 7 — 2 Pollos Rostizados',
+    descripcionCorta: 'Incluye arroz, salsa y adobo a elegir.',
+    imagen: 'assets/menu/paquete-7.jpg',
+    precio: 389,
+    variantes: [
+      { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
+      { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+    ],
+  },
+  {
+    id: 'paquete-11',
+    categoria: 'rostizados',
+    nombre: 'Paquete 11 — 1 Pollo Rostizado + Coca-Cola 2L',
+    descripcionCorta: 'Incluye arroz, salsa, adobo a elegir y refresco de 2 litros.',
+    imagen: 'assets/menu/paquete-11.jpg',
+    precio: 249,
+    variantes: [
+      { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
+      { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+    ],
+  },
+  {
+    id: 'paquete-12',
+    categoria: 'rostizados',
+    nombre: 'Paquete 12 — 2 Piezas Rostizadas',
+    descripcionCorta: 'Incluye 2 complementos, salsa y adobo a elegir.',
+    imagen: 'assets/menu/paquete-12.jpg',
+    precio: 85,
+    variantes: [
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+    ],
+  },
+  {
+    id: 'paquete-9',
+    categoria: 'crujientes',
+    nombre: 'Paquete 9 — 2 Piezas Crujientes',
+    descripcionCorta: 'Incluye 2 complementos y salsa a elegir.',
+    imagen: 'assets/menu/paquete-9.jpg',
+    precio: 85,
+    variantes: [
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Chiles en escabeche', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Chiles en escabeche', 'Nopales', 'Papas gajo'] },
+      { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
+    ],
+  },
+  {
+    id: 'paquete-10',
+    categoria: 'crujientes',
+    nombre: 'Paquete 10 — 3 Piezas Crujientes',
+    descripcionCorta: 'Incluye 2 complementos y salsa a elegir.',
+    imagen: 'assets/menu/paquete-10.jpg',
+    precio: 99,
+    variantes: [
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Chiles en escabeche', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Chiles en escabeche', 'Nopales', 'Papas gajo'] },
+      { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
+    ],
+  },
+  {
+    id: 'paquete-5',
+    categoria: 'crujientes',
+    nombre: 'Paquete 5 — 8 Piezas Crujientes',
+    descripcionCorta: 'Incluye salsa a elegir y puré de papa o ensalada de col.',
+    imagen: 'assets/menu/paquete-5.jpg',
+    precio: 229,
+    variantes: [
+      { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
+      { id: 'guarnicion', label: 'Guarnición', opciones: ['Puré de papa', 'Ensalada de col'] },
+    ],
+  },
+  {
+    id: 'paquete-4',
+    categoria: 'crujientes',
+    nombre: 'Paquete 4 — 12 Piezas Crujientes',
+    descripcionCorta: 'Incluye salsa a elegir y puré de papa o ensalada de col.',
+    imagen: 'assets/menu/paquete-4.jpg',
+    precio: 254,
+    variantes: [
+      { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
+      { id: 'guarnicion', label: 'Guarnición', opciones: ['Puré de papa', 'Ensalada de col'] },
+    ],
+  },
+  {
+    id: 'paquete-8-cuarto',
+    categoria: 'costillas',
+    nombre: 'Costillas — ¼ kg',
+    descripcionCorta: 'Incluye 2 complementos y adobo a elegir.',
+    imagen: 'assets/menu/paquete-8.jpg',
+    precio: 95,
+    variantes: [
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+    ],
+  },
+  {
+    id: 'paquete-8-medio',
+    categoria: 'costillas',
+    nombre: 'Costillas — ½ kg',
+    descripcionCorta: 'Incluye 2 complementos y adobo a elegir.',
+    imagen: 'assets/menu/paquete-8.jpg',
+    precio: 190,
+    variantes: [
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+    ],
+  },
+  {
+    id: 'paquete-8-kilo',
+    categoria: 'costillas',
+    nombre: 'Costillas — 1 kg',
+    descripcionCorta: 'Incluye 2 complementos y adobo a elegir.',
+    imagen: 'assets/menu/paquete-8.jpg',
+    precio: 380,
+    variantes: [
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+    ],
+  },
+];
+
+// Complementos y salsas a la carta — se agregan directo con tamaño + cantidad, sin variantes.
+const A_LA_CARTA = [
+  {
+    id: 'comp-arroz',
+    categoria: 'complementos',
+    nombre: 'Arroz blanco o rojo',
+    tamanos: [{ label: '250 gr', precio: 30 }],
+  },
+  {
+    id: 'comp-espagueti',
+    categoria: 'complementos',
+    nombre: 'Espagueti',
+    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
+  },
+  {
+    id: 'comp-sopa-codo',
+    categoria: 'complementos',
+    nombre: 'Sopa de codo',
+    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
+  },
+  {
+    id: 'comp-campesina',
+    categoria: 'complementos',
+    nombre: 'Campesina',
+    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
+  },
+  {
+    id: 'comp-papas-cambray',
+    categoria: 'complementos',
+    nombre: 'Papas cambray',
+    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
+  },
+  {
+    id: 'comp-ensalada-col',
+    categoria: 'complementos',
+    nombre: 'Ensalada de col',
+    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
+  },
+  {
+    id: 'comp-chiles-escabeche',
+    categoria: 'complementos',
+    nombre: 'Chiles en escabeche',
+    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
+  },
+  {
+    id: 'comp-pure-papa',
+    categoria: 'complementos',
+    nombre: 'Puré de papa',
+    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
+  },
+  {
+    id: 'comp-nopales',
+    categoria: 'complementos',
+    nombre: 'Nopales',
+    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
+  },
+  {
+    id: 'comp-papas-gajo',
+    categoria: 'complementos',
+    nombre: 'Papas gajo',
+    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
+  },
+  {
+    id: 'comp-pierna-muslo-ala',
+    categoria: 'complementos',
+    nombre: 'Pierna, muslo o ala',
+    tamanos: [{ label: '250 gr', precio: 25 }],
+  },
+  {
+    id: 'comp-pechuga',
+    categoria: 'complementos',
+    nombre: 'Pechuga',
+    tamanos: [{ label: '250 gr', precio: 30 }],
+  },
+  {
+    id: 'salsa-jalapenos',
+    categoria: 'salsas',
+    nombre: 'Salsa de jalapeños',
+    tamanos: [{ label: 'Chica', precio: 8 }, { label: 'Mediana', precio: 15 }, { label: 'Grande', precio: 25 }],
+  },
+  {
+    id: 'salsa-bbq',
+    categoria: 'salsas',
+    nombre: 'Salsa BBQ',
+    tamanos: [{ label: 'Chica', precio: 8 }, { label: 'Mediana', precio: 15 }, { label: 'Grande', precio: 25 }],
+  },
+  {
+    id: 'salsa-adobo-tradicional',
+    categoria: 'salsas',
+    nombre: 'Adobo tradicional',
+    tamanos: [{ label: 'Grande', precio: 35 }],
+  },
+  {
+    id: 'salsa-3-chiles',
+    categoria: 'salsas',
+    nombre: 'Adobo 3 chiles',
+    tamanos: [{ label: 'Grande', precio: 35 }],
+  },
+];

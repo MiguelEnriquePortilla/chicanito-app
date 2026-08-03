@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirmación — Chicanito App</title>
+<link rel="icon" href="assets/brand/logo-badge.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <div style="display:flex; align-items:center; gap:0.6rem;">
+      <img src="assets/brand/logo-badge.jpg" alt="Chicken Chicanito" class="header-logo">
+      <span class="header-title">Chicanito <span>App</span></span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <p class="confirm-icon">🐔</p>
+  <h1 class="page-title" style="text-align:center;">¡Ya casi! Un último paso</h1>
+  <p class="page-sub" style="text-align:center;">Envía tu pedido por WhatsApp para que el repartidor lo reciba de una vez.</p>
+
+  <div class="card-block">
+    <div class="card-block-title">Resumen de tu pedido</div>
+    <div class="order-summary-list" id="order-summary"></div>
+    <div class="summary-line"><span>Subtotal</span><span id="summary-subtotal">$0</span></div>
+    <div class="summary-line"><span>Envío</span><span id="summary-envio">$0</span></div>
+    <div class="summary-line total"><span>Total</span><span id="summary-total">$0</span></div>
+    <div class="summary-line"><span>Pago</span><span id="summary-pago"></span></div>
+  </div>
+
+  <a class="btn btn-whatsapp" id="send-whatsapp-btn" href="#" target="_blank" rel="noopener">
+    Enviar pedido por WhatsApp
+  </a>
+  <p style="text-align:center; margin-top:0.8rem;"><a href="index.html" style="font-size:0.85rem; text-decoration:underline;">Volver al menú</a></p>
+</main>
+
+<script src="js/whatsapp.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/confirmacion.js"></script>
+</body>
+</html>

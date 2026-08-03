@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicanito App — Pide tu pollo Very Sabrosito</title>
+<meta name="description" content="Arma tu pedido de Chicken Chicanito y mándalo directo por WhatsApp al repartidor.">
+<link rel="icon" href="assets/brand/logo-badge.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <div style="display:flex; align-items:center; gap:0.6rem;">
+      <img src="assets/brand/logo-badge.jpg" alt="Chicken Chicanito" class="header-logo">
+      <span class="header-title">Chicanito <span>App</span></span>
+    </div>
+    <button class="cart-btn" id="open-cart-btn" type="button">
+      🛒 Carrito <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </div>
+</header>
+
+<div id="hours-banner" class="hours-banner" style="display:none;">
+  Estamos cerrados por ahora. Recibimos pedidos en línea de 9:00 a 18:00 hrs.
+</div>
+
+<main>
+  <div class="container">
+    <h1 class="page-title">¿Qué se te antoja hoy?</h1>
+    <p class="page-sub">Elige tus paquetes, complementos y salsas — al final te ayudamos a enviar tu pedido por WhatsApp.</p>
+  </div>
+
+  <nav class="tabs container" id="tabs"></nav>
+
+  <div id="menu-container"></div>
+</main>
+
+<!-- Overlay + Cart Drawer -->
+<div class="overlay-dim hidden" id="cart-overlay"></div>
+<aside class="cart-drawer hidden" id="cart-drawer">
+  <div class="cart-drawer-header">
+    <span class="cart-drawer-title">Tu carrito</span>
+    <button class="modal-close" id="close-cart-btn" type="button" style="position:static;">✕</button>
+  </div>
+  <div class="cart-drawer-items" id="cart-items"></div>
+  <div class="cart-drawer-footer">
+    <div class="summary-line"><span>Subtotal</span><span id="cart-subtotal">$0</span></div>
+    <div class="summary-line"><span>Envío</span><span id="cart-envio">$0</span></div>
+    <div class="summary-line total"><span>Total</span><span id="cart-total">$0</span></div>
+    <button class="btn btn-primary" id="checkout-btn" type="button">Continuar con mi pedido</button>
+  </div>
+</aside>
+
+<!-- Modal: selector de variantes -->
+<div class="modal-overlay hidden" id="variant-modal">
+  <div class="modal-sheet">
+    <button class="modal-close" id="close-modal-btn" type="button">✕</button>
+    <h2 class="modal-title" id="modal-item-name"></h2>
+    <p class="modal-price" id="modal-item-price"></p>
+    <div id="modal-variants"></div>
+    <button class="btn btn-primary" id="modal-add-btn" type="button" disabled>Agregar al carrito</button>
+  </div>
+</div>
+
+<script src="js/menu.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/hours.js"></script>
+<script src="js/shipping.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

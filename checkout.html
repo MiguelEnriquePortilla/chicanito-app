@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Chicanito App</title>
+<link rel="icon" href="assets/brand/logo-badge.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <div style="display:flex; align-items:center; gap:0.6rem;">
+      <a href="index.html" style="text-decoration:none; display:flex; align-items:center; gap:0.6rem;">
+        <img src="assets/brand/logo-badge.jpg" alt="Chicken Chicanito" class="header-logo">
+        <span class="header-title">Chicanito <span>App</span></span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div id="hours-banner" class="hours-banner" style="display:none;">
+  Estamos cerrados por ahora. Recibimos pedidos en línea de 9:00 a 18:00 hrs.
+</div>
+
+<main class="container">
+  <h1 class="page-title">Últimos datos</h1>
+  <p class="page-sub">Necesitamos esto para que tu pedido llegue bien.</p>
+
+  <div class="card-block">
+    <div class="card-block-title">Tu pedido</div>
+    <div class="order-summary-list" id="order-summary"></div>
+    <div class="summary-line"><span>Subtotal</span><span id="summary-subtotal">$0</span></div>
+    <div class="summary-line"><span>Envío</span><span id="summary-envio">$0</span></div>
+    <div class="summary-line total"><span>Total</span><span id="summary-total">$0</span></div>
+  </div>
+
+  <form id="checkout-form">
+    <div class="card-block">
+      <div class="card-block-title">Tus datos</div>
+      <div class="form-group">
+        <label class="form-label" for="nombre">Nombre</label>
+        <input class="form-input" type="text" id="nombre" required placeholder="¿Cómo te llamas?">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="telefono">Teléfono</label>
+        <input class="form-input" type="tel" id="telefono" required placeholder="10 dígitos">
+      </div>
+    </div>
+
+    <div class="card-block">
+      <div class="card-block-title">Ubicación de entrega</div>
+      <button class="btn btn-outline" id="share-location-btn" type="button">📍 Compartir mi ubicación actual</button>
+      <p class="location-status" id="location-status"></p>
+      <div class="form-group" id="manual-address-group" style="display:none; margin-top:0.8rem;">
+        <label class="form-label" for="direccion-manual">Escribe tu dirección o referencias</label>
+        <textarea class="form-textarea" id="direccion-manual" rows="3" placeholder="Calle, número, colonia, referencias..."></textarea>
+      </div>
+    </div>
+
+    <div class="card-block">
+      <div class="card-block-title">Notas (opcional)</div>
+      <div class="form-group">
+        <textarea class="form-textarea" id="notas" rows="2" placeholder="Ej. sin cebolla, tocar el timbre, etc."></textarea>
+      </div>
+    </div>
+
+    <div class="card-block">
+      <div class="card-block-title">Método de pago</div>
+      <div class="payment-options">
+        <label class="payment-option is-selected" id="opt-efectivo">
+          <input type="radio" name="pago" value="efectivo" checked style="display:none;">
+          <div>
+            <div class="payment-option-title">Efectivo o transferencia al recibir</div>
+            <div class="payment-option-sub">Le pagas directo al repartidor.</div>
+          </div>
+        </label>
+        <label class="payment-option" id="opt-mercadopago">
+          <input type="radio" name="pago" value="mercadopago" style="display:none;">
+          <div>
+            <div class="payment-option-title">Pagar en línea (Mercado Pago)</div>
+            <div class="payment-option-sub" id="mp-status-text">Tarjeta, transferencia SPEI u OXXO.</div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </form>
+</main>
+
+<div class="sticky-footer">
+  <button class="btn btn-primary" id="confirm-btn" type="button">Confirmar pedido</button>
+</div>
+
+<script src="js/menu.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/hours.js"></script>
+<script src="js/shipping.js"></script>
+<script src="js/whatsapp.js"></script>
+<script src="js/checkout.js"></script>
+</body>
+</html>
