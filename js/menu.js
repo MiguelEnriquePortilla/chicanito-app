@@ -17,7 +17,7 @@ const PAQUETES = [
     nombre: 'Paquete 1 — 1 Pollo Rostizado',
     caption: 'El clásico que nunca falla 🔥',
     descripcionCorta: 'Incluye salsa jalapeño y adobo a elegir.',
-    imagen: 'assets/menu/paquete-1.jpg',
+    imagen: 'assets/menu/paquete-1.png',
     precio: 189,
     variantes: [
       { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },

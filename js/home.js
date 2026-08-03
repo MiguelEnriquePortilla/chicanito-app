@@ -80,7 +80,7 @@ function renderFeed() {
   feedContainerEl.innerHTML = PAQUETES.map(
     (p, i) => `
       <article class="feed-card" id="feed-${p.id}" data-id="${p.id}">
-        <img class="feed-card-img" src="${p.imagen}" alt="${p.nombre}" loading="lazy">
+        <img class="feed-card-img" src="${p.imagen}" alt="${p.nombre}" loading="${i === 0 ? 'eager' : 'lazy'}">
         <div class="feed-card-gradient"></div>
         <div class="feed-card-content">
           <span class="feed-card-category">${CATEGORIAS[p.categoria]}</span>
