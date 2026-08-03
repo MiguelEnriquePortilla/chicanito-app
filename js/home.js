@@ -57,10 +57,28 @@ function renderTabs() {
   });
 }
 
+// ---------- Separadores entre paquetes ----------
+const FEED_DIVIDER_TAGLINES = [
+  'Very Sabrosito 🐔',
+  'Recién hecho para ti 🔥',
+  'El sabor que ya conoces 💙',
+  'Directo del carrito a tu casa 🛵',
+];
+
+function renderFeedDivider(index) {
+  const tagline = FEED_DIVIDER_TAGLINES[index % FEED_DIVIDER_TAGLINES.length];
+  return `
+    <div class="feed-divider">
+      <img src="assets/brand/chicanito-mascot-cutout.png" alt="Chicanito" class="feed-divider-mascot">
+      <span class="feed-divider-text">${tagline}</span>
+    </div>
+  `;
+}
+
 // ---------- Feed de paquetes ----------
 function renderFeed() {
   feedContainerEl.innerHTML = PAQUETES.map(
-    (p) => `
+    (p, i) => `
       <article class="feed-card" id="feed-${p.id}" data-id="${p.id}">
         <img class="feed-card-img" src="${p.imagen}" alt="${p.nombre}" loading="lazy">
         <div class="feed-card-gradient"></div>
@@ -82,6 +100,7 @@ function renderFeed() {
           </button>
         </div>
       </article>
+      ${i < PAQUETES.length - 1 ? renderFeedDivider(i) : ''}
     `
   ).join('');
 

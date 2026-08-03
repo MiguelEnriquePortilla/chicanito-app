@@ -224,6 +224,25 @@ html {
 .feed-action-btn:active .icon { transform: scale(1.25); }
 .heart-btn.is-active .icon { filter: none; }
 
+/* ---------- Separador entre tarjetas del feed ---------- */
+.feed-divider {
+  height: 96px;
+  background: var(--navy);
+  border-top: 3px solid var(--red);
+  border-bottom: 3px solid var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+.feed-divider-mascot { height: 64px; width: auto; object-fit: contain; }
+.feed-divider-text {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  color: var(--white);
+}
+
 .feed-scroll-hint {
   position: absolute;
   top: 1rem;
