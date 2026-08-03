@@ -53,6 +53,26 @@
     </div>
 
     <div class="card-block">
+      <div class="card-block-title">Método de entrega</div>
+      <div class="payment-options">
+        <label class="payment-option is-selected" id="opt-domicilio">
+          <input type="radio" name="entrega" value="domicilio" checked style="display:none;">
+          <div>
+            <div class="payment-option-title">Entrega a domicilio</div>
+            <div class="payment-option-sub">Envío gratis en compras de $250+ (si no, +$30).</div>
+          </div>
+        </label>
+        <label class="payment-option" id="opt-recoger">
+          <input type="radio" name="entrega" value="recoger" style="display:none;">
+          <div>
+            <div class="payment-option-title">Recoger en tienda</div>
+            <div class="payment-option-sub">Sin costo de envío.</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="card-block" id="ubicacion-block">
       <div class="card-block-title">Ubicación de entrega</div>
       <button class="btn btn-outline" id="share-location-btn" type="button">📍 Compartir mi ubicación actual</button>
       <p class="location-status" id="location-status"></p>

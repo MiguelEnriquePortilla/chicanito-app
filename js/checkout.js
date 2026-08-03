@@ -10,8 +10,8 @@ if (cart.length === 0) {
 }
 
 const subtotal = getSubtotal(cart);
-const envio = calcularEnvio(subtotal);
-const total = subtotal + envio;
+let envio = calcularEnvio(subtotal);
+let total = subtotal + envio;
 
 document.getElementById('order-summary').innerHTML = cart
   .map(
@@ -24,8 +24,31 @@ document.getElementById('order-summary').innerHTML = cart
   )
   .join('');
 document.getElementById('summary-subtotal').textContent = formatoMoneda(subtotal);
-document.getElementById('summary-envio').textContent = envio === 0 ? 'Gratis' : formatoMoneda(envio);
-document.getElementById('summary-total').textContent = formatoMoneda(total);
+
+function actualizarResumenEnvio() {
+  document.getElementById('summary-envio').textContent = envio === 0 ? 'Gratis' : formatoMoneda(envio);
+  document.getElementById('summary-total').textContent = formatoMoneda(total);
+}
+actualizarResumenEnvio();
+
+// ---------- Método de entrega ----------
+const optDomicilio = document.getElementById('opt-domicilio');
+const optRecoger = document.getElementById('opt-recoger');
+const ubicacionBlock = document.getElementById('ubicacion-block');
+let metodoEntrega = 'domicilio';
+
+function seleccionarEntrega(metodo) {
+  metodoEntrega = metodo;
+  optDomicilio.classList.toggle('is-selected', metodo === 'domicilio');
+  optRecoger.classList.toggle('is-selected', metodo === 'recoger');
+  ubicacionBlock.style.display = metodo === 'recoger' ? 'none' : 'block';
+  envio = metodo === 'recoger' ? 0 : calcularEnvio(subtotal);
+  total = subtotal + envio;
+  actualizarResumenEnvio();
+}
+
+optDomicilio.addEventListener('click', () => seleccionarEntrega('domicilio'));
+optRecoger.addEventListener('click', () => seleccionarEntrega('recoger'));
 
 // ---------- Horario ----------
 const hoursBannerEl = document.getElementById('hours-banner');
@@ -117,18 +140,19 @@ document.getElementById('confirm-btn').addEventListener('click', async () => {
     return;
   }
 
-  let ubicacionFinal = ubicacionTexto;
-  if (!ubicacionFinal) {
-    ubicacionFinal = direccionManualEl.value.trim();
-  }
-  if (!ubicacionFinal) {
-    alert('Comparte tu ubicación o escribe tu dirección para poder entregarte el pedido.');
-    return;
+  let ubicacionFinal = '';
+  if (metodoEntrega === 'domicilio') {
+    ubicacionFinal = ubicacionTexto || direccionManualEl.value.trim();
+    if (!ubicacionFinal) {
+      alert('Comparte tu ubicación o escribe tu dirección para poder entregarte el pedido.');
+      return;
+    }
   }
 
   const pedido = {
     cart,
     cliente: { nombre, telefono },
+    metodoEntrega,
     ubicacionTexto: ubicacionFinal,
     subtotal,
     envio,

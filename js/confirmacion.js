@@ -23,11 +23,13 @@ document.getElementById('order-summary').innerHTML = pedido.cart
 document.getElementById('summary-subtotal').textContent = formatoMoneda(pedido.subtotal);
 document.getElementById('summary-envio').textContent = pedido.envio === 0 ? 'Gratis' : formatoMoneda(pedido.envio);
 document.getElementById('summary-total').textContent = formatoMoneda(pedido.total);
+document.getElementById('summary-entrega').textContent = pedido.metodoEntrega === 'recoger' ? 'Recoger en tienda' : 'A domicilio';
 document.getElementById('summary-pago').textContent = pedido.metodoPago;
 
 const mensaje = buildOrderMessage({
   cart: pedido.cart,
   cliente: pedido.cliente,
+  metodoEntrega: pedido.metodoEntrega,
   ubicacionTexto: pedido.ubicacionTexto,
   subtotal: pedido.subtotal,
   envio: pedido.envio,

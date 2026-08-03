@@ -155,7 +155,6 @@ html {
   height: calc(100vh - var(--topbar-h, 120px));
   min-height: 420px;
   scroll-snap-align: start;
-  scroll-snap-stop: always;
   overflow: hidden;
   display: flex;
   flex-direction: column;

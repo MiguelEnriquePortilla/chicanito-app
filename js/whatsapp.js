@@ -10,7 +10,7 @@ function lineaDeItem(item) {
   return `- ${item.cantidad}x ${item.nombre} (${formatoMoneda(item.precioUnitario)} c/u)${detalles}`;
 }
 
-function buildOrderMessage({ cart, cliente, ubicacionTexto, subtotal, envio, total, metodoPago, notas }) {
+function buildOrderMessage({ cart, cliente, metodoEntrega, ubicacionTexto, subtotal, envio, total, metodoPago, notas }) {
   const lineasPedido = cart.map(lineaDeItem).join('\n');
   const envioTexto = envio === 0 ? 'Gratis' : formatoMoneda(envio);
 
@@ -19,7 +19,15 @@ function buildOrderMessage({ cart, cliente, ubicacionTexto, subtotal, envio, tot
     '',
     `*Cliente:* ${cliente.nombre}`,
     `*Teléfono:* ${cliente.telefono}`,
-    `*Ubicación:* ${ubicacionTexto}`,
+  ];
+
+  if (metodoEntrega === 'recoger') {
+    partes.push('*Entrega:* Recoger en tienda');
+  } else {
+    partes.push('*Entrega:* A domicilio', `*Ubicación:* ${ubicacionTexto}`);
+  }
+
+  partes.push(
     '',
     '*Pedido:*',
     lineasPedido,
@@ -28,7 +36,7 @@ function buildOrderMessage({ cart, cliente, ubicacionTexto, subtotal, envio, tot
     `*Envío:* ${envioTexto}`,
     `*Total:* ${formatoMoneda(total)}`,
     `*Pago:* ${metodoPago}`,
-  ];
+  );
 
   if (notas && notas.trim()) {
     partes.push('', `*Notas:* ${notas.trim()}`);
