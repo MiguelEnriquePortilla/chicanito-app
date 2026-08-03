@@ -148,7 +148,7 @@ a { color: inherit; }
 
 /* ---------- Feed estilo TikTok (paquetes) ---------- */
 html {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   scroll-padding-top: var(--topbar-h, 120px);
 }
 .feed-card {
