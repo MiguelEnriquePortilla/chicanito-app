@@ -64,8 +64,8 @@ a { color: inherit; }
 .btn-whatsapp { background: #25D366; color: var(--white); box-shadow: 0 5px 0 #128c39; }
 .btn-whatsapp:not(:disabled):hover { background: #2ee273; }
 
-/* ---------- Header ---------- */
-.site-header {
+/* ---------- Top bar (header + banner + tabs, pinned together) ---------- */
+.top-bar {
   position: sticky;
   top: 0;
   z-index: 50;
@@ -73,6 +73,8 @@ a { color: inherit; }
   backdrop-filter: blur(6px);
   border-bottom: 3px solid var(--navy);
 }
+
+/* ---------- Header ---------- */
 .header-inner {
   display: flex;
   align-items: center;
@@ -144,7 +146,139 @@ a { color: inherit; }
 }
 .tab-btn.is-active { background: var(--navy); color: var(--white); }
 
-/* ---------- Menu grid ---------- */
+/* ---------- Feed estilo TikTok (paquetes) ---------- */
+html {
+  scroll-snap-type: y mandatory;
+}
+.feed-card {
+  position: relative;
+  height: calc(100vh - var(--topbar-h, 120px));
+  min-height: 420px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--black);
+}
+.feed-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.feed-card-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 65%);
+}
+.feed-card-content {
+  position: relative;
+  z-index: 2;
+  color: var(--white);
+  padding: 1.2rem 5.5rem 1.6rem 1.2rem;
+}
+.feed-card-category {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--red);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.5rem;
+}
+.feed-card-name { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.01em; line-height: 1.1; }
+.feed-card-caption { font-size: 1rem; font-weight: 600; margin-top: 0.35rem; }
+.feed-card-desc { font-size: 0.85rem; opacity: 0.85; margin-top: 0.3rem; }
+.feed-card-price { font-family: var(--font-display); font-size: 1.6rem; color: var(--white); margin-top: 0.5rem; }
+.feed-card-price span { color: #ffd166; }
+
+.feed-card-actions {
+  position: absolute;
+  right: 0.8rem;
+  bottom: 1.6rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+}
+.feed-action-btn {
+  background: none;
+  border: none;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+.feed-action-btn .icon { font-size: 2.1rem; line-height: 1; transition: transform 0.15s ease; }
+.feed-action-btn:active .icon { transform: scale(1.25); }
+.heart-btn.is-active .icon { filter: none; }
+
+.feed-scroll-hint {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ---------- Heart burst (doble-tap) ---------- */
+.heart-burst {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  font-size: 6rem;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 200;
+  pointer-events: none;
+}
+.heart-burst.is-bursting {
+  animation: heartBurst 0.7s ease;
+}
+@keyframes heartBurst {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  30% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  background: var(--navy);
+  color: var(--white);
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 200;
+}
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- A la carta wrap ---------- */
+.alacarta-wrap { padding-top: 0.5rem; }
+
+/* ---------- Menu section (usado por complementos/salsas a la carta) ---------- */
 .menu-section { padding: 0 1rem 1.5rem; }
 .menu-section-title {
   font-family: var(--font-display);
@@ -153,29 +287,6 @@ a { color: inherit; }
   margin: 1rem 0 0.75rem;
   letter-spacing: 0.02em;
 }
-.menu-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-}
-@media (min-width: 480px) {
-  .menu-grid { grid-template-columns: 1fr 1fr; }
-}
-
-.menu-card {
-  background: var(--white);
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(23, 33, 62, 0.12);
-  display: flex;
-  flex-direction: column;
-}
-.menu-card-img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; background: #eee; }
-.menu-card-body { padding: 0.9rem; display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
-.menu-card-name { font-family: var(--font-display); font-size: 1.15rem; letter-spacing: 0.01em; }
-.menu-card-desc { font-size: 0.82rem; color: #4a5372; flex: 1; }
-.menu-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: 0.3rem; }
-.menu-card-price { font-family: var(--font-display); font-size: 1.3rem; color: var(--red); }
 .add-btn {
   background: var(--red);
   color: var(--white);

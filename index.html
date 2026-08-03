@@ -13,32 +13,40 @@
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <div style="display:flex; align-items:center; gap:0.6rem;">
-      <img src="assets/brand/logo-badge.jpg" alt="Chicken Chicanito" class="header-logo">
-      <span class="header-title">Chicanito <span>App</span></span>
+<div class="top-bar" id="top-bar">
+  <header class="site-header">
+    <div class="container header-inner">
+      <div style="display:flex; align-items:center; gap:0.6rem;">
+        <img src="assets/brand/logo-badge.jpg" alt="Chicken Chicanito" class="header-logo">
+        <span class="header-title">Chicanito <span>App</span></span>
+      </div>
+      <button class="cart-btn" id="open-cart-btn" type="button">
+        🛒 <span class="cart-count" id="cart-count">0</span>
+      </button>
     </div>
-    <button class="cart-btn" id="open-cart-btn" type="button">
-      🛒 Carrito <span class="cart-count" id="cart-count">0</span>
-    </button>
-  </div>
-</header>
+  </header>
 
-<div id="hours-banner" class="hours-banner" style="display:none;">
-  Estamos cerrados por ahora. Recibimos pedidos en línea de 9:00 a 18:00 hrs.
+  <div id="hours-banner" class="hours-banner" style="display:none;">
+    Estamos cerrados por ahora. Recibimos pedidos en línea de 9:00 a 18:00 hrs.
+  </div>
+
+  <nav class="tabs" id="tabs"></nav>
 </div>
 
 <main>
-  <div class="container">
-    <h1 class="page-title">¿Qué se te antoja hoy?</h1>
-    <p class="page-sub">Elige tus paquetes, complementos y salsas — al final te ayudamos a enviar tu pedido por WhatsApp.</p>
-  </div>
+  <div class="feed-container" id="feed-container"></div>
 
-  <nav class="tabs container" id="tabs"></nav>
-
-  <div id="menu-container"></div>
+  <section class="alacarta-wrap container" id="alacarta-wrap">
+    <p class="page-sub" style="padding-top:1rem;">Agrega complementos y salsas extra a tu pedido:</p>
+    <div id="alacarta-container"></div>
+  </section>
 </main>
+
+<!-- Burst de corazón al hacer doble-tap -->
+<div class="heart-burst" id="heart-burst">❤️</div>
+
+<!-- Toast simple para mensajes cortos -->
+<div class="toast" id="toast"></div>
 
 <!-- Overlay + Cart Drawer -->
 <div class="overlay-dim hidden" id="cart-overlay"></div>

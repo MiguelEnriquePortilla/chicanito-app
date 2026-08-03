@@ -1,8 +1,115 @@
-// Lógica de la página de inicio: tabs, tarjetas de menú, selector de variantes y carrito.
+// Lógica de la página de inicio: feed estilo TikTok, tabs, complementos a la carta y carrito.
 
+const topBarEl = document.getElementById('top-bar');
 const tabsEl = document.getElementById('tabs');
-const menuContainerEl = document.getElementById('menu-container');
+const feedContainerEl = document.getElementById('feed-container');
+const alacartaContainerEl = document.getElementById('alacarta-container');
 const hoursBannerEl = document.getElementById('hours-banner');
+const heartBurstEl = document.getElementById('heart-burst');
+const toastEl = document.getElementById('toast');
+
+function formatoMoneda(v) {
+  return `$${v.toFixed(0)}`;
+}
+
+function mostrarToast(mensaje) {
+  toastEl.textContent = mensaje;
+  toastEl.classList.add('is-visible');
+  setTimeout(() => toastEl.classList.remove('is-visible'), 2000);
+}
+
+function ajustarAlturaTopBar() {
+  document.documentElement.style.setProperty('--topbar-h', `${topBarEl.offsetHeight}px`);
+}
+window.addEventListener('resize', ajustarAlturaTopBar);
+
+// ---------- Categorías presentes ----------
+function categoriasPaquetes() {
+  const presentes = new Set(PAQUETES.map((p) => p.categoria));
+  return Object.keys(CATEGORIAS).filter((c) => presentes.has(c) && c !== 'complementos' && c !== 'salsas');
+}
+function categoriasALaCarta() {
+  const presentes = new Set(A_LA_CARTA.map((a) => a.categoria));
+  return Object.keys(CATEGORIAS).filter((c) => presentes.has(c) && (c === 'complementos' || c === 'salsas'));
+}
+
+// ---------- Tabs ----------
+function renderTabs() {
+  const todas = [...categoriasPaquetes(), ...categoriasALaCarta()];
+  tabsEl.innerHTML = todas
+    .map((cat, i) => `<button class="tab-btn${i === 0 ? ' is-active' : ''}" data-cat="${cat}" type="button">${CATEGORIAS[cat]}</button>`)
+    .join('');
+
+  tabsEl.querySelectorAll('.tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      tabsEl.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const cat = btn.dataset.cat;
+      if (cat === 'complementos' || cat === 'salsas') {
+        document.getElementById(`alacarta-${cat}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      const primerPaquete = PAQUETES.find((p) => p.categoria === cat);
+      if (primerPaquete) {
+        document.getElementById(`feed-${primerPaquete.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+}
+
+// ---------- Feed de paquetes ----------
+function renderFeed() {
+  feedContainerEl.innerHTML = PAQUETES.map(
+    (p) => `
+      <article class="feed-card" id="feed-${p.id}" data-id="${p.id}">
+        <img class="feed-card-img" src="${p.imagen}" alt="${p.nombre}" loading="lazy">
+        <div class="feed-card-gradient"></div>
+        <div class="feed-card-content">
+          <span class="feed-card-category">${CATEGORIAS[p.categoria]}</span>
+          <h2 class="feed-card-name">${p.nombre}</h2>
+          ${p.caption ? `<p class="feed-card-caption">${p.caption}</p>` : ''}
+          <p class="feed-card-desc">${p.descripcionCorta}</p>
+          <p class="feed-card-price"><span>${formatoMoneda(p.precio)}</span></p>
+        </div>
+        <div class="feed-card-actions">
+          <button class="feed-action-btn heart-btn" data-id="${p.id}" type="button" aria-label="Agregar al carrito">
+            <span class="icon heart-icon">🤍</span>
+            <span class="heart-count">0</span>
+          </button>
+          <button class="feed-action-btn share-btn" data-id="${p.id}" type="button" aria-label="Compartir">
+            <span class="icon">🔗</span>
+            <span>Compartir</span>
+          </button>
+        </div>
+      </article>
+    `
+  ).join('');
+
+  feedContainerEl.querySelectorAll('.heart-btn').forEach((btn) => {
+    btn.addEventListener('click', () => onHeartTap(btn.dataset.id));
+  });
+  feedContainerEl.querySelectorAll('.share-btn').forEach((btn) => {
+    btn.addEventListener('click', () => onShare(btn.dataset.id));
+  });
+  feedContainerEl.querySelectorAll('.feed-card-img').forEach((img) => {
+    img.addEventListener('dblclick', () => {
+      const id = img.closest('.feed-card').dataset.id;
+      onHeartTap(id);
+      dispararHeartBurst();
+    });
+  });
+}
+
+function dispararHeartBurst() {
+  heartBurstEl.classList.remove('is-bursting');
+  // Forzar reflow para reiniciar la animación si se dispara varias veces seguidas.
+  void heartBurstEl.offsetWidth;
+  heartBurstEl.classList.add('is-bursting');
+}
+
+// ---------- Agregar al carrito desde el corazón ----------
+let modalPaquete = null;
+let modalSeleccion = {};
 
 const variantModal = document.getElementById('variant-modal');
 const modalItemName = document.getElementById('modal-item-name');
@@ -11,129 +118,7 @@ const modalVariants = document.getElementById('modal-variants');
 const modalAddBtn = document.getElementById('modal-add-btn');
 const closeModalBtn = document.getElementById('close-modal-btn');
 
-let modalPaquete = null;
-let modalSeleccion = {};
-
-function formatoMoneda(v) {
-  return `$${v.toFixed(0)}`;
-}
-
-// ---------- Render de tabs ----------
-function ordenCategorias() {
-  const presentes = new Set([...PAQUETES.map((p) => p.categoria), ...A_LA_CARTA.map((a) => a.categoria)]);
-  return Object.keys(CATEGORIAS).filter((c) => presentes.has(c));
-}
-
-function renderTabs() {
-  const categorias = ordenCategorias();
-  tabsEl.innerHTML = categorias
-    .map((cat, i) => `<button class="tab-btn${i === 0 ? ' is-active' : ''}" data-cat="${cat}" type="button">${CATEGORIAS[cat]}</button>`)
-    .join('');
-
-  tabsEl.querySelectorAll('.tab-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      tabsEl.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      const target = document.getElementById(`section-${btn.dataset.cat}`);
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-}
-
-// ---------- Render de menú ----------
-function renderMenuCard(paquete) {
-  return `
-    <div class="menu-card">
-      <img class="menu-card-img" src="${paquete.imagen}" alt="${paquete.nombre}" loading="lazy">
-      <div class="menu-card-body">
-        <div class="menu-card-name">${paquete.nombre}</div>
-        <div class="menu-card-desc">${paquete.descripcionCorta}</div>
-        <div class="menu-card-footer">
-          <span class="menu-card-price">${formatoMoneda(paquete.precio)}</span>
-          <button class="add-btn" data-id="${paquete.id}" type="button">Agregar</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function renderCartaRow(item) {
-  const pillsHtml = item.tamanos
-    .map((t, i) => `<button class="size-pill${i === 0 ? ' is-active' : ''}" data-idx="${i}" type="button">${t.label} · ${formatoMoneda(t.precio)}</button>`)
-    .join('');
-  return `
-    <div class="carta-row" data-id="${item.id}">
-      <div class="carta-row-name">${item.nombre}</div>
-      <div class="carta-row-controls">
-        <div class="size-pills">${pillsHtml}</div>
-        <button class="add-btn" type="button">Agregar</button>
-      </div>
-    </div>
-  `;
-}
-
-function renderMenu() {
-  const categorias = ordenCategorias();
-  menuContainerEl.innerHTML = categorias
-    .map((cat) => {
-      const paquetes = PAQUETES.filter((p) => p.categoria === cat);
-      const carta = A_LA_CARTA.filter((a) => a.categoria === cat);
-      const itemsHtml = paquetes.length
-        ? `<div class="menu-grid">${paquetes.map(renderMenuCard).join('')}</div>`
-        : `<div style="display:flex; flex-direction:column; gap:0.7rem;">${carta.map(renderCartaRow).join('')}</div>`;
-      return `
-        <section class="menu-section" id="section-${cat}">
-          <h2 class="menu-section-title">${CATEGORIAS[cat]}</h2>
-          ${itemsHtml}
-        </section>
-      `;
-    })
-    .join('');
-
-  // Botones "Agregar" de paquetes (pueden requerir variantes)
-  menuContainerEl.querySelectorAll('.menu-card .add-btn').forEach((btn) => {
-    btn.addEventListener('click', () => onAddPaquete(btn.dataset.id));
-  });
-
-  // Filas a la carta: seleccionar tamaño + agregar
-  menuContainerEl.querySelectorAll('.carta-row').forEach((row) => {
-    const id = row.dataset.id;
-    const item = A_LA_CARTA.find((a) => a.id === id);
-    let tamanoIdx = 0;
-    row.querySelectorAll('.size-pill').forEach((pill) => {
-      pill.addEventListener('click', () => {
-        row.querySelectorAll('.size-pill').forEach((p) => p.classList.remove('is-active'));
-        pill.classList.add('is-active');
-        tamanoIdx = Number(pill.dataset.idx);
-      });
-    });
-    row.querySelector('.add-btn').addEventListener('click', () => {
-      const tamano = item.tamanos[tamanoIdx];
-      addToCart({
-        tipo: 'ala_carta',
-        refId: item.id,
-        nombre: item.nombre,
-        precioUnitario: tamano.precio,
-        detalleVariantes: tamano.label,
-      });
-      refreshCartUI();
-      flashAdded(row.querySelector('.add-btn'));
-    });
-  });
-}
-
-function flashAdded(btn) {
-  const original = btn.textContent;
-  btn.textContent = '¡Agregado!';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.textContent = original;
-    btn.disabled = false;
-  }, 900);
-}
-
-// ---------- Modal de variantes ----------
-function onAddPaquete(id) {
+function onHeartTap(id) {
   const paquete = PAQUETES.find((p) => p.id === id);
   if (!paquete.variantes || paquete.variantes.length === 0) {
     addToCart({
@@ -146,6 +131,10 @@ function onAddPaquete(id) {
     refreshCartUI();
     return;
   }
+  abrirModalVariantes(paquete);
+}
+
+function abrirModalVariantes(paquete) {
   modalPaquete = paquete;
   modalSeleccion = {};
   modalItemName.textContent = paquete.nombre;
@@ -185,9 +174,7 @@ function checkModalComplete() {
 }
 
 modalAddBtn.addEventListener('click', () => {
-  const detalle = modalPaquete.variantes
-    .map((g) => `${g.label}: ${modalSeleccion[g.id]}`)
-    .join(' · ');
+  const detalle = modalPaquete.variantes.map((g) => `${g.label}: ${modalSeleccion[g.id]}`).join(' · ');
   addToCart({
     tipo: 'paquete',
     refId: modalPaquete.id,
@@ -200,6 +187,110 @@ modalAddBtn.addEventListener('click', () => {
 });
 
 closeModalBtn.addEventListener('click', () => variantModal.classList.add('hidden'));
+
+// ---------- Compartir ----------
+async function onShare(id) {
+  const paquete = PAQUETES.find((p) => p.id === id);
+  const texto = `🐔 ${paquete.nombre} — ${formatoMoneda(paquete.precio)} en Chicken Chicanito. ¡Pídelo aquí!`;
+  const url = window.location.href.split('#')[0];
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: paquete.nombre, text: texto, url });
+    } catch (e) {
+      // El usuario canceló el share nativo; no hacemos nada.
+    }
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(`${texto} ${url}`);
+    mostrarToast('Link copiado. ¡Compártelo donde quieras!');
+  } catch (e) {
+    mostrarToast('No se pudo copiar el link.');
+  }
+}
+
+// ---------- Corazones: reflejar cuántos de cada paquete hay en el carrito ----------
+function refreshFeedHearts() {
+  const cart = getCart();
+  PAQUETES.forEach((p) => {
+    const cantidad = cart
+      .filter((it) => it.tipo === 'paquete' && it.refId === p.id)
+      .reduce((sum, it) => sum + it.cantidad, 0);
+    const btn = feedContainerEl.querySelector(`.heart-btn[data-id="${p.id}"]`);
+    if (!btn) return;
+    btn.classList.toggle('is-active', cantidad > 0);
+    btn.querySelector('.heart-icon').textContent = cantidad > 0 ? '❤️' : '🤍';
+    btn.querySelector('.heart-count').textContent = cantidad;
+  });
+}
+
+// ---------- A la carta (complementos y salsas) ----------
+function renderCartaRow(item) {
+  const pillsHtml = item.tamanos
+    .map((t, i) => `<button class="size-pill${i === 0 ? ' is-active' : ''}" data-idx="${i}" type="button">${t.label} · ${formatoMoneda(t.precio)}</button>`)
+    .join('');
+  return `
+    <div class="carta-row" data-id="${item.id}">
+      <div class="carta-row-name">${item.nombre}</div>
+      <div class="carta-row-controls">
+        <div class="size-pills">${pillsHtml}</div>
+        <button class="add-btn" type="button">Agregar</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderALaCarta() {
+  const categorias = categoriasALaCarta();
+  alacartaContainerEl.innerHTML = categorias
+    .map((cat) => {
+      const items = A_LA_CARTA.filter((a) => a.categoria === cat);
+      return `
+        <section class="menu-section" id="alacarta-${cat}">
+          <h2 class="menu-section-title">${CATEGORIAS[cat]}</h2>
+          <div style="display:flex; flex-direction:column; gap:0.7rem;">${items.map(renderCartaRow).join('')}</div>
+        </section>
+      `;
+    })
+    .join('');
+
+  alacartaContainerEl.querySelectorAll('.carta-row').forEach((row) => {
+    const id = row.dataset.id;
+    const item = A_LA_CARTA.find((a) => a.id === id);
+    let tamanoIdx = 0;
+    row.querySelectorAll('.size-pill').forEach((pill) => {
+      pill.addEventListener('click', () => {
+        row.querySelectorAll('.size-pill').forEach((p) => p.classList.remove('is-active'));
+        pill.classList.add('is-active');
+        tamanoIdx = Number(pill.dataset.idx);
+      });
+    });
+    row.querySelector('.add-btn').addEventListener('click', () => {
+      const tamano = item.tamanos[tamanoIdx];
+      addToCart({
+        tipo: 'ala_carta',
+        refId: item.id,
+        nombre: item.nombre,
+        precioUnitario: tamano.precio,
+        detalleVariantes: tamano.label,
+      });
+      refreshCartUI();
+      flashAdded(row.querySelector('.add-btn'));
+    });
+  });
+}
+
+function flashAdded(btn) {
+  const original = btn.textContent;
+  btn.textContent = '¡Agregado!';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = original;
+    btn.disabled = false;
+  }, 900);
+}
 
 // ---------- Carrito ----------
 const openCartBtn = document.getElementById('open-cart-btn');
@@ -287,6 +378,7 @@ function refreshCartUI() {
   cartEnvioEl.textContent = envio === 0 ? 'Gratis' : formatoMoneda(envio);
   cartTotalEl.textContent = formatoMoneda(subtotal + envio);
   checkoutBtn.disabled = cart.length === 0;
+  refreshFeedHearts();
 }
 
 checkoutBtn.addEventListener('click', () => {
@@ -297,10 +389,13 @@ checkoutBtn.addEventListener('click', () => {
 // ---------- Horario ----------
 function renderHoursBanner() {
   hoursBannerEl.style.display = estaAbierto() ? 'none' : 'block';
+  ajustarAlturaTopBar();
 }
 
 // ---------- Init ----------
 renderTabs();
-renderMenu();
+renderFeed();
+renderALaCarta();
 refreshCartUI();
 renderHoursBanner();
+ajustarAlturaTopBar();
