@@ -29,7 +29,7 @@ const PAQUETES = [
     nombre: 'Paquete 2 — 1 Pollo Rostizado',
     caption: 'Con arroz y todo el sabor 🍚🔥',
     descripcionCorta: 'Incluye arroz, salsa jalapeño y adobo a elegir.',
-    imagen: 'assets/menu/paquete-2.jpg',
+    imagen: 'assets/menu/paquete-2.png',
     precio: 209,
     variantes: [
       { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
@@ -42,7 +42,7 @@ const PAQUETES = [
     nombre: 'Paquete 3 — 1½ Pollo Rostizado',
     caption: 'Para compartir... o no 😅',
     descripcionCorta: 'Incluye arroz, salsa y adobo a elegir.',
-    imagen: 'assets/menu/paquete-3.jpg',
+    imagen: 'assets/menu/paquete-3.png',
     precio: 254,
     variantes: [
       { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
@@ -56,7 +56,7 @@ const PAQUETES = [
     nombre: 'Paquete 6 — ½ Pollo Rostizado',
     caption: 'Ideal para uno solo, Very Sabrosito 🐔',
     descripcionCorta: 'Incluye arroz, salsa y adobo a elegir.',
-    imagen: 'assets/menu/paquete-6.jpg',
+    imagen: 'assets/menu/paquete-6.png',
     precio: 110,
     variantes: [
       { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
@@ -70,7 +70,7 @@ const PAQUETES = [
     nombre: 'Paquete 7 — 2 Pollos Rostizados',
     caption: 'El festín familiar 👨‍👩‍👧‍👦',
     descripcionCorta: 'Incluye arroz, salsa y adobo a elegir.',
-    imagen: 'assets/menu/paquete-7.jpg',
+    imagen: 'assets/menu/paquete-7.png',
     precio: 389,
     variantes: [
       { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
@@ -84,7 +84,7 @@ const PAQUETES = [
     nombre: 'Paquete 11 — 1 Pollo Rostizado + Coca-Cola 2L',
     caption: 'Combo completo con refresco incluido 🥤',
     descripcionCorta: 'Incluye arroz, salsa, adobo a elegir y refresco de 2 litros.',
-    imagen: 'assets/menu/paquete-11.jpg',
+    imagen: 'assets/menu/paquete-11.png',
     precio: 249,
     variantes: [
       { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
@@ -98,7 +98,7 @@ const PAQUETES = [
     nombre: 'Paquete 12 — 2 Piezas Rostizadas',
     caption: 'Piezas rostizadas a tu manera 🔥',
     descripcionCorta: 'Incluye 2 complementos, salsa y adobo a elegir.',
-    imagen: 'assets/menu/paquete-12.jpg',
+    imagen: 'assets/menu/paquete-12.png',
     precio: 85,
     variantes: [
       { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
@@ -113,7 +113,7 @@ const PAQUETES = [
     nombre: 'Paquete 9 — 2 Piezas Crujientes',
     caption: 'Crujiente y rápido, perfecto para antojos 😋',
     descripcionCorta: 'Incluye 2 complementos y salsa a elegir.',
-    imagen: 'assets/menu/paquete-9.jpg',
+    imagen: 'assets/menu/paquete-9.png',
     precio: 85,
     variantes: [
       { id: 'complemento1', label: 'Complemento 1', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Chiles en escabeche', 'Nopales', 'Papas gajo'] },
@@ -127,7 +127,7 @@ const PAQUETES = [
     nombre: 'Paquete 10 — 3 Piezas Crujientes',
     caption: 'Un poquito más para no quedarte con hambre 🍗',
     descripcionCorta: 'Incluye 2 complementos y salsa a elegir.',
-    imagen: 'assets/menu/paquete-10.jpg',
+    imagen: 'assets/menu/paquete-10.png',
     precio: 99,
     variantes: [
       { id: 'complemento1', label: 'Complemento 1', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Chiles en escabeche', 'Nopales', 'Papas gajo'] },
@@ -141,7 +141,7 @@ const PAQUETES = [
     nombre: 'Paquete 5 — 8 Piezas Crujientes',
     caption: 'Para compartir con la banda 🙌',
     descripcionCorta: 'Incluye salsa a elegir y puré de papa o ensalada de col.',
-    imagen: 'assets/menu/paquete-5.jpg',
+    imagen: 'assets/menu/paquete-5.png',
     precio: 229,
     variantes: [
       { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
@@ -154,7 +154,7 @@ const PAQUETES = [
     nombre: 'Paquete 4 — 12 Piezas Crujientes',
     caption: 'La fiesta del pollo crujiente 🎉',
     descripcionCorta: 'Incluye salsa a elegir y puré de papa o ensalada de col.',
-    imagen: 'assets/menu/paquete-4.jpg',
+    imagen: 'assets/menu/paquete-4.png',
     precio: 254,
     variantes: [
       { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
@@ -167,7 +167,7 @@ const PAQUETES = [
     nombre: 'Costillas — ¼ kg',
     caption: 'Bañadas en BBQ, se deshacen solitas 🍖',
     descripcionCorta: 'Incluye 2 complementos y adobo a elegir.',
-    imagen: 'assets/menu/paquete-8.jpg',
+    imagen: 'assets/menu/paquete-8.png',
     precio: 95,
     variantes: [
       { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
@@ -181,7 +181,7 @@ const PAQUETES = [
     nombre: 'Costillas — ½ kg',
     caption: 'Para los que sí saben 🍖🔥',
     descripcionCorta: 'Incluye 2 complementos y adobo a elegir.',
-    imagen: 'assets/menu/paquete-8.jpg',
+    imagen: 'assets/menu/paquete-8.png',
     precio: 190,
     variantes: [
       { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
@@ -195,7 +195,7 @@ const PAQUETES = [
     nombre: 'Costillas — 1 kg',
     caption: 'El kilo completo, para no batallar dos veces 💪',
     descripcionCorta: 'Incluye 2 complementos y adobo a elegir.',
-    imagen: 'assets/menu/paquete-8.jpg',
+    imagen: 'assets/menu/paquete-8.png',
     precio: 380,
     variantes: [
       { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
