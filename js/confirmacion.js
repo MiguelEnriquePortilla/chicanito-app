@@ -38,6 +38,14 @@ const mensaje = buildOrderMessage({
   notas: pedido.notas,
 });
 
+// Guarda el pedido en la base de datos para el dashboard interno (mejor esfuerzo:
+// si falla o no está configurada, no afecta el envío por WhatsApp).
+fetch('/api/crear-pedido', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(pedido),
+}).catch(() => {});
+
 const sendBtn = document.getElementById('send-whatsapp-btn');
 sendBtn.href = buildWhatsAppUrl(mensaje);
 sendBtn.addEventListener('click', () => {

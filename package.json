@@ -1,0 +1,9 @@
+{
+  "name": "chicanito-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chicanito App — pedidos por WhatsApp para Chicken Chicanito",
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4"
+  }
+}

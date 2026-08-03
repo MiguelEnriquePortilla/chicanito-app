@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard — Chicanito App</title>
+<link rel="icon" href="assets/brand/logo-badge.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .dash-header { padding: 1.2rem 0 0.5rem; }
+  .dash-table-wrap { overflow-x: auto; padding-bottom: 3rem; }
+  table.dash-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 12px; overflow: hidden; font-size: 0.85rem; min-width: 900px; }
+  table.dash-table th, table.dash-table td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #eee; vertical-align: top; }
+  table.dash-table th { background: var(--navy); color: var(--white); font-family: var(--font-display); font-weight: 400; letter-spacing: 0.02em; position: sticky; top: 0; }
+  table.dash-table tr:nth-child(even) { background: #fafafa; }
+  .dash-total { font-weight: 700; color: var(--red); white-space: nowrap; }
+  .dash-empty, .dash-denied { text-align: center; padding: 3rem 1rem; color: #4a5372; }
+  .dash-denied { color: var(--red); font-weight: 600; }
+  .dash-pill { display: inline-block; font-size: 0.72rem; padding: 0.15rem 0.5rem; border-radius: 999px; background: var(--navy); color: var(--white); white-space: nowrap; }
+  .dash-items { max-width: 260px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <div style="display:flex; align-items:center; gap:0.6rem;">
+      <img src="assets/brand/logo-badge.jpg" alt="Chicken Chicanito" class="header-logo">
+      <span class="header-title">Chicanito <span>Dashboard</span></span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="dash-header">
+    <h1 class="page-title">Pedidos recibidos</h1>
+    <p class="page-sub" id="dash-sub">Cargando...</p>
+  </div>
+  <div class="dash-table-wrap" id="dash-content"></div>
+</main>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>
