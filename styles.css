@@ -149,6 +149,7 @@ a { color: inherit; }
 /* ---------- Feed estilo TikTok (paquetes) ---------- */
 html {
   scroll-snap-type: y mandatory;
+  scroll-padding-top: var(--topbar-h, 120px);
 }
 .feed-card {
   position: relative;
@@ -159,7 +160,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background: var(--navy);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF7EC 100%);
 }
 .feed-card-img {
   position: absolute;
@@ -173,12 +174,12 @@ html {
 .feed-card-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 65%);
+  background: linear-gradient(to top, rgba(255,247,236,0.9) 0%, rgba(255,247,236,0.2) 40%, rgba(255,247,236,0) 60%);
 }
 .feed-card-content {
   position: relative;
   z-index: 2;
-  color: var(--white);
+  color: var(--navy);
   padding: 1.2rem 5.5rem 1.6rem 1.2rem;
 }
 .feed-card-category {
@@ -188,15 +189,15 @@ html {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   background: var(--red);
+  color: var(--white);
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   margin-bottom: 0.5rem;
 }
-.feed-card-name { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.01em; line-height: 1.1; }
-.feed-card-caption { font-size: 1rem; font-weight: 600; margin-top: 0.35rem; }
-.feed-card-desc { font-size: 0.85rem; opacity: 0.85; margin-top: 0.3rem; }
-.feed-card-price { font-family: var(--font-display); font-size: 1.6rem; color: var(--white); margin-top: 0.5rem; }
-.feed-card-price span { color: #ffd166; }
+.feed-card-name { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.01em; line-height: 1.1; color: var(--navy); }
+.feed-card-caption { font-size: 1rem; font-weight: 600; margin-top: 0.35rem; color: var(--navy); }
+.feed-card-desc { font-size: 0.85rem; opacity: 0.7; margin-top: 0.3rem; color: var(--navy); }
+.feed-card-price { font-family: var(--font-display); font-size: 1.6rem; color: var(--red); margin-top: 0.5rem; }
 
 .feed-card-actions {
   position: absolute;
@@ -209,26 +210,30 @@ html {
   gap: 1.1rem;
 }
 .feed-action-btn {
-  background: none;
+  background: rgba(255,255,255,0.8);
   border: none;
-  color: var(--white);
+  color: var(--navy);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.15rem;
-  font-size: 0.7rem;
+  justify-content: center;
+  gap: 0.1rem;
+  font-size: 0.62rem;
   font-weight: 600;
   cursor: pointer;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(23,33,62,0.18);
 }
-.feed-action-btn .icon { font-size: 2.1rem; line-height: 1; transition: transform 0.15s ease; }
+.feed-action-btn .icon { font-size: 1.5rem; line-height: 1; transition: transform 0.15s ease; }
 .feed-action-btn:active .icon { transform: scale(1.25); }
-.heart-btn.is-active .icon { filter: none; }
+.heart-btn.is-active { background: var(--red); color: var(--white); }
 
 /* ---------- Separador entre tarjetas del feed ---------- */
 .feed-divider {
   height: 96px;
-  background: var(--navy);
+  background: var(--white);
   border-top: 3px solid var(--red);
   border-bottom: 3px solid var(--red);
   display: flex;
@@ -241,7 +246,7 @@ html {
   font-family: var(--font-display);
   font-size: 1.3rem;
   letter-spacing: 0.02em;
-  color: var(--white);
+  color: var(--navy);
 }
 
 .feed-scroll-hint {

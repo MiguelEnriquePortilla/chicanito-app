@@ -22,6 +22,9 @@ function ajustarAlturaTopBar() {
   document.documentElement.style.setProperty('--topbar-h', `${topBarEl.offsetHeight}px`);
 }
 window.addEventListener('resize', ajustarAlturaTopBar);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(ajustarAlturaTopBar);
+}
 
 // ---------- Categorías presentes ----------
 function categoriasPaquetes() {
