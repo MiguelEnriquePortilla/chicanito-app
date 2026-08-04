@@ -33,9 +33,11 @@ module.exports = async (req, res) => {
         subtotal NUMERIC,
         envio NUMERIC,
         total NUMERIC,
-        items JSONB
+        items JSONB,
+        estado TEXT DEFAULT 'pendiente'
       )
     `;
+    await sql`ALTER TABLE pedidos ADD COLUMN IF NOT EXISTS estado TEXT DEFAULT 'pendiente'`;
     const rows = await sql`SELECT * FROM pedidos ORDER BY creado_en DESC LIMIT 200`;
     res.status(200).json({ pedidos: rows });
   } catch (e) {

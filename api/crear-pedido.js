@@ -18,9 +18,11 @@ async function asegurarTabla(sql) {
       subtotal NUMERIC,
       envio NUMERIC,
       total NUMERIC,
-      items JSONB
+      items JSONB,
+      estado TEXT DEFAULT 'pendiente'
     )
   `;
+  await sql`ALTER TABLE pedidos ADD COLUMN IF NOT EXISTS estado TEXT DEFAULT 'pendiente'`;
 }
 
 module.exports = async (req, res) => {

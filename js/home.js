@@ -37,6 +37,17 @@ function categoriasALaCarta() {
 }
 
 // ---------- Tabs ----------
+// Mueve el scroll DENTRO de #feed-container únicamente, sin tocar el scroll
+// de la página exterior (scrollIntoView normal a veces también mueve la
+// página exterior cuando el objetivo vive en una caja de scroll anidada,
+// desalineando todo contra el header fijo).
+function scrollFeedCardIntoView(cardEl) {
+  const containerRect = feedContainerEl.getBoundingClientRect();
+  const cardRect = cardEl.getBoundingClientRect();
+  const delta = cardRect.top - containerRect.top;
+  feedContainerEl.scrollTo({ top: feedContainerEl.scrollTop + delta, behavior: 'auto' });
+}
+
 function renderTabs() {
   const todas = [...categoriasPaquetes(), ...categoriasALaCarta()];
   tabsEl.innerHTML = todas
@@ -53,8 +64,9 @@ function renderTabs() {
         return;
       }
       const primerPaquete = PAQUETES.find((p) => p.categoria === cat);
-      if (primerPaquete) {
-        document.getElementById(`feed-${primerPaquete.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const cardEl = primerPaquete && document.getElementById(`feed-${primerPaquete.id}`);
+      if (cardEl) {
+        scrollFeedCardIntoView(cardEl);
       }
     });
   });
