@@ -14,7 +14,7 @@ const PAQUETES = [
   {
     id: 'paquete-1',
     categoria: 'rostizados',
-    nombre: 'Paquete 1 — 1 Pollo Rostizado',
+    nombre: '1 Pollo Rostizado',
     caption: 'El clásico que nunca falla 🔥',
     descripcionCorta: 'Incluye salsa jalapeño y adobo a elegir.',
     imagen: 'assets/menu/paquete-1.png',
@@ -26,7 +26,7 @@ const PAQUETES = [
   {
     id: 'paquete-2',
     categoria: 'rostizados',
-    nombre: 'Paquete 2 — 1 Pollo Rostizado',
+    nombre: '1 Pollo Rostizado con Arroz',
     caption: 'Con arroz y todo el sabor 🍚🔥',
     descripcionCorta: 'Incluye arroz, salsa jalapeño y adobo a elegir.',
     imagen: 'assets/menu/paquete-2.png',
@@ -39,7 +39,7 @@ const PAQUETES = [
   {
     id: 'paquete-3',
     categoria: 'rostizados',
-    nombre: 'Paquete 3 — 1½ Pollo Rostizado',
+    nombre: '1½ Pollo Rostizado',
     caption: 'Para compartir... o no 😅',
     descripcionCorta: 'Incluye arroz, salsa y adobo a elegir.',
     imagen: 'assets/menu/paquete-3.png',
@@ -53,7 +53,7 @@ const PAQUETES = [
   {
     id: 'paquete-6',
     categoria: 'rostizados',
-    nombre: 'Paquete 6 — ½ Pollo Rostizado',
+    nombre: '½ Pollo Rostizado',
     caption: 'Ideal para uno solo, Very Sabrosito 🐔',
     descripcionCorta: 'Incluye arroz, salsa y adobo a elegir.',
     imagen: 'assets/menu/paquete-6.png',
@@ -67,7 +67,7 @@ const PAQUETES = [
   {
     id: 'paquete-7',
     categoria: 'rostizados',
-    nombre: 'Paquete 7 — 2 Pollos Rostizados',
+    nombre: '2 Pollos Rostizados',
     caption: 'El festín familiar 👨‍👩‍👧‍👦',
     descripcionCorta: 'Incluye arroz, salsa y adobo a elegir.',
     imagen: 'assets/menu/paquete-7.png',
@@ -81,7 +81,7 @@ const PAQUETES = [
   {
     id: 'paquete-11',
     categoria: 'rostizados',
-    nombre: 'Paquete 11 — 1 Pollo Rostizado + Coca-Cola 2L',
+    nombre: '1 Pollo Rostizado + Coca-Cola 2L',
     caption: 'Combo completo con refresco incluido 🥤',
     descripcionCorta: 'Incluye arroz, salsa, adobo a elegir y refresco de 2 litros.',
     imagen: 'assets/menu/paquete-11.png',
@@ -95,7 +95,7 @@ const PAQUETES = [
   {
     id: 'paquete-12',
     categoria: 'rostizados',
-    nombre: 'Paquete 12 — 2 Piezas Rostizadas',
+    nombre: '2 Piezas Rostizadas',
     caption: 'Piezas rostizadas a tu manera 🔥',
     descripcionCorta: 'Incluye 2 complementos, salsa y adobo a elegir.',
     imagen: 'assets/menu/paquete-12.png',
@@ -110,7 +110,7 @@ const PAQUETES = [
   {
     id: 'paquete-9',
     categoria: 'crujientes',
-    nombre: 'Paquete 9 — 2 Piezas Crujientes',
+    nombre: '2 Piezas Crujientes',
     caption: 'Crujiente y rápido, perfecto para antojos 😋',
     descripcionCorta: 'Incluye 2 complementos y salsa a elegir.',
     imagen: 'assets/menu/paquete-9.png',
@@ -124,7 +124,7 @@ const PAQUETES = [
   {
     id: 'paquete-10',
     categoria: 'crujientes',
-    nombre: 'Paquete 10 — 3 Piezas Crujientes',
+    nombre: '3 Piezas Crujientes',
     caption: 'Un poquito más para no quedarte con hambre 🍗',
     descripcionCorta: 'Incluye 2 complementos y salsa a elegir.',
     imagen: 'assets/menu/paquete-10.png',
@@ -138,7 +138,7 @@ const PAQUETES = [
   {
     id: 'paquete-5',
     categoria: 'crujientes',
-    nombre: 'Paquete 5 — 8 Piezas Crujientes',
+    nombre: '8 Piezas Crujientes',
     caption: 'Para compartir con la banda 🙌',
     descripcionCorta: 'Incluye salsa a elegir y puré de papa o ensalada de col.',
     imagen: 'assets/menu/paquete-5.png',
@@ -151,7 +151,7 @@ const PAQUETES = [
   {
     id: 'paquete-4',
     categoria: 'crujientes',
-    nombre: 'Paquete 4 — 12 Piezas Crujientes',
+    nombre: '12 Piezas Crujientes',
     caption: 'La fiesta del pollo crujiente 🎉',
     descripcionCorta: 'Incluye salsa a elegir y puré de papa o ensalada de col.',
     imagen: 'assets/menu/paquete-4.png',
