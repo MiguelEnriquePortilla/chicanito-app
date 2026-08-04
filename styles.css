@@ -94,7 +94,7 @@ a { color: inherit; }
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
-  animation: splashLogoPop 0.7s cubic-bezier(0.22, 1.4, 0.36, 1) both;
+  animation: splashLogoPop 0.35s ease-out both;
 }
 .splash-title {
   font-family: var(--font-display);
@@ -140,7 +140,7 @@ a { color: inherit; }
   color: rgba(255,255,255,0.7);
 }
 @keyframes splashLogoPop {
-  0% { transform: scale(0.4); opacity: 0; }
+  0% { transform: scale(0.92); opacity: 0.6; }
   100% { transform: scale(1); opacity: 1; }
 }
 @keyframes splashFadeUp {
