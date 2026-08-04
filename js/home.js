@@ -120,7 +120,7 @@ function renderFeed() {
   ).join('');
 
   feedContainerEl.querySelectorAll('.heart-btn').forEach((btn) => {
-    btn.addEventListener('click', () => onHeartTap(btn.dataset.id));
+    btn.addEventListener('click', () => onHeartTap(btn.dataset.id, btn));
   });
   feedContainerEl.querySelectorAll('.share-btn').forEach((btn) => {
     btn.addEventListener('click', () => onShare(btn.dataset.id));
@@ -141,6 +141,47 @@ function dispararHeartBurst() {
   heartBurstEl.classList.add('is-bursting');
 }
 
+// ---------- Animación "vuela al carrito" al agregar un producto ----------
+function punchCart() {
+  openCartBtn.classList.remove('is-pulsing');
+  void openCartBtn.offsetWidth;
+  openCartBtn.classList.add('is-pulsing');
+  cartCountEl.classList.remove('is-popping');
+  void cartCountEl.offsetWidth;
+  cartCountEl.classList.add('is-popping');
+}
+
+function flyToCart(originEl) {
+  if (!originEl || typeof originEl.animate !== 'function') {
+    punchCart();
+    return;
+  }
+  const originRect = originEl.getBoundingClientRect();
+  const targetRect = openCartBtn.getBoundingClientRect();
+  const chip = document.createElement('div');
+  chip.className = 'fly-chip';
+  chip.textContent = '✓';
+  chip.style.left = `${originRect.left + originRect.width / 2 - 13}px`;
+  chip.style.top = `${originRect.top + originRect.height / 2 - 13}px`;
+  document.body.appendChild(chip);
+
+  const dx = targetRect.left + targetRect.width / 2 - (originRect.left + originRect.width / 2);
+  const dy = targetRect.top + targetRect.height / 2 - (originRect.top + originRect.height / 2);
+
+  const anim = chip.animate(
+    [
+      { transform: 'translate(0, 0) scale(1)', opacity: 1, offset: 0 },
+      { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 60}px) scale(1.1)`, opacity: 1, offset: 0.5 },
+      { transform: `translate(${dx}px, ${dy}px) scale(0.4)`, opacity: 0, offset: 1 },
+    ],
+    { duration: 550, easing: 'cubic-bezier(0.3, 0.8, 0.4, 1)' }
+  );
+  anim.onfinish = () => {
+    chip.remove();
+    punchCart();
+  };
+}
+
 // ---------- Agregar al carrito desde el corazón ----------
 let modalPaquete = null;
 let modalSeleccion = {};
@@ -152,7 +193,7 @@ const modalVariants = document.getElementById('modal-variants');
 const modalAddBtn = document.getElementById('modal-add-btn');
 const closeModalBtn = document.getElementById('close-modal-btn');
 
-function onHeartTap(id) {
+function onHeartTap(id, originEl) {
   const paquete = PAQUETES.find((p) => p.id === id);
   if (!paquete.variantes || paquete.variantes.length === 0) {
     addToCart({
@@ -163,6 +204,7 @@ function onHeartTap(id) {
       detalleVariantes: '',
     });
     refreshCartUI();
+    flyToCart(originEl || feedContainerEl.querySelector(`.heart-btn[data-id="${id}"]`));
     return;
   }
   abrirModalVariantes(paquete);
@@ -216,6 +258,7 @@ modalAddBtn.addEventListener('click', () => {
     precioUnitario: modalPaquete.precio,
     detalleVariantes: detalle,
   });
+  flyToCart(modalAddBtn); // medir posición antes de ocultar el modal
   variantModal.classList.add('hidden');
   refreshCartUI();
 });
@@ -312,6 +355,7 @@ function renderALaCarta() {
       });
       refreshCartUI();
       flashAdded(row.querySelector('.add-btn'));
+      flyToCart(row.querySelector('.add-btn'));
     });
   });
 }
@@ -417,7 +461,7 @@ function refreshCartUI() {
 
 checkoutBtn.addEventListener('click', () => {
   if (getCart().length === 0) return;
-  window.location.href = 'checkout.html';
+  chicanitoGo('checkout.html');
 });
 
 // ---------- Horario ----------

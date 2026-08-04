@@ -181,5 +181,10 @@ document.getElementById('confirm-btn').addEventListener('click', async () => {
   }
 
   sessionStorage.setItem('chicanito_pending_order', JSON.stringify({ ...pedido, metodoPago: 'Efectivo o transferencia al recibir' }));
-  window.location.href = 'confirmacion.html';
+  chicanitoGo('confirmacion.html');
+});
+
+document.getElementById('back-to-menu-link').addEventListener('click', (e) => {
+  e.preventDefault();
+  chicanitoGo('index.html');
 });

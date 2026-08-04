@@ -52,3 +52,42 @@ sendBtn.addEventListener('click', () => {
   clearCart();
   sessionStorage.removeItem('chicanito_pending_order');
 });
+
+document.getElementById('back-to-menu-link').addEventListener('click', (e) => {
+  e.preventDefault();
+  chicanitoGo('index.html');
+});
+
+// ---------- Confeti de celebración (una sola vez al llegar a esta pantalla) ----------
+function lanzarConfeti() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const colores = ['#E30613', '#17213E', '#FFF7EC', '#FFFFFF'];
+  const piezas = 26;
+  for (let i = 0; i < piezas; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const size = 6 + Math.random() * 6;
+    piece.style.width = `${size}px`;
+    piece.style.height = `${size * 0.4}px`;
+    piece.style.left = `${Math.random() * 100}vw`;
+    piece.style.background = colores[i % colores.length];
+    document.body.appendChild(piece);
+
+    if (typeof piece.animate !== 'function') {
+      piece.remove();
+      continue;
+    }
+    const fallDistance = window.innerHeight + 40;
+    const drift = (Math.random() - 0.5) * 160;
+    const rotation = (Math.random() - 0.5) * 720;
+    const anim = piece.animate(
+      [
+        { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
+        { transform: `translate(${drift}px, ${fallDistance}px) rotate(${rotation}deg)`, opacity: 0 },
+      ],
+      { duration: 1600 + Math.random() * 900, easing: 'cubic-bezier(0.2, 0.6, 0.4, 1)', delay: Math.random() * 250 }
+    );
+    anim.onfinish = () => piece.remove();
+  }
+}
+lanzarConfeti();

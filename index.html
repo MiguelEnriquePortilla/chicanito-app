@@ -19,6 +19,54 @@
 </head>
 <body>
 
+<div class="splash" id="splash">
+  <div class="splash-inner">
+    <img src="assets/brand/logo-badge.jpg" alt="" class="splash-logo" id="splash-logo">
+    <div class="splash-title">Chicanito <span>App</span></div>
+    <div class="splash-tagline">Very Facilito, Rapidito y Sabrosito!</div>
+  </div>
+  <div class="splash-bottom">
+    <div class="splash-bar"><div class="splash-bar-fill" id="splash-bar-fill"></div></div>
+    <div class="splash-percent" id="splash-percent">0%</div>
+  </div>
+</div>
+<script>
+(function () {
+  var splash = document.getElementById('splash');
+  var fill = document.getElementById('splash-bar-fill');
+  var percentEl = document.getElementById('splash-percent');
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (sessionStorage.getItem('chicanito-splash-seen')) {
+    splash.remove();
+    return;
+  }
+  sessionStorage.setItem('chicanito-splash-seen', '1');
+
+  if (reduceMotion) {
+    splash.classList.add('is-done');
+    setTimeout(function () { splash.remove(); }, 300);
+    return;
+  }
+
+  var start = Date.now();
+  var duration = 1300;
+  function tick() {
+    var elapsed = Date.now() - start;
+    var pct = Math.min(100, Math.round((elapsed / duration) * 100));
+    fill.style.width = pct + '%';
+    percentEl.textContent = pct + '%';
+    if (pct < 100) {
+      requestAnimationFrame(tick);
+    } else {
+      splash.classList.add('is-done');
+      setTimeout(function () { splash.remove(); }, 650);
+    }
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+
 <div class="top-bar" id="top-bar">
   <header class="site-header">
     <div class="container header-inner">
@@ -81,6 +129,7 @@
   </div>
 </div>
 
+<script src="js/transitions.js"></script>
 <script src="js/menu.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/hours.js"></script>
