@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
         (cliente_nombre, cliente_telefono, metodo_entrega, ubicacion, notas, metodo_pago, subtotal, envio, total, items)
       VALUES
         (${cliente?.nombre || ''}, ${cliente?.telefono || ''}, ${metodoEntrega || ''}, ${ubicacionTexto || ''},
-         ${notas || ''}, ${metodoPago || ''}, ${subtotal || 0}, ${envio || 0}, ${total || 0}, ${JSON.stringify(cart || [])})
+         ${notas || ''}, ${metodoPago || ''}, ${subtotal || 0}, ${envio ?? null}, ${total || 0}, ${JSON.stringify(cart || [])})
     `;
 
     res.status(200).json({ saved: true });

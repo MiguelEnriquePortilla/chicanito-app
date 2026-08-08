@@ -451,10 +451,11 @@ function refreshCartUI() {
   cartCountEl.textContent = getCartCount(cart);
   renderCartItems(cart);
   const subtotal = getSubtotal(cart);
-  const envio = cart.length ? calcularEnvio(subtotal) : 0;
+  const envio = cart.length ? calcularEnvio() : 0;
   cartSubtotalEl.textContent = formatoMoneda(subtotal);
-  cartEnvioEl.textContent = envio === 0 ? 'Gratis' : formatoMoneda(envio);
-  cartTotalEl.textContent = formatoMoneda(subtotal + envio);
+  cartEnvioEl.textContent = envio === 0 ? 'Gratis' : 'Por confirmar';
+  cartTotalEl.textContent = envio === 0 ? formatoMoneda(subtotal) : `${formatoMoneda(subtotal)} + envío`;
+  document.getElementById('cart-envio-nota').style.display = envio === 0 ? 'none' : 'block';
   checkoutBtn.disabled = cart.length === 0;
   refreshFeedHearts();
 }

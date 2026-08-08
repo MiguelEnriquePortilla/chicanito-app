@@ -10,8 +10,8 @@ if (cart.length === 0) {
 }
 
 const subtotal = getSubtotal(cart);
-let envio = calcularEnvio(subtotal);
-let total = subtotal + envio;
+let envio = calcularEnvio();
+const total = subtotal;
 
 document.getElementById('order-summary').innerHTML = cart
   .map(
@@ -26,8 +26,9 @@ document.getElementById('order-summary').innerHTML = cart
 document.getElementById('summary-subtotal').textContent = formatoMoneda(subtotal);
 
 function actualizarResumenEnvio() {
-  document.getElementById('summary-envio').textContent = envio === 0 ? 'Gratis' : formatoMoneda(envio);
-  document.getElementById('summary-total').textContent = formatoMoneda(total);
+  document.getElementById('summary-envio').textContent = envio === 0 ? 'Gratis' : 'Por confirmar';
+  document.getElementById('summary-total').textContent = envio === 0 ? formatoMoneda(total) : `${formatoMoneda(total)} + envío`;
+  document.getElementById('summary-envio-nota').style.display = envio === 0 ? 'none' : 'block';
 }
 actualizarResumenEnvio();
 
@@ -42,8 +43,7 @@ function seleccionarEntrega(metodo) {
   optDomicilio.classList.toggle('is-selected', metodo === 'domicilio');
   optRecoger.classList.toggle('is-selected', metodo === 'recoger');
   ubicacionBlock.style.display = metodo === 'recoger' ? 'none' : 'block';
-  envio = metodo === 'recoger' ? 0 : calcularEnvio(subtotal);
-  total = subtotal + envio;
+  envio = metodo === 'recoger' ? 0 : calcularEnvio();
   actualizarResumenEnvio();
 }
 

@@ -20,7 +20,7 @@ const PAQUETES = [
     imagen: 'assets/menu/paquete-1.png',
     precio: 189,
     variantes: [
-      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional', 'Chipotle'] },
     ],
   },
   {
@@ -33,7 +33,7 @@ const PAQUETES = [
     precio: 209,
     variantes: [
       { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
-      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional', 'Chipotle'] },
     ],
   },
   {
@@ -47,7 +47,7 @@ const PAQUETES = [
     variantes: [
       { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
       { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
-      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional', 'Chipotle'] },
     ],
   },
   {
@@ -61,7 +61,7 @@ const PAQUETES = [
     variantes: [
       { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
       { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
-      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional', 'Chipotle'] },
     ],
   },
   {
@@ -75,7 +75,7 @@ const PAQUETES = [
     variantes: [
       { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
       { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
-      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional', 'Chipotle'] },
     ],
   },
   {
@@ -89,7 +89,7 @@ const PAQUETES = [
     variantes: [
       { id: 'arroz', label: 'Arroz', opciones: ['Blanco', 'Rojo'] },
       { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
-      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional', 'Chipotle'] },
     ],
   },
   {
@@ -101,10 +101,10 @@ const PAQUETES = [
     imagen: 'assets/menu/paquete-12.png',
     precio: 85,
     variantes: [
-      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
-      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Puré de papa', 'Nopales', 'Papas gajo'] },
       { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
-      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional', 'Chipotle'] },
     ],
   },
   {
@@ -116,8 +116,8 @@ const PAQUETES = [
     imagen: 'assets/menu/paquete-9.png',
     precio: 85,
     variantes: [
-      { id: 'complemento1', label: 'Complemento 1', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Chiles en escabeche', 'Nopales', 'Papas gajo'] },
-      { id: 'complemento2', label: 'Complemento 2', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Chiles en escabeche', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Nopales', 'Papas gajo'] },
       { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
     ],
   },
@@ -130,8 +130,8 @@ const PAQUETES = [
     imagen: 'assets/menu/paquete-10.png',
     precio: 99,
     variantes: [
-      { id: 'complemento1', label: 'Complemento 1', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Chiles en escabeche', 'Nopales', 'Papas gajo'] },
-      { id: 'complemento2', label: 'Complemento 2', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Chiles en escabeche', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Puré de papa', 'Ensalada de col', 'Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Nopales', 'Papas gajo'] },
       { id: 'salsa', label: 'Salsa', opciones: ['Jalapeño', 'BBQ'] },
     ],
   },
@@ -170,9 +170,9 @@ const PAQUETES = [
     imagen: 'assets/menu/paquete-8.png',
     precio: 95,
     variantes: [
-      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
-      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
-      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional', 'Chipotle'] },
     ],
   },
   {
@@ -184,9 +184,9 @@ const PAQUETES = [
     imagen: 'assets/menu/paquete-8.png',
     precio: 190,
     variantes: [
-      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
-      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
-      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional', 'Chipotle'] },
     ],
   },
   {
@@ -198,9 +198,9 @@ const PAQUETES = [
     imagen: 'assets/menu/paquete-8.png',
     precio: 380,
     variantes: [
-      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
-      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Chiles en escabeche', 'Puré de papa', 'Nopales', 'Papas gajo'] },
-      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional'] },
+      { id: 'complemento1', label: 'Complemento 1', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'complemento2', label: 'Complemento 2', opciones: ['Arroz', 'Espagueti', 'Sopa de codo', 'Campesina', 'Papas cambray', 'Ensalada de col', 'Puré de papa', 'Nopales', 'Papas gajo'] },
+      { id: 'adobo', label: 'Adobo', opciones: ['3 chiles', 'BBQ', 'Tradicional', 'Chipotle'] },
     ],
   },
 ];
@@ -244,12 +244,6 @@ const A_LA_CARTA = [
     tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
   },
   {
-    id: 'comp-chiles-escabeche',
-    categoria: 'complementos',
-    nombre: 'Chiles en escabeche',
-    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
-  },
-  {
     id: 'comp-pure-papa',
     categoria: 'complementos',
     nombre: 'Puré de papa',
@@ -265,7 +259,7 @@ const A_LA_CARTA = [
     id: 'comp-papas-gajo',
     categoria: 'complementos',
     nombre: 'Papas gajo',
-    tamanos: [{ label: '125 gr', precio: 20 }, { label: '250 gr', precio: 40 }],
+    tamanos: [{ label: '125 gr', precio: 25 }, { label: '250 gr', precio: 50 }],
   },
   {
     id: 'comp-pierna-muslo-ala',
@@ -301,6 +295,12 @@ const A_LA_CARTA = [
     id: 'salsa-3-chiles',
     categoria: 'salsas',
     nombre: 'Adobo 3 chiles',
+    tamanos: [{ label: 'Grande', precio: 35 }],
+  },
+  {
+    id: 'salsa-chipotle',
+    categoria: 'salsas',
+    nombre: 'Adobo chipotle',
     tamanos: [{ label: 'Grande', precio: 35 }],
   },
 ];

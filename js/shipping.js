@@ -1,7 +1,10 @@
-// Reglas de envío: gratis en compras de $250 o más; de lo contrario, $30 fijo.
-const ENVIO_GRATIS_DESDE = 250;
-const COSTO_ENVIO = 30;
+// El envío a domicilio es de costo variable según la distancia — ya no hay
+// tarifa fija ni envío gratis por monto de compra. El costo real se confirma
+// por WhatsApp una vez que se asigna un repartidor. "Recoger en tienda" no
+// tiene costo de envío (ver checkout.js, que usa 0 directo para ese caso).
+const ENVIO_VARIABLE_MENSAJE = 'Costo variable según la distancia (se confirma por WhatsApp)';
 
-function calcularEnvio(subtotal) {
-  return subtotal >= ENVIO_GRATIS_DESDE ? 0 : COSTO_ENVIO;
+// Devuelve null para representar "costo variable, aún no se sabe".
+function calcularEnvio() {
+  return null;
 }

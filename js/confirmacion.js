@@ -21,8 +21,9 @@ document.getElementById('order-summary').innerHTML = pedido.cart
   )
   .join('');
 document.getElementById('summary-subtotal').textContent = formatoMoneda(pedido.subtotal);
-document.getElementById('summary-envio').textContent = pedido.envio === 0 ? 'Gratis' : formatoMoneda(pedido.envio);
-document.getElementById('summary-total').textContent = formatoMoneda(pedido.total);
+document.getElementById('summary-envio').textContent = pedido.envio === 0 ? 'Gratis' : 'Por confirmar';
+document.getElementById('summary-total').textContent = pedido.envio === 0 ? formatoMoneda(pedido.total) : `${formatoMoneda(pedido.total)} + envío`;
+document.getElementById('summary-envio-nota').style.display = pedido.envio === 0 ? 'none' : 'block';
 document.getElementById('summary-entrega').textContent = pedido.metodoEntrega === 'recoger' ? 'Recoger en tienda' : 'A domicilio';
 document.getElementById('summary-pago').textContent = pedido.metodoPago;
 

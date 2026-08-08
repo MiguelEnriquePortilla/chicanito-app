@@ -12,7 +12,8 @@ function lineaDeItem(item) {
 
 function buildOrderMessage({ cart, cliente, metodoEntrega, ubicacionTexto, subtotal, envio, total, metodoPago, notas }) {
   const lineasPedido = cart.map(lineaDeItem).join('\n');
-  const envioTexto = envio === 0 ? 'Gratis' : formatoMoneda(envio);
+  const envioTexto = envio === 0 ? 'Gratis' : ENVIO_VARIABLE_MENSAJE;
+  const totalTexto = envio === 0 ? formatoMoneda(total) : `${formatoMoneda(total)} + envío`;
 
   const partes = [
     '🐔 *Nuevo pedido - Chicanito*',
@@ -34,7 +35,7 @@ function buildOrderMessage({ cart, cliente, metodoEntrega, ubicacionTexto, subto
     '',
     `*Subtotal:* ${formatoMoneda(subtotal)}`,
     `*Envío:* ${envioTexto}`,
-    `*Total:* ${formatoMoneda(total)}`,
+    `*Total:* ${totalTexto}`,
     `*Pago:* ${metodoPago}`,
   );
 
