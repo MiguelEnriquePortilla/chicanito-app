@@ -16,7 +16,9 @@
 
 ---
 
-📸 *Screenshots / demo GIF go here — see [`docs/`](docs) for how to drop them in.*
+<div align="center">
+  <img src="docs/demo.gif" width="360" alt="Chicanito App demo — swipeable menu feed" />
+</div>
 
 ---
 
