@@ -93,37 +93,25 @@ function mostrarFallbackUbicacion(mensaje) {
 
 // ---------- Método de pago ----------
 const optEfectivo = document.getElementById('opt-efectivo');
-const optMercadoPago = document.getElementById('opt-mercadopago');
-const mpStatusText = document.getElementById('mp-status-text');
+const optTransferencia = document.getElementById('opt-transferencia');
+const optTarjeta = document.getElementById('opt-tarjeta');
+const METODO_PAGO_LABELS = {
+  efectivo: 'Efectivo contra entrega',
+  transferencia: 'Transferencia contra entrega',
+  tarjeta: 'Tarjeta contra entrega',
+};
 let metodoPago = 'efectivo';
-let mpDisponible = false;
 
 function seleccionarPago(metodo) {
   metodoPago = metodo;
   optEfectivo.classList.toggle('is-selected', metodo === 'efectivo');
-  optMercadoPago.classList.toggle('is-selected', metodo === 'mercadopago');
+  optTransferencia.classList.toggle('is-selected', metodo === 'transferencia');
+  optTarjeta.classList.toggle('is-selected', metodo === 'tarjeta');
 }
 
 optEfectivo.addEventListener('click', () => seleccionarPago('efectivo'));
-optMercadoPago.addEventListener('click', () => {
-  if (mpDisponible) seleccionarPago('mercadopago');
-});
-
-// Verifica si el backend de Mercado Pago está configurado, sin romper el flujo si no lo está.
-fetch('/api/mp-status')
-  .then((r) => (r.ok ? r.json() : { enabled: false }))
-  .then((data) => {
-    mpDisponible = !!data.enabled;
-    if (!mpDisponible) {
-      optMercadoPago.classList.add('is-disabled');
-      mpStatusText.textContent = 'Próximamente.';
-    }
-  })
-  .catch(() => {
-    mpDisponible = false;
-    optMercadoPago.classList.add('is-disabled');
-    mpStatusText.textContent = 'Próximamente.';
-  });
+optTransferencia.addEventListener('click', () => seleccionarPago('transferencia'));
+optTarjeta.addEventListener('click', () => seleccionarPago('tarjeta'));
 
 // ---------- Confirmar pedido ----------
 document.getElementById('confirm-btn').addEventListener('click', async () => {
@@ -160,27 +148,7 @@ document.getElementById('confirm-btn').addEventListener('click', async () => {
     notas,
   };
 
-  if (metodoPago === 'mercadopago' && mpDisponible) {
-    sessionStorage.setItem('chicanito_pending_order', JSON.stringify({ ...pedido, metodoPago: 'Pagado en línea (Mercado Pago) ✅' }));
-    try {
-      const res = await fetch('/api/crear-preferencia', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ total }),
-      });
-      const data = await res.json();
-      if (data.init_point) {
-        window.location.href = data.init_point;
-        return;
-      }
-      throw new Error('Sin init_point');
-    } catch (e) {
-      alert('No se pudo iniciar el pago en línea. Intenta con efectivo/transferencia por ahora.');
-      return;
-    }
-  }
-
-  sessionStorage.setItem('chicanito_pending_order', JSON.stringify({ ...pedido, metodoPago: 'Efectivo o transferencia al recibir' }));
+  sessionStorage.setItem('chicanito_pending_order', JSON.stringify({ ...pedido, metodoPago: METODO_PAGO_LABELS[metodoPago] }));
   chicanitoGo('confirmacion.html');
 });
 
