@@ -672,3 +672,33 @@ body.is-leaving {
 }
 .order-summary-list { display: flex; flex-direction: column; gap: 0.5rem; margin: 0.8rem 0; }
 .order-summary-line { display: flex; justify-content: space-between; font-size: 0.9rem; }
+
+/* Promoción inicial: compacta para conservar espacio del menú en móviles. */
+.seasonal-banner {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .65rem 1rem;
+  background: var(--cream);
+  color: var(--navy);
+  border-bottom: 2px solid var(--red);
+  font-size: .78rem;
+}
+.seasonal-banner[hidden] { display: none; }
+.seasonal-banner strong { color: var(--red-dark); font-size: .92rem; }
+.seasonal-banner p { margin-top: .15rem; }
+.seasonal-banner button {
+  flex-shrink: 0;
+  background: var(--red);
+  color: white;
+  border: 0;
+  border-radius: 999px;
+  padding: .7rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.seasonal-banner button:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
+.promo-gift { background: var(--cream); border: 1px solid var(--green); border-radius: .75rem; padding: .75rem; }
+.promo-gift strong { color: var(--green); }
+.promo-gift p { font-size: .8rem; margin-top: .3rem; }

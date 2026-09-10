@@ -137,6 +137,15 @@ document.getElementById('confirm-btn').addEventListener('click', async () => {
     }
   }
 
+  // Revalidar al confirmar: el carrito puede haber cambiado en otra pestaña
+  // o la campaña haber terminado mientras esta pantalla estaba abierta.
+  const currentCart = getCart();
+  if (JSON.stringify(currentCart) !== JSON.stringify(cart)) {
+    alert('Tu carrito o la promoción cambió. Actualizaremos el resumen antes de continuar.');
+    window.location.reload();
+    return;
+  }
+
   const pedido = {
     cart,
     cliente: { nombre, telefono },

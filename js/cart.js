@@ -4,14 +4,14 @@ const CART_KEY = 'chicanito_cart_v1';
 function getCart() {
   try {
     const raw = localStorage.getItem(CART_KEY);
-    return raw ? JSON.parse(raw) : [];
+    return applyPromotion(raw ? JSON.parse(raw) : []);
   } catch (e) {
     return [];
   }
 }
 
 function saveCart(cart) {
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  localStorage.setItem(CART_KEY, JSON.stringify(cart.filter((it) => it.tipo !== 'promocion')));
 }
 
 function addToCart(item) {
@@ -50,5 +50,5 @@ function getSubtotal(cart) {
 }
 
 function getCartCount(cart) {
-  return cart.reduce((sum, it) => sum + it.cantidad, 0);
+  return cart.filter((it) => it.tipo !== 'promocion').reduce((sum, it) => sum + it.cantidad, 0);
 }

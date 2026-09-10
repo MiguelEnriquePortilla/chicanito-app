@@ -405,7 +405,12 @@ function renderCartItems(cart) {
   }
   cartItemsEl.innerHTML = cart
     .map(
-      (it) => `
+      (it) => it.tipo === 'promocion' ? `
+        <div class="cart-item promo-gift" role="status">
+          <strong>${it.nombre} · $0</strong>
+          <p>${it.detalleVariantes}</p>
+        </div>
+      ` : `
         <div class="cart-item" data-uid="${it.uid}">
           <div class="cart-item-top">
             <span class="cart-item-name">${it.nombre}</span>
@@ -478,3 +483,28 @@ renderALaCarta();
 refreshCartUI();
 renderHoursBanner();
 ajustarAlturaTopBar();
+
+// El banner vuelve a mostrarse al abrir el inicio; la campaña controla su vigencia.
+function renderSeasonalBanner() {
+  const campaign = activeCampaign();
+  const banner = document.getElementById('seasonal-banner');
+  banner.hidden = !campaign;
+  if (campaign) {
+    document.getElementById('seasonal-title').textContent = campaign.title;
+    document.getElementById('seasonal-message').textContent = campaign.message;
+    document.getElementById('seasonal-cta').textContent = campaign.ctaLabel || 'Ver producto';
+    document.getElementById('seasonal-cta').onclick = () => {
+      const card = document.getElementById(`feed-${campaign.productId}`);
+      if (card) {
+        scrollFeedCardIntoView(card);
+        card.querySelector('.heart-btn').focus({ preventScroll: true });
+      }
+    };
+  }
+  ajustarAlturaTopBar();
+}
+renderSeasonalBanner();
+window.addEventListener('pageshow', () => { renderSeasonalBanner(); refreshCartUI(); });
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) { renderSeasonalBanner(); refreshCartUI(); }
+});
