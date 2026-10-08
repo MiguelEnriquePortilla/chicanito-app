@@ -486,6 +486,9 @@ ajustarAlturaTopBar();
 
 // El banner vuelve a mostrarse al abrir el inicio; la campaña controla su vigencia.
 function renderSeasonalBanner() {
+  const previous = PAQUETES[0]?.id;
+  refreshSeasonalProducts();
+  if (previous !== PAQUETES[0]?.id) { renderTabs(); renderFeed(); }
   const campaign = activeCampaign();
   const banner = document.getElementById('seasonal-banner');
   banner.hidden = !campaign;

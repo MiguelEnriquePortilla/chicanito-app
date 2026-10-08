@@ -2,6 +2,12 @@
 // Agrega la campaña siguiente aquí; no se repite septiembre en años futuros.
 const CAMPAIGNS = [
   {
+    id: 'octubre-2026', startsOn: '2026-10-08', endsOn: '2026-10-31',
+    title: '¡Sin miedito, pide con piloncito!',
+    message: '12 piezas crujientes con salsa de la casa por $229. ¡250 g de papas gajo GRATIS! Exclusivo por la app hasta el 31 de octubre.',
+    productId: 'cruji-pilon-octubre-2026', ctaLabel: 'Pedir promo de $229',
+  },
+  {
     id: 'septiembre-2026',
     startsOn: '2026-09-01',
     endsOn: '2026-09-30',
@@ -25,8 +31,13 @@ function activeCampaign(now = new Date()) {
 
 // Derivar el regalo evita duplicarlo al recargar o cambiar cantidades.
 function applyPromotion(cart, now = new Date()) {
-  const paidItems = cart.filter((item) => item.tipo !== 'promocion');
   const campaign = activeCampaign(now);
+  const paidItems = cart.filter((item) => item.tipo !== 'promocion' &&
+    (item.refId !== 'cruji-pilon-octubre-2026' || campaign?.id === 'octubre-2026'))
+    .map((item) => item.refId === 'cruji-pilon-octubre-2026' ? {
+      ...item, nombre: 'Cruji con pilón · 12 piezas crujientes', precioUnitario: 229,
+      detalleVariantes: 'Salsa de la casa + 250 g de papas gajo GRATIS por paquete',
+    } : item);
   if (!campaign || !campaign.giftName || !paidItems.some((item) =>
     item.tipo === 'paquete' && item.refId === campaign.productId && item.cantidad > 0
   )) return paidItems;
@@ -36,3 +47,18 @@ function applyPromotion(cart, now = new Date()) {
     detalleVariantes: campaign.giftDetail || '',
   }];
 }
+
+// Producto independiente: el paquete habitual conserva precio y guarniciones.
+function refreshSeasonalProducts() {
+  if (typeof PAQUETES === 'undefined') return;
+  const index = PAQUETES.findIndex((p) => p.id === 'cruji-pilon-octubre-2026');
+  if (index >= 0) PAQUETES.splice(index, 1);
+  if (activeCampaign()?.id === 'octubre-2026') PAQUETES.unshift({
+    id: 'cruji-pilon-octubre-2026', categoria: 'crujientes',
+    nombre: 'Cruji con pilón · 12 piezas', precio: 229,
+    caption: '¡250 g de papas gajo GRATIS!',
+    descripcionCorta: '12 piezas crujientes con salsa de la casa + 250 g de papas gajo gratis. Solo por la app, hasta el 31 de octubre de 2026.',
+    imagen: 'assets/menu/cruji-pilon-octubre-2026.png', variantes: [],
+  });
+}
+refreshSeasonalProducts();

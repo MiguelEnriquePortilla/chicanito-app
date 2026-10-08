@@ -95,7 +95,7 @@ try:
                 page.locator('.remove-btn').click()
                 expect(page.locator('.promo-gift')).to_have_count(0)
                 expect(page.locator('#cart-subtotal')).to_have_text('$0')
-                page.evaluate("CAMPAIGNS[0].endsOn = '2026-09-09'; renderSeasonalBanner()")
+                page.evaluate("CAMPAIGNS.find(c => c.id === 'septiembre-2026').endsOn = '2026-09-09'; renderSeasonalBanner()")
                 expect(page.locator('#seasonal-banner')).to_be_hidden()
             assert not errors, errors
             print(('ELEGIBLE' if eligible else 'NO ELEGIBLE') + ': OK')

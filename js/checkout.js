@@ -115,6 +115,11 @@ optTarjeta.addEventListener('click', () => seleccionarPago('tarjeta'));
 
 // ---------- Confirmar pedido ----------
 document.getElementById('confirm-btn').addEventListener('click', async () => {
+  if (cart.some((item) => item.refId === 'cruji-pilon-octubre-2026') && activeCampaign()?.id !== 'octubre-2026') {
+    alert('La promoción de octubre terminó. Revisa tu carrito antes de continuar.');
+    window.location.href = 'index.html';
+    return;
+  }
   if (!estaAbierto()) {
     alert('Estamos cerrados por ahora. Recibimos pedidos en línea de 9:00 a 18:00 hrs.');
     return;

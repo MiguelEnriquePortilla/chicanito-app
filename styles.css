@@ -292,6 +292,22 @@ a { color: inherit; }
   padding: 2rem 1.5rem 10rem;
   box-sizing: border-box;
 }
+
+/* El arte de octubre incluye texto: darle su propio espacio evita superposiciones. */
+#feed-cruji-pilon-octubre-2026 {
+  height: auto;
+  min-height: 100%;
+  justify-content: flex-start;
+}
+#feed-cruji-pilon-octubre-2026 .feed-card-img {
+  position: relative;
+  inset: auto;
+  height: auto;
+  max-height: 55vh;
+  padding: 1rem 1.5rem 0;
+  flex-shrink: 0;
+}
+#feed-cruji-pilon-octubre-2026 .feed-card-gradient { display: none; }
 .feed-card-gradient {
   position: absolute;
   inset: 0;
