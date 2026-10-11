@@ -30,8 +30,8 @@ try:
             assert page.evaluate("PAQUETES.find(p=>p.id==='paquete-4').precio")==254
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
             page.locator('#seasonal-cta').click()
-            page.locator('.heart-btn[data-id="cruji-pilon-octubre-2026"]').click()
-            page.locator('#open-cart-btn').click()
+            expect(page.locator('#cart-drawer')).to_be_visible()
+            expect(page.locator('#cart-count')).to_have_text('1')
             expect(page.locator('#cart-subtotal')).to_have_text('$229')
             expect(page.locator('#cart-items')).to_contain_text('250 g de papas gajo GRATIS')
             page.locator('.qty-btn[data-delta="1"]').click()

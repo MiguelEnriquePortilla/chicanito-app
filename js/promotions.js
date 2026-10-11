@@ -5,7 +5,7 @@ const CAMPAIGNS = [
     id: 'octubre-2026', startsOn: '2026-10-08', endsOn: '2026-10-31',
     title: '¡Sin miedito, pide con piloncito!',
     message: '12 piezas crujientes con salsa de la casa por $229. ¡250 g de papas gajo GRATIS! Exclusivo por la app hasta el 31 de octubre.',
-    productId: 'cruji-pilon-octubre-2026', ctaLabel: 'Pedir promo de $229',
+    productId: 'cruji-pilon-octubre-2026', ctaLabel: 'Pedir promo de $229', ctaAction: 'add-to-cart',
   },
   {
     id: 'septiembre-2026',

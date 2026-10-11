@@ -497,6 +497,18 @@ function renderSeasonalBanner() {
     document.getElementById('seasonal-message').textContent = campaign.message;
     document.getElementById('seasonal-cta').textContent = campaign.ctaLabel || 'Ver producto';
     document.getElementById('seasonal-cta').onclick = () => {
+      const currentCampaign = activeCampaign();
+      if (currentCampaign?.id !== campaign.id) {
+        renderSeasonalBanner();
+        refreshCartUI();
+        return;
+      }
+      if (campaign.ctaAction === 'add-to-cart') {
+        onHeartTap(campaign.productId, document.getElementById('seasonal-cta'));
+        const paquete = PAQUETES.find((p) => p.id === campaign.productId);
+        if (!paquete.variantes?.length) openCart();
+        return;
+      }
       const card = document.getElementById(`feed-${campaign.productId}`);
       if (card) {
         scrollFeedCardIntoView(card);
