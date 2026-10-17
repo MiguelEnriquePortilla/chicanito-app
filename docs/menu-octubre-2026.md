@@ -1,3 +1,17 @@
+## Icono: sello exacto de identidad 2026
+
+Se sustituye el icono por el SELLO DE MARCA mostrado en identidad-referencia-p3.png. Fuente de alta resolucion extraida del PDF Chicken_Chicanito_Extension_Identidad_2026.pdf, pagina 3, imagen FormXob.38627257a651b65b92d089167d73f450.png, 1254x1254. No es el sello anterior de 270x260.
+
+Fuente preservada en assets/brand/sello-marca-2026-original.png. PNG 192,512,maskable512 y Apple180 con escala proporcional y fondo blanco; maskable conserva zona segura. Archivo SVG contiene la imagen original empaquetada como PNG de 512 incrustado, NO un trazado vectorial inventado. Se conserva logo institucional del encabezado. Cambian iconos manifest, favicon SVG y Apple; la identidad/start_url de las apps no cambia. Reproduccion mediante preparar_iconos.py y registros SHA en PWA-ICONS.json. Mismo sello exacto en ambas apps por solicitud del usuario; los nombres de instalacion Chicanito / Very Sabrosito distinguen sus funciones.
+
+Una instalacion Android existente puede mantener el icono anterior hasta que el navegador renueve su paquete; no confirmar actualizacion del telefono sin comprobarlo. Si persiste, reinstalar la app concreta. No borrar datos o pedidos para renovar iconos.
+
+## Unificacion de menus, 16 octubre 2026
+
+Se verifican 20 presentaciones regulares, 20 fotografias identicas por SHA-256, precios, descripciones, variantes y 13 extras. Las fichas de Very Sabrosito usan los mismos nombres y descripciones del catalogo de pedidos; se muestran precios variables desde y la costilla por peso como aproximada. Se indica solo jueves para Cruji Jueves. La promo de octubre permanece exclusiva de chicanito.app, ahora explicada en Very Sabrosito con la misma vigencia, precio y regalo; se oculta fuera del intervalo usando America/Mexico_City. No se cambia la promo ni el checkout.
+
+Fuente compartida: 07-MARKETING/MENU/catalogo-digital.json; copia versionada en app/docs/catalogo-digital.json y site/assets/catalogo-digital.json. Website/scripts/preparar_assets.py consume esta fuente, no infiere precios desde nombres de imagen. Las tres imagenes de portada tambien se sustituyen por los mismos originales vigentes del catalogo. Para cambios futuros, actualizar el catalogo de pedidos y esta fuente en la misma entrega; reconstruir y ejecutar comparacion antes de publicar ambos repositorios.
+
 # Menu de pedidos ? 16 octubre 2026
 
 Se sincroniza chicanito.app con las 20 presentaciones del menu publicado en Very Sabrosito. Las 20 imagenes de MENU/02-ORIGINALES/Octubre-2026 se copian intactas a assets/menu/octubre-2026; fuentes y hashes en menu-assets.json. No se usan los cuadrados POSTER. El arte completo se separa del texto y botones para no tapar precios.

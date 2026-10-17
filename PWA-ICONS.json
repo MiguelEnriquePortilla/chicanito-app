@@ -1,0 +1,50 @@
+[
+  {
+    "asset": "assets/icons/sello-2026-192.png",
+    "size": [
+      192,
+      192
+    ],
+    "purpose": "any",
+    "source": "assets/brand/sello-marca-2026-original.png",
+    "source_sha256": "3355e3d5b66ba48db38deefc5367b0a47fc0e36476c789542bc74309bac846a3",
+    "sha256": "ff0acc31632b84f57de6a19139771bf68b890460446966af4f3c625f597dfd0f",
+    "processing": "proportional resize, white canvas; no crop or redraw"
+  },
+  {
+    "asset": "assets/icons/sello-2026-512.png",
+    "size": [
+      512,
+      512
+    ],
+    "purpose": "any",
+    "source": "assets/brand/sello-marca-2026-original.png",
+    "source_sha256": "3355e3d5b66ba48db38deefc5367b0a47fc0e36476c789542bc74309bac846a3",
+    "sha256": "18fb7b45afed6346169784d04617c37329126cc039e6ed2163fe7dcf654dc94d",
+    "processing": "proportional resize, white canvas; no crop or redraw"
+  },
+  {
+    "asset": "assets/icons/sello-2026-maskable-512.png",
+    "size": [
+      512,
+      512
+    ],
+    "purpose": "maskable",
+    "source": "assets/brand/sello-marca-2026-original.png",
+    "source_sha256": "3355e3d5b66ba48db38deefc5367b0a47fc0e36476c789542bc74309bac846a3",
+    "sha256": "0402c6e384ec79b38d6533b6b3581c7b14b747de446b76fe054be7a7f8ef4723",
+    "processing": "proportional resize, white canvas; no crop or redraw"
+  },
+  {
+    "asset": "assets/icons/sello-2026-apple-180.png",
+    "size": [
+      180,
+      180
+    ],
+    "purpose": "apple-touch-icon",
+    "source": "assets/brand/sello-marca-2026-original.png",
+    "source_sha256": "3355e3d5b66ba48db38deefc5367b0a47fc0e36476c789542bc74309bac846a3",
+    "sha256": "1e844bbe7e8fbf87bbd338d19e03421b3cb5664ba65e61d0b2a57085ed97f5bf",
+    "processing": "proportional resize, white canvas; no crop or redraw"
+  }
+]

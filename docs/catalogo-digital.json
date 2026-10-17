@@ -1,0 +1,790 @@
+{
+  "version": "20261016",
+  "products": [
+    {
+      "id": "paquete-1",
+      "categoria": "rostizados",
+      "nombre": "Chicanito",
+      "precio": 189,
+      "imagen": "assets/menu/octubre-2026/chicanito-189-45x80.png",
+      "descripcionCorta": "1 pollo: 8 piezas. Con adobo y salsa de la casa.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "adobo",
+          "label": "Adobo",
+          "opciones": [
+            "Tradicional",
+            "Tres Chiles",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-2",
+      "categoria": "rostizados",
+      "nombre": "Chicanito con arroz",
+      "precio": 209,
+      "imagen": "assets/menu/octubre-2026/chicanito-con-arroz-209-45x80.png",
+      "descripcionCorta": "1 pollo: 8 piezas. Con arroz, adobo y salsa de la casa.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "arroz",
+          "label": "Arroz",
+          "opciones": [
+            "Blanco",
+            "Rojo"
+          ]
+        },
+        {
+          "id": "adobo",
+          "label": "Adobo",
+          "opciones": [
+            "Tradicional",
+            "Tres Chiles",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-3",
+      "categoria": "rostizados",
+      "nombre": "Chicanito y medio",
+      "precio": 254,
+      "imagen": "assets/menu/octubre-2026/chicanito-y-medio-254-45x80.png",
+      "descripcionCorta": "1½ pollos: 12 piezas. Con arroz, adobo y salsa de la casa.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "arroz",
+          "label": "Arroz",
+          "opciones": [
+            "Blanco",
+            "Rojo"
+          ]
+        },
+        {
+          "id": "adobo",
+          "label": "Adobo",
+          "opciones": [
+            "Tradicional",
+            "Tres Chiles",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-6",
+      "categoria": "rostizados",
+      "nombre": "Medio Chicanito",
+      "precio": 110,
+      "imagen": "assets/menu/octubre-2026/medio-chicanito-110-45x80.png",
+      "descripcionCorta": "½ pollo: 4 piezas. Con arroz, adobo y salsa de la casa.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "arroz",
+          "label": "Arroz",
+          "opciones": [
+            "Blanco",
+            "Rojo"
+          ]
+        },
+        {
+          "id": "adobo",
+          "label": "Adobo",
+          "opciones": [
+            "Tradicional",
+            "Tres Chiles",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-7",
+      "categoria": "rostizados",
+      "nombre": "Doble Chicanito",
+      "precio": 389,
+      "imagen": "assets/menu/octubre-2026/doble-chicanito-389-45x80.png",
+      "descripcionCorta": "2 pollos: 16 piezas. Con arroz, adobo y salsa de la casa.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "arroz",
+          "label": "Arroz",
+          "opciones": [
+            "Blanco",
+            "Rojo"
+          ]
+        },
+        {
+          "id": "adobo",
+          "label": "Adobo",
+          "opciones": [
+            "Tradicional",
+            "Tres Chiles",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-12",
+      "categoria": "rostizados",
+      "nombre": "Un cuarto Chicanito",
+      "precio": 85,
+      "imagen": "assets/menu/octubre-2026/un-cuarto-chicanito-85-45x80.png",
+      "descripcionCorta": "¼ pollo: 2 piezas. Con arroz, adobo y salsa de la casa.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "arroz",
+          "label": "Arroz",
+          "opciones": [
+            "Blanco",
+            "Rojo"
+          ]
+        },
+        {
+          "id": "adobo",
+          "label": "Adobo",
+          "opciones": [
+            "Tradicional",
+            "Tres Chiles",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "rosti-solo",
+      "categoria": "rostizados",
+      "nombre": "Rosti solo",
+      "precio": 129,
+      "imagen": "assets/menu/octubre-2026/rosti-solo-129-45x80-qr.png",
+      "descripcionCorta": "8 piezas al natural. Sin adobo ni complementos.",
+      "caption": "",
+      "variantes": [],
+      "arteMenu": true
+    },
+    {
+      "id": "cuarto-rosti-solo",
+      "categoria": "rostizados",
+      "nombre": "Un cuarto Rosti solo",
+      "precio": 50,
+      "imagen": "assets/menu/octubre-2026/un-cuarto-rosti-solo-50-60-45x80-qr.png",
+      "descripcionCorta": "2 piezas al natural. Sin adobo ni complementos. Pierna y muslo $50; pechuga y ala $60.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "corte",
+          "label": "Corte",
+          "opciones": [
+            "Pierna y muslo",
+            "Pechuga y ala"
+          ],
+          "recargos": {
+            "Pechuga y ala": 10
+          }
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-9",
+      "categoria": "crujientes",
+      "nombre": "Cruji Dúo",
+      "precio": 89,
+      "imagen": "assets/menu/octubre-2026/cruji-duo-89-45x80-qr.png",
+      "descripcionCorta": "2 piezas, salsa chica y papas gajo chicas.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "salsa",
+          "label": "Salsa",
+          "opciones": [
+            "Verde",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-10",
+      "categoria": "crujientes",
+      "nombre": "Cruji Trío",
+      "precio": 99,
+      "imagen": "assets/menu/octubre-2026/cruji-trio-99-45x80-qr.png",
+      "descripcionCorta": "3 piezas, salsa chica y papas gajo chicas.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "salsa",
+          "label": "Salsa",
+          "opciones": [
+            "Verde",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "cruji-cuatro",
+      "categoria": "crujientes",
+      "nombre": "Cruji Cuatro",
+      "precio": 115,
+      "imagen": "assets/menu/octubre-2026/cruji-cuatro-115-45x80-qr.png",
+      "descripcionCorta": "4 piezas, salsa mediana y papas gajo medianas.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "salsa",
+          "label": "Salsa",
+          "opciones": [
+            "Verde",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-5",
+      "categoria": "crujientes",
+      "nombre": "Cruji Ocho",
+      "precio": 229,
+      "imagen": "assets/menu/octubre-2026/cruji-ocho-229-45x80-qr.png",
+      "descripcionCorta": "8 piezas, salsa grande y papas gajo grandes.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "salsa",
+          "label": "Salsa",
+          "opciones": [
+            "Verde",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-4",
+      "categoria": "crujientes",
+      "nombre": "Cruji Doce",
+      "precio": 254,
+      "imagen": "assets/menu/octubre-2026/cruji-doce-254-45x80-qr.png",
+      "descripcionCorta": "12 piezas, salsa grande y papas gajo grandes.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "salsa",
+          "label": "Salsa",
+          "opciones": [
+            "Verde",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "cruji-jueves",
+      "categoria": "crujientes",
+      "nombre": "Cruji Jueves",
+      "precio": 229,
+      "imagen": "assets/menu/octubre-2026/cruji-jueves-229-45x80-qr.png",
+      "descripcionCorta": "Solo los jueves. 12 piezas y salsa chica BBQ o de la casa. Sin complementos.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "salsa",
+          "label": "Salsa",
+          "opciones": [
+            "BBQ",
+            "Verde"
+          ]
+        }
+      ],
+      "arteMenu": true,
+      "soloJueves": true
+    },
+    {
+      "id": "pollo-cruji-solo",
+      "categoria": "crujientes",
+      "nombre": "Pollo Cruji solo",
+      "precio": 159,
+      "imagen": "assets/menu/octubre-2026/pollo-cruji-solo-159-45x80-qr.png",
+      "descripcionCorta": "8 piezas. Sin salsas ni complementos.",
+      "caption": "",
+      "variantes": [],
+      "arteMenu": true
+    },
+    {
+      "id": "crujipieza",
+      "categoria": "crujientes",
+      "nombre": "Crujipieza",
+      "precio": 25,
+      "imagen": "assets/menu/octubre-2026/crujipieza-25-30-45x80-qr.png",
+      "descripcionCorta": "Una pieza: pierna, muslo o ala $25; pechuga $30.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "pieza",
+          "label": "Pieza",
+          "opciones": [
+            "Pierna",
+            "Muslo",
+            "Ala",
+            "Pechuga"
+          ],
+          "recargos": {
+            "Pechuga": 5
+          }
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-8-cuarto",
+      "categoria": "costillas",
+      "nombre": "Cuarto de Costilla Chicanita",
+      "precio": 129,
+      "imagen": "assets/menu/octubre-2026/cuarto-costilla-chicanita-129-45x80-qr.png",
+      "descripcionCorta": "Adobo chico y 2 complementos medianos. Puedes repetir complemento.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "complemento1",
+          "label": "Complemento 1",
+          "opciones": [
+            "Arroz",
+            "Espagueti cremoso",
+            "Codo cremoso",
+            "Ensalada campesina",
+            "Papas cambray",
+            "Nopales",
+            "Papas gajo"
+          ]
+        },
+        {
+          "id": "complemento2",
+          "label": "Complemento 2",
+          "opciones": [
+            "Arroz",
+            "Espagueti cremoso",
+            "Codo cremoso",
+            "Ensalada campesina",
+            "Papas cambray",
+            "Nopales",
+            "Papas gajo"
+          ]
+        },
+        {
+          "id": "adobo",
+          "label": "Adobo",
+          "opciones": [
+            "Tradicional",
+            "Tres Chiles",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-8-medio",
+      "categoria": "costillas",
+      "nombre": "Medio kilo de Costilla Chicanita",
+      "precio": 249,
+      "imagen": "assets/menu/octubre-2026/medio-kilo-costilla-chicanita-249-45x80-qr.png",
+      "descripcionCorta": "Adobo mediano y 2 complementos medianos. Puedes repetir complemento.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "complemento1",
+          "label": "Complemento 1",
+          "opciones": [
+            "Arroz",
+            "Espagueti cremoso",
+            "Codo cremoso",
+            "Ensalada campesina",
+            "Papas cambray",
+            "Nopales",
+            "Papas gajo"
+          ]
+        },
+        {
+          "id": "complemento2",
+          "label": "Complemento 2",
+          "opciones": [
+            "Arroz",
+            "Espagueti cremoso",
+            "Codo cremoso",
+            "Ensalada campesina",
+            "Papas cambray",
+            "Nopales",
+            "Papas gajo"
+          ]
+        },
+        {
+          "id": "adobo",
+          "label": "Adobo",
+          "opciones": [
+            "Tradicional",
+            "Tres Chiles",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "paquete-8-kilo",
+      "categoria": "costillas",
+      "nombre": "Un kilo de Costilla Chicanita",
+      "precio": 459,
+      "imagen": "assets/menu/octubre-2026/un-kilo-costilla-chicanita-459-45x80-qr.png",
+      "descripcionCorta": "Adobo grande y 2 complementos grandes. Puedes repetir complemento.",
+      "caption": "",
+      "variantes": [
+        {
+          "id": "complemento1",
+          "label": "Complemento 1",
+          "opciones": [
+            "Arroz",
+            "Espagueti cremoso",
+            "Codo cremoso",
+            "Ensalada campesina",
+            "Papas cambray",
+            "Nopales",
+            "Papas gajo"
+          ]
+        },
+        {
+          "id": "complemento2",
+          "label": "Complemento 2",
+          "opciones": [
+            "Arroz",
+            "Espagueti cremoso",
+            "Codo cremoso",
+            "Ensalada campesina",
+            "Papas cambray",
+            "Nopales",
+            "Papas gajo"
+          ]
+        },
+        {
+          "id": "adobo",
+          "label": "Adobo",
+          "opciones": [
+            "Tradicional",
+            "Tres Chiles",
+            "BBQ",
+            "Chipotle"
+          ]
+        }
+      ],
+      "arteMenu": true
+    },
+    {
+      "id": "costilla-sola",
+      "categoria": "costillas",
+      "nombre": "Costilla sola con su caldito",
+      "precio": 90,
+      "imagen": "assets/menu/octubre-2026/costilla-sola-036g-45x80-qr.png",
+      "descripcionCorta": "Desde 250 g: $90 aprox. $0.36/g, se cobra el peso real. Sin adobo ni complementos.",
+      "caption": "",
+      "variantes": [],
+      "arteMenu": true,
+      "detalleFijo": "250 g aprox.; $0.36/g. Importe sujeto al peso real."
+    }
+  ],
+  "extras": [
+    {
+      "id": "comp-arroz",
+      "categoria": "complementos",
+      "nombre": "Arroz blanco o rojo",
+      "tamanos": [
+        {
+          "label": "125 g",
+          "precio": 20.0
+        },
+        {
+          "label": "250 g",
+          "precio": 40.0
+        },
+        {
+          "label": "500 g",
+          "precio": 80.0
+        },
+        {
+          "label": "1000 g",
+          "precio": 160.0
+        }
+      ]
+    },
+    {
+      "id": "comp-espagueti",
+      "categoria": "complementos",
+      "nombre": "Espagueti cremoso",
+      "tamanos": [
+        {
+          "label": "125 g",
+          "precio": 20.0
+        },
+        {
+          "label": "250 g",
+          "precio": 40.0
+        },
+        {
+          "label": "500 g",
+          "precio": 80.0
+        },
+        {
+          "label": "1000 g",
+          "precio": 160.0
+        }
+      ]
+    },
+    {
+      "id": "comp-sopa-codo",
+      "categoria": "complementos",
+      "nombre": "Codo cremoso",
+      "tamanos": [
+        {
+          "label": "125 g",
+          "precio": 20.0
+        },
+        {
+          "label": "250 g",
+          "precio": 40.0
+        },
+        {
+          "label": "500 g",
+          "precio": 80.0
+        },
+        {
+          "label": "1000 g",
+          "precio": 160.0
+        }
+      ]
+    },
+    {
+      "id": "comp-campesina",
+      "categoria": "complementos",
+      "nombre": "Ensalada campesina",
+      "tamanos": [
+        {
+          "label": "125 g",
+          "precio": 20.0
+        },
+        {
+          "label": "250 g",
+          "precio": 40.0
+        },
+        {
+          "label": "500 g",
+          "precio": 80.0
+        },
+        {
+          "label": "1000 g",
+          "precio": 160.0
+        }
+      ]
+    },
+    {
+      "id": "comp-papas-cambray",
+      "categoria": "complementos",
+      "nombre": "Papas cambray",
+      "tamanos": [
+        {
+          "label": "125 g",
+          "precio": 20.0
+        },
+        {
+          "label": "250 g",
+          "precio": 40.0
+        },
+        {
+          "label": "500 g",
+          "precio": 80.0
+        },
+        {
+          "label": "1000 g",
+          "precio": 160.0
+        }
+      ]
+    },
+    {
+      "id": "comp-nopales",
+      "categoria": "complementos",
+      "nombre": "Nopales",
+      "tamanos": [
+        {
+          "label": "125 g",
+          "precio": 20.0
+        },
+        {
+          "label": "250 g",
+          "precio": 40.0
+        },
+        {
+          "label": "500 g",
+          "precio": 80.0
+        },
+        {
+          "label": "1000 g",
+          "precio": 160.0
+        }
+      ]
+    },
+    {
+      "id": "comp-papas-gajo",
+      "categoria": "complementos",
+      "nombre": "Papas gajo",
+      "tamanos": [
+        {
+          "label": "125 g",
+          "precio": 25.0
+        },
+        {
+          "label": "250 g",
+          "precio": 50.0
+        },
+        {
+          "label": "500 g",
+          "precio": 100.0
+        },
+        {
+          "label": "1000 g",
+          "precio": 200.0
+        }
+      ]
+    },
+    {
+      "id": "salsa-jalapenos",
+      "categoria": "salsas",
+      "nombre": "Salsa Verde",
+      "tamanos": [
+        {
+          "label": "Chica",
+          "precio": 8
+        },
+        {
+          "label": "Mediana",
+          "precio": 15
+        },
+        {
+          "label": "Grande",
+          "precio": 25
+        }
+      ]
+    },
+    {
+      "id": "salsa-bbq",
+      "categoria": "salsas",
+      "nombre": "Salsa BBQ",
+      "tamanos": [
+        {
+          "label": "Chica",
+          "precio": 8
+        },
+        {
+          "label": "Mediana",
+          "precio": 15
+        },
+        {
+          "label": "Grande",
+          "precio": 25
+        }
+      ]
+    },
+    {
+      "id": "salsa-chipotle-salsa",
+      "categoria": "salsas",
+      "nombre": "Salsa Chipotle",
+      "tamanos": [
+        {
+          "label": "Chica",
+          "precio": 8
+        },
+        {
+          "label": "Mediana",
+          "precio": 15
+        },
+        {
+          "label": "Grande",
+          "precio": 25
+        }
+      ]
+    },
+    {
+      "id": "salsa-adobo-tradicional",
+      "categoria": "salsas",
+      "nombre": "Adobo tradicional",
+      "tamanos": [
+        {
+          "label": "Grande",
+          "precio": 35
+        }
+      ]
+    },
+    {
+      "id": "salsa-3-chiles",
+      "categoria": "salsas",
+      "nombre": "Adobo Tres Chiles",
+      "tamanos": [
+        {
+          "label": "Grande",
+          "precio": 35
+        }
+      ]
+    },
+    {
+      "id": "salsa-chipotle",
+      "categoria": "salsas",
+      "nombre": "Adobo Chipotle",
+      "tamanos": [
+        {
+          "label": "Grande",
+          "precio": 35
+        }
+      ]
+    }
+  ],
+  "campaign": {
+    "id": "octubre-2026",
+    "startsOn": "2026-10-08",
+    "endsOn": "2026-10-31",
+    "title": "¡Sin miedito, pide con piloncito!",
+    "message": "12 piezas crujientes con salsa de la casa por $229. ¡250 g de papas gajo GRATIS! Exclusivo por la app hasta el 31 de octubre.",
+    "productId": "cruji-pilon-octubre-2026"
+  }
+}
