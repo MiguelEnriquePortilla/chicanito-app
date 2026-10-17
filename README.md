@@ -1,3 +1,5 @@
+> Menu actualizado el 16 octubre 2026: 20 originales pre-POSTER, precios y variantes vigentes, promo de octubre conservada. Detalle: [docs/menu-octubre-2026.md](docs/menu-octubre-2026.md).
+
 <div align="center">
   <img src="assets/brand/logo-badge.jpg" width="200" alt="Chicken Chicanito logo" />
 

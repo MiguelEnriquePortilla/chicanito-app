@@ -94,7 +94,7 @@ function renderFeedDivider(index) {
 function renderFeed() {
   feedContainerEl.innerHTML = PAQUETES.map(
     (p, i) => `
-      <article class="feed-card" id="feed-${p.id}" data-id="${p.id}">
+      <article class="feed-card${p.arteMenu ? ' menu-art-card' : ''}" id="feed-${p.id}" data-id="${p.id}">
         <img class="feed-card-img" src="${p.imagen}" alt="${p.nombre}" loading="${i === 0 ? 'eager' : 'lazy'}">
         <div class="feed-card-gradient"></div>
         <div class="feed-card-content">
@@ -105,9 +105,9 @@ function renderFeed() {
           <p class="feed-card-price"><span>${formatoMoneda(p.precio)}</span></p>
         </div>
         <div class="feed-card-actions">
-          <button class="feed-action-btn heart-btn" data-id="${p.id}" type="button" aria-label="Agregar al carrito">
+          <button class="feed-action-btn heart-btn" data-id="${p.id}" type="button" aria-label="Agregar ${p.nombre} al carrito" ${productoDisponible(p) ? '' : 'disabled title="Disponible los jueves"'}>
             <span class="icon heart-icon">🤍</span>
-            <span class="heart-count">0</span>
+            <span class="heart-count">${productoDisponible(p) ? '0' : 'Solo jueves'}</span>
           </button>
           <button class="feed-action-btn share-btn" data-id="${p.id}" type="button" aria-label="Compartir">
             <span class="icon">🔗</span>
@@ -195,13 +195,14 @@ const closeModalBtn = document.getElementById('close-modal-btn');
 
 function onHeartTap(id, originEl) {
   const paquete = PAQUETES.find((p) => p.id === id);
+  if (!productoDisponible(paquete)) { mostrarToast('Este producto solo está disponible los jueves.'); return; }
   if (!paquete.variantes || paquete.variantes.length === 0) {
     addToCart({
       tipo: 'paquete',
       refId: paquete.id,
       nombre: paquete.nombre,
       precioUnitario: paquete.precio,
-      detalleVariantes: '',
+      detalleVariantes: paquete.detalleFijo || '',
     });
     refreshCartUI();
     flyToCart(originEl || feedContainerEl.querySelector(`.heart-btn[data-id="${id}"]`));
@@ -221,7 +222,7 @@ function abrirModalVariantes(paquete) {
         <div class="variant-group" data-group="${grupo.id}">
           <div class="variant-group-label">${grupo.label}</div>
           <div class="variant-options">
-            ${grupo.opciones.map((op) => `<button class="variant-option" data-value="${op}" type="button">${op}</button>`).join('')}
+            ${grupo.opciones.map((op) => `<button class="variant-option" data-value="${op}" type="button">${op}${grupo.recargos?.[op] ? ` (+${formatoMoneda(grupo.recargos[op])})` : ''}</button>`).join('')}
           </div>
         </div>
       `
@@ -247,6 +248,7 @@ function abrirModalVariantes(paquete) {
 function checkModalComplete() {
   const completo = modalPaquete.variantes.every((g) => modalSeleccion[g.id]);
   modalAddBtn.disabled = !completo;
+  modalItemPrice.textContent = formatoMoneda(precioSeleccion(modalPaquete, modalSeleccion));
 }
 
 modalAddBtn.addEventListener('click', () => {
@@ -255,7 +257,7 @@ modalAddBtn.addEventListener('click', () => {
     tipo: 'paquete',
     refId: modalPaquete.id,
     nombre: modalPaquete.nombre,
-    precioUnitario: modalPaquete.precio,
+    precioUnitario: precioSeleccion(modalPaquete, modalSeleccion),
     detalleVariantes: detalle,
   });
   flyToCart(modalAddBtn); // medir posición antes de ocultar el modal
@@ -482,6 +484,10 @@ renderFeed();
 renderALaCarta();
 refreshCartUI();
 renderHoursBanner();
+if (localStorage.getItem('chicanito_menu_changed')) {
+ mostrarToast('Actualizamos el menú. Vuelve a agregar tus productos con los precios nuevos.');
+ localStorage.removeItem('chicanito_menu_changed');
+}
 ajustarAlturaTopBar();
 
 // El banner vuelve a mostrarse al abrir el inicio; la campaña controla su vigencia.

@@ -4,7 +4,14 @@ const CART_KEY = 'chicanito_cart_v1';
 function getCart() {
   try {
     const raw = localStorage.getItem(CART_KEY);
-    return applyPromotion(raw ? JSON.parse(raw) : []);
+    const cart = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(cart)) return [];
+    if (cart.some(it=>it.menuVersion !== MENU_VERSION)) {
+      localStorage.setItem('chicanito_menu_changed','1');
+      localStorage.setItem(CART_KEY,'[]');
+      return [];
+    }
+    return applyPromotion(cart.filter(it=>it.tipo!=='paquete'||productoDisponible(PAQUETES.find(p=>p.id===it.refId))));
   } catch (e) {
     return [];
   }
@@ -20,6 +27,7 @@ function addToCart(item) {
     uid: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
     cantidad: 1,
     ...item,
+    menuVersion: MENU_VERSION,
   });
   saveCart(cart);
   return cart;
