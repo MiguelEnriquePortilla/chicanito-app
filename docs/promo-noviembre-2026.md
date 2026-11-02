@@ -28,4 +28,6 @@ Inicio muestra el cartel aprobado y botones para elegir ROSTI o CRUJI, con preci
 
 ## Publicación
 
-Preparada para publicar por GitHub main, que dispara Vercel. La verificación de producción se registra al terminar el despliegue.
+Publicada por GitHub main en el commit `ace540b`, que disparó el despliegue de Vercel. Verificación real en https://chicanito.app/: `promotions.js?v=20261102bravas`, banner «Noviembre con N de NO PARAMOS», un cartel activo y fotografía cargada; sin desbordamiento horizontal a 390 px. Captura `docs/promo-noviembre/produccion-390.png`. No se crearon pedidos reales ni se enviaron mensajes.
+
+Archivo PNG vigente respaldado en Drive: https://drive.google.com/file/d/1EpWx3akfgjF4slP-ZpkefDBmFxF90OcD/view. PDF y PNG conservan QR original aprobado. La resolución del arte procede de la generación original; no se afirma que sea un maestro de 300 dpi.
