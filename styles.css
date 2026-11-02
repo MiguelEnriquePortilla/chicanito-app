@@ -724,3 +724,13 @@ body.is-leaving {
 .menu-art-card .feed-card-img{position:relative;inset:auto;height:auto;max-height:62vh;padding:12px 18px 0;flex-shrink:0;object-fit:contain}
 .menu-art-card .feed-card-gradient{display:none}.menu-art-card .feed-card-content{padding-top:14px}
 .feed-action-btn:disabled{opacity:.5;cursor:not-allowed}.menu-art-card .heart-count{font-size:12px}
+
+/* November art stays whole; purchase choices remain separate from the poster. */
+.november-promo-card { height: auto; min-height: 100%; padding: 0; background: #001b36; justify-content: flex-start; }
+.november-promo-art { display: block; width: 100%; max-height: calc(100vh - var(--topbar-h, 240px) - 100px); max-height: calc(100dvh - var(--topbar-h, 240px) - 100px); object-fit: contain; flex-shrink: 0; }
+.november-promo-options { display: flex; gap: .6rem; padding: 1rem; justify-content: center; flex-wrap: wrap; }
+.november-promo-options button { border: 0; border-radius: .5rem; background: #fff1d5; color: #001b36; padding: .8rem 1rem; font: inherit; font-weight: 700; cursor: pointer; }
+.november-promo-options button:focus-visible { outline: 3px solid #ffbd28; outline-offset: 3px; }
+@media (max-width: 480px) { .seasonal-banner { flex-wrap: wrap; } .seasonal-banner > div { flex: 1 1 220px; } .november-promo-options { padding: .7rem; } }
+
+@media (max-width: 480px) { .november-promo-options { flex-wrap: nowrap; } .november-promo-options button { flex: 1; min-width: 0; padding: .8rem .4rem; font-size: .75rem; white-space: nowrap; } }

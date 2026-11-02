@@ -2,6 +2,15 @@
 // Agrega la campaña siguiente aquí; no se repite septiembre en años futuros.
 const CAMPAIGNS = [
   {
+    id: 'noviembre-2026', startsOn: '2026-11-01', endsOn: '2026-11-30',
+    title: 'Noviembre con N de NO PARAMOS',
+    message: 'Gajos Bravas Habaneras GRATIS en la compra de 12 piezas CRUJI o ROSTI. Pide por la app. Válido todo NOVIEMBRE 2026.',
+    productId: 'noviembre-2026', ctaLabel: 'Ver promo', ctaAction: 'show-promo',
+    productIds: ['paquete-3', 'paquete-4', 'cruji-jueves'],
+    giftName: 'Gajos Bravas Habaneras GRATIS',
+    giftDetail: '250 g por paquete de 12 piezas. Sazón seco de habanero, paprika y toque cítrico. Promo noviembre 2026.',
+  },
+  {
     id: 'octubre-2026', startsOn: '2026-10-08', endsOn: '2026-10-31',
     title: '¡Sin miedito, pide con piloncito!',
     message: '12 piezas crujientes con salsa de la casa por $229. ¡250 g de papas gajo GRATIS! Exclusivo por la app hasta el 31 de octubre.',
@@ -38,6 +47,16 @@ function applyPromotion(cart, now = new Date()) {
       ...item, nombre: 'Cruji con pilón · 12 piezas crujientes', precioUnitario: 229,
       detalleVariantes: 'Salsa de la casa + 250 g de papas gajo GRATIS por paquete',
     } : item);
+  if (campaign?.id === 'noviembre-2026') {
+    const cantidad = paidItems.reduce((sum, item) => sum + (
+      item.tipo === 'paquete' && campaign.productIds.includes(item.refId) && item.cantidad > 0
+        ? item.cantidad : 0), 0);
+    return cantidad ? [...paidItems, {
+      uid: `promo-${campaign.id}`, tipo: 'promocion', refId: campaign.id,
+      nombre: campaign.giftName, cantidad, precioUnitario: 0,
+      detalleVariantes: campaign.giftDetail,
+    }] : paidItems;
+  }
   if (!campaign || !campaign.giftName || !paidItems.some((item) =>
     item.tipo === 'paquete' && item.refId === campaign.productId && item.cantidad > 0
   )) return paidItems;

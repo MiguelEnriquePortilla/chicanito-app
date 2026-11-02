@@ -92,7 +92,15 @@ function renderFeedDivider(index) {
 
 // ---------- Feed de paquetes ----------
 function renderFeed() {
-  feedContainerEl.innerHTML = PAQUETES.map(
+  const november = activeCampaign()?.id === 'noviembre-2026';
+  const promo = november ? `<article class="feed-card november-promo-card" id="feed-noviembre-2026" aria-label="Promoción noviembre 2026">
+    <img class="november-promo-art" src="assets/menu/bravas-noviembre-2026.png" alt="Noviembre con N de No Paramos. Gajos Bravas Habaneras gratis en la compra de 12 piezas CRUJI o ROSTI, pidiendo por la app. Válido todo noviembre 2026.">
+    <div class="november-promo-options">
+      <button type="button" data-promo-choice="paquete-3">Elegir ROSTI &middot; ${formatoMoneda(PAQUETES.find(p => p.id === 'paquete-3').precio)}</button>
+      <button type="button" data-promo-choice="paquete-4">Elegir CRUJI &middot; ${formatoMoneda(PAQUETES.find(p => p.id === 'paquete-4').precio)}</button>
+    </div>
+  </article>` : '';
+  feedContainerEl.innerHTML = promo + PAQUETES.map(
     (p, i) => `
       <article class="feed-card${p.arteMenu ? ' menu-art-card' : ''}" id="feed-${p.id}" data-id="${p.id}">
         <img class="feed-card-img" src="${p.imagen}" alt="${p.nombre}" loading="${i === 0 ? 'eager' : 'lazy'}">
@@ -119,6 +127,9 @@ function renderFeed() {
     `
   ).join('');
 
+  feedContainerEl.querySelectorAll('[data-promo-choice]').forEach((btn) => {
+    btn.addEventListener('click', () => onHeartTap(btn.dataset.promoChoice, btn));
+  });
   feedContainerEl.querySelectorAll('.heart-btn').forEach((btn) => {
     btn.addEventListener('click', () => onHeartTap(btn.dataset.id, btn));
   });
@@ -494,7 +505,8 @@ ajustarAlturaTopBar();
 function renderSeasonalBanner() {
   const previous = PAQUETES[0]?.id;
   refreshSeasonalProducts();
-  if (previous !== PAQUETES[0]?.id) { renderTabs(); renderFeed(); }
+  const november = activeCampaign()?.id === 'noviembre-2026';
+  if (previous !== PAQUETES[0]?.id || Boolean(document.getElementById('feed-noviembre-2026')) !== november) { renderTabs(); renderFeed(); }
   const campaign = activeCampaign();
   const banner = document.getElementById('seasonal-banner');
   banner.hidden = !campaign;
@@ -518,7 +530,7 @@ function renderSeasonalBanner() {
       const card = document.getElementById(`feed-${campaign.productId}`);
       if (card) {
         scrollFeedCardIntoView(card);
-        card.querySelector('.heart-btn').focus({ preventScroll: true });
+        (card.querySelector('.heart-btn') || card.querySelector('[data-promo-choice]'))?.focus({ preventScroll: true });
       }
     };
   }
