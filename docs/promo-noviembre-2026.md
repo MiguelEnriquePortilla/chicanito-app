@@ -16,7 +16,7 @@ Se conservan los precios y variantes del menú vigente: Chicanito y medio (paque
 
 Del 1 al 30 de noviembre de 2026, hora de Ciudad de México, los paquetes de 12 piezas anteriores generan 250 g de gajos Bravas Habaneras gratis por paquete. Se conserva lo que ya incluye cada paquete; no se sustituye una guarnición pagada por el regalo. El regalo se deriva de la cantidad elegible en el carrito; no se duplica al recargar. Aparece en checkout, confirmación y mensaje de WhatsApp.
 
-Inicio muestra el cartel aprobado y botones para elegir ROSTI o CRUJI, con precio tomado del catálogo. El cartel se mantiene completo y los controles van fuera de la imagen. Los botones de compra son visibles en celular sin desplazarse. No se modifica el píxel, envío, pagos ni APIs de pedidos.
+Inicio muestra una sección integrada con fotografía sin texto ni QR, texto HTML de campaña y botones ROSTI/CRUJI con precio del catálogo. Se conserva todo el mensaje comercial; se quita el cintillo del QR y el aviso superior repetido. Escritorio: foto y texto en dos columnas. Celular: foto arriba y texto con botones debajo, visibles sin desplazarse. El PDF tabloide conserva su QR. No se modifica el píxel, envío, pagos ni APIs de pedidos.
 
 ## Validación
 
@@ -32,6 +32,10 @@ Inicio muestra el cartel aprobado y botones para elegir ROSTI o CRUJI, con preci
 
 Miguel rechazó la apariencia de cartel sobrepuesto. La app ahora integra la campaña en un recuadro con fotografía sin letras ni QR y texto HTML: lema, sabor, GRATIS, condición y vigencia. Se elimina exclusivamente el cintillo de QR en la web y el aviso superior duplicado; el PDF de impresión conserva su QR. En escritorio foto y texto comparten dos columnas; en celular la foto encabeza el recuadro y los dos botones quedan visibles. Se conservan precios, reglas y regalo. Pruebas de noviembre y recorrido de compra pasan a 390 y 1280 px; captura revisada visualmente y detector Impeccable sin hallazgos.
 
-Publicada por GitHub main en el commit `ace540b`, que disparó el despliegue de Vercel. Verificación real en https://chicanito.app/: `promotions.js?v=20261102bravas`, banner «Noviembre con N de NO PARAMOS», un cartel activo y fotografía cargada; sin desbordamiento horizontal a 390 px. Captura `docs/promo-noviembre/produccion-390.png`. No se crearon pedidos reales ni se enviaron mensajes.
+Versión funcional vigente publicada por GitHub main: **`8b9dd8e`**. Sustituye la integración inicial `ace540b`. Producción verificada en https://www.chicanito.app/: sección nativa, texto HTML completo, imagen `bravas-noviembre-foto.png` cargada y aviso duplicado oculto. No se crearon pedidos reales ni se enviaron mensajes. Las capturas `inicio-390.png` e `inicio-1280.png` reflejan el diseño final; la antigua captura `produccion-390.png` corresponde a la versión inicial y es antecedente.
 
 Archivo PNG vigente respaldado en Drive: https://drive.google.com/file/d/1EpWx3akfgjF4slP-ZpkefDBmFxF90OcD/view. PDF y PNG conservan QR original aprobado. La resolución del arte procede de la generación original; no se afirma que sea un maestro de 300 dpi.
+
+## Aprobación y cierre
+
+Miguel confirmó «Perrrfect!» después de la corrección web y pidió «documenta. guarda. organiza. cierra la sesion». Entrega aceptada y sesión cerrada el 2 de noviembre de 2026. Mantener separados impresión (con QR), web (sin cintillo de QR), recursos, acuerdos y versiones anteriores para borrar. Sin pendientes de esta solicitud; esperar nuevas instrucciones. No borrar permanentemente los anteriores ni modificar más la app por iniciativa propia.
