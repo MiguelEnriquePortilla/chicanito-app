@@ -28,6 +28,10 @@ Inicio muestra el cartel aprobado y botones para elegir ROSTI o CRUJI, con preci
 
 ## Publicación
 
+### Corrección de integración web — 2 noviembre
+
+Miguel rechazó la apariencia de cartel sobrepuesto. La app ahora integra la campaña en un recuadro con fotografía sin letras ni QR y texto HTML: lema, sabor, GRATIS, condición y vigencia. Se elimina exclusivamente el cintillo de QR en la web y el aviso superior duplicado; el PDF de impresión conserva su QR. En escritorio foto y texto comparten dos columnas; en celular la foto encabeza el recuadro y los dos botones quedan visibles. Se conservan precios, reglas y regalo. Pruebas de noviembre y recorrido de compra pasan a 390 y 1280 px; captura revisada visualmente y detector Impeccable sin hallazgos.
+
 Publicada por GitHub main en el commit `ace540b`, que disparó el despliegue de Vercel. Verificación real en https://chicanito.app/: `promotions.js?v=20261102bravas`, banner «Noviembre con N de NO PARAMOS», un cartel activo y fotografía cargada; sin desbordamiento horizontal a 390 px. Captura `docs/promo-noviembre/produccion-390.png`. No se crearon pedidos reales ni se enviaron mensajes.
 
 Archivo PNG vigente respaldado en Drive: https://drive.google.com/file/d/1EpWx3akfgjF4slP-ZpkefDBmFxF90OcD/view. PDF y PNG conservan QR original aprobado. La resolución del arte procede de la generación original; no se afirma que sea un maestro de 300 dpi.

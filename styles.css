@@ -725,12 +725,31 @@ body.is-leaving {
 .menu-art-card .feed-card-gradient{display:none}.menu-art-card .feed-card-content{padding-top:14px}
 .feed-action-btn:disabled{opacity:.5;cursor:not-allowed}.menu-art-card .heart-count{font-size:12px}
 
-/* November art stays whole; purchase choices remain separate from the poster. */
-.november-promo-card { height: auto; min-height: 100%; padding: 0; background: #001b36; justify-content: flex-start; }
-.november-promo-art { display: block; width: 100%; max-height: calc(100vh - var(--topbar-h, 240px) - 100px); max-height: calc(100dvh - var(--topbar-h, 240px) - 100px); object-fit: contain; flex-shrink: 0; }
-.november-promo-options { display: flex; gap: .6rem; padding: 1rem; justify-content: center; flex-wrap: wrap; }
-.november-promo-options button { border: 0; border-radius: .5rem; background: #fff1d5; color: #001b36; padding: .8rem 1rem; font: inherit; font-weight: 700; cursor: pointer; }
-.november-promo-options button:focus-visible { outline: 3px solid #ffbd28; outline-offset: 3px; }
-@media (max-width: 480px) { .seasonal-banner { flex-wrap: wrap; } .seasonal-banner > div { flex: 1 1 220px; } .november-promo-options { padding: .7rem; } }
-
-@media (max-width: 480px) { .november-promo-options { flex-wrap: nowrap; } .november-promo-options button { flex: 1; min-width: 0; padding: .8rem .4rem; font-size: .75rem; white-space: nowrap; } }
+/* November is a native campaign section, not a print poster embedded in the feed. */
+.november-promo-card { height:auto; min-height:100%; padding:28px 24px; background:var(--cream); justify-content:center; }
+.november-promo-layout { width:100%; max-width:1040px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; overflow:hidden; border-radius:16px; background:#fff; }
+.november-promo-visual { min-height:440px; background:#9c1217; }
+.november-promo-art { display:block; width:100%; height:100%; object-fit:cover; }
+.november-promo-copy { align-self:center; padding:40px 36px; color:var(--navy); }
+.november-promo-copy h1 { font-family:var(--font-display); font-size:clamp(2rem,3.6vw,3.4rem); font-weight:400; line-height:1.03; margin:0 0 24px; }
+.november-promo-copy h1 span { color:var(--red); }
+.november-promo-copy h2 { font-family:var(--font-display); font-weight:400; font-size:2rem; line-height:1.05; margin:0 0 12px; }
+.november-promo-copy h2 em { display:block; font-size:1.6em; font-style:normal; color:var(--red); }
+.november-promo-condition { font-size:.9rem; font-weight:600; line-height:1.5; }
+.november-promo-flavor { margin-top:12px; font-size:.85rem; line-height:1.6; }
+.november-promo-options { display:flex; gap:10px; margin-top:24px; }
+.november-promo-options button { flex:1; border:0; border-radius:8px; background:var(--red); color:white; padding:14px 10px; font:inherit; font-size:.8rem; font-weight:700; cursor:pointer; }
+.november-promo-options button:focus-visible { outline:3px solid var(--navy); outline-offset:3px; }
+.november-promo-validity { margin-top:16px; font-size:.68rem; line-height:1.5; }
+@media(max-width:700px) {
+ .november-promo-card { padding:16px; justify-content:flex-start; }
+ .november-promo-layout { grid-template-columns:1fr; }
+ .november-promo-visual { min-height:0; height:210px; }
+ .november-promo-copy { padding:22px; }
+ .november-promo-copy h1 { font-size:2.05rem; margin-bottom:16px; }
+ .november-promo-copy h2 { font-size:1.6rem; }
+ .november-promo-flavor { display:none; }
+ .november-promo-options { margin-top:18px; }
+ .november-promo-options button { padding:13px 5px; font-size:.73rem; }
+ .november-promo-validity { margin-top:12px; }
+}

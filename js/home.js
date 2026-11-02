@@ -94,11 +94,19 @@ function renderFeedDivider(index) {
 function renderFeed() {
   const november = activeCampaign()?.id === 'noviembre-2026';
   const promo = november ? `<article class="feed-card november-promo-card" id="feed-noviembre-2026" aria-label="Promoción noviembre 2026">
-    <img class="november-promo-art" src="assets/menu/bravas-noviembre-2026.png" alt="Noviembre con N de No Paramos. Gajos Bravas Habaneras gratis en la compra de 12 piezas CRUJI o ROSTI, pidiendo por la app. Válido todo noviembre 2026.">
-    <div class="november-promo-options">
+    <div class="november-promo-layout">
+    <div class="november-promo-visual"><img class="november-promo-art" src="assets/menu/bravas-noviembre-foto.png" alt="Gajos Bravas Habaneras con sazón seco de habanero, paprika y toque cítrico." fetchpriority="high"></div>
+    <div class="november-promo-copy">
+      <h1>Noviembre con <span>“N”</span><br>de NO PARAMOS.</h1>
+      <h2>Gajos Bravas Habaneras <em>GRATIS</em></h2>
+      <p class="november-promo-condition">En la compra de 12 piezas CRUJI o ROSTI.</p>
+      <p class="november-promo-flavor">Habanero, paprika y toque cítrico. Un nuevo sabor para acompañar tu pollo favorito.</p>
+      <div class="november-promo-options">
       <button type="button" data-promo-choice="paquete-3">Elegir ROSTI &middot; ${formatoMoneda(PAQUETES.find(p => p.id === 'paquete-3').precio)}</button>
       <button type="button" data-promo-choice="paquete-4">Elegir CRUJI &middot; ${formatoMoneda(PAQUETES.find(p => p.id === 'paquete-4').precio)}</button>
-    </div>
+      </div>
+      <p class="november-promo-validity">Exclusivo por la app · Válido todo NOVIEMBRE 2026</p>
+    </div></div>
   </article>` : '';
   feedContainerEl.innerHTML = promo + PAQUETES.map(
     (p, i) => `
@@ -509,7 +517,7 @@ function renderSeasonalBanner() {
   if (previous !== PAQUETES[0]?.id || Boolean(document.getElementById('feed-noviembre-2026')) !== november) { renderTabs(); renderFeed(); }
   const campaign = activeCampaign();
   const banner = document.getElementById('seasonal-banner');
-  banner.hidden = !campaign;
+  banner.hidden = !campaign || campaign.id === 'noviembre-2026';
   if (campaign) {
     document.getElementById('seasonal-title').textContent = campaign.title;
     document.getElementById('seasonal-message').textContent = campaign.message;
