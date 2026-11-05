@@ -1,3 +1,11 @@
+## Correccion vigente - 5 noviembre 2026: SOLO piezas y gajos
+
+Miguel aclara que la promo de $229 incluye exclusivamente 12 piezas ROSTI o CRUJI y los gajos Bravas Habaneras gratis. No incluye arroz, adobo, salsa ni opciones. Esta aclaracion sustituye la indicacion anterior de conservar variantes y acompanamientos del paquete regular.
+
+Se crean dos productos de promocion independientes, sin variantes; los botones agregan directamente al carrito. Se normalizan carritos guardados con los antiguos paquetes a $229 para retirar sus opciones. Los paquetes regulares mantienen sus precios y opciones; la promo termina el 30 de noviembre de 2026 (CDMX). No se generan pedidos reales ni mensajes durante las pruebas.
+
+---
+
 ## Correccion de precio - 5 noviembre 2026
 
 Miguel confirma $229, no $254, para la promo de 12 piezas ROSTI o CRUJI con gajos Bravas Habaneras gratis. Aplica durante noviembre (CDMX), en botones, seleccion, carrito, checkout y WhatsApp; corrige carritos existentes. Al terminar noviembre vuelve el precio regular. Esta indicacion sustituye la conservacion de $254 indicada en el cierre anterior. Los artes del menu regular conservan su precio impreso; la seccion promocional y el cobro usan $229.

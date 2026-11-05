@@ -6,7 +6,7 @@ const CAMPAIGNS = [
     title: 'Noviembre con N de NO PARAMOS',
     message: 'Gajos Bravas Habaneras GRATIS en la compra de 12 piezas CRUJI o ROSTI. Pide por la app. Válido todo NOVIEMBRE 2026.',
     productId: 'noviembre-2026', ctaLabel: 'Ver promo', ctaAction: 'show-promo',
-    productIds: ['paquete-3', 'paquete-4', 'cruji-jueves'],
+    productIds: ['bravas-rosti-noviembre-2026', 'bravas-cruji-noviembre-2026'],
     price: 229,
     giftName: 'Gajos Bravas Habaneras GRATIS',
     giftDetail: '250 g por paquete de 12 piezas. Sazón seco de habanero, paprika y toque cítrico. Promo noviembre 2026.',
@@ -43,15 +43,23 @@ function activeCampaign(now = new Date()) {
 function applyPromotion(cart, now = new Date()) {
   const campaign = activeCampaign(now);
   const paidItems = cart.filter((item) => item.tipo !== 'promocion' &&
-    (item.refId !== 'cruji-pilon-octubre-2026' || campaign?.id === 'octubre-2026'))
+    (item.refId !== 'cruji-pilon-octubre-2026' || campaign?.id === 'octubre-2026') &&
+    (!item.refId?.startsWith('bravas-') || campaign?.id === 'noviembre-2026'))
     .map((item) => item.refId === 'cruji-pilon-octubre-2026' ? {
       ...item, nombre: 'Cruji con pilón · 12 piezas crujientes', precioUnitario: 229,
       detalleVariantes: 'Salsa de la casa + 250 g de papas gajo GRATIS por paquete',
     } : { ...item });
+  // Normalizar promos ya guardadas, retirando las opciones del paquete anterior.
   for (const item of paidItems) {
-    if (item.tipo !== 'paquete' || !CAMPAIGNS[0].productIds.includes(item.refId)) continue;
-    const regularPrice = item.refId === 'cruji-jueves' ? 229 : 254;
-    item.precioUnitario = campaign?.id === 'noviembre-2026' ? campaign.price : regularPrice;
+    if (item.tipo !== 'paquete' || campaign?.id !== 'noviembre-2026') continue;
+    const legacy = { 'paquete-3': 'rosti', 'paquete-4': 'cruji' }[item.refId];
+    if (legacy && item.precioUnitario === campaign.price) {
+      item.refId = `bravas-${legacy}-noviembre-2026`;
+    }
+    if (!campaign.productIds.includes(item.refId)) continue;
+    item.nombre = `Promo Bravas - 12 piezas ${item.refId.includes('-rosti-') ? 'ROSTI' : 'CRUJI'}`;
+    item.precioUnitario = campaign.price;
+    item.detalleVariantes = 'Solo 12 piezas.';
   }
   if (campaign?.id === 'noviembre-2026') {
     const cantidad = paidItems.reduce((sum, item) => sum + (
@@ -77,10 +85,22 @@ function applyPromotion(cart, now = new Date()) {
 function refreshSeasonalProducts() {
   if (typeof PAQUETES === 'undefined') return;
   const campaign = activeCampaign();
-  for (const product of PAQUETES) {
-    if (!CAMPAIGNS[0].productIds.includes(product.id)) continue;
-    product.precioRegular ??= product.precio;
-    product.precio = campaign?.id === 'noviembre-2026' ? campaign.price : product.precioRegular;
+  for (let i = PAQUETES.length - 1; i >= 0; i--) {
+    if (PAQUETES[i].id.startsWith('bravas-')) PAQUETES.splice(i, 1);
+  }
+  if (campaign?.id === 'noviembre-2026') {
+    PAQUETES.unshift(...['rosti', 'cruji'].map((kind) => ({
+      id: `bravas-${kind}-noviembre-2026`,
+      categoria: kind === 'rosti' ? 'rostizados' : 'crujientes',
+      nombre: `Promo Bravas - 12 piezas ${kind.toUpperCase()}`,
+      precio: campaign.price,
+      caption: 'Gajos Bravas Habaneras GRATIS',
+      descripcionCorta: 'Solo 12 piezas + gajos Bravas Habaneras gratis.',
+      detalleFijo: 'Solo 12 piezas.',
+      imagen: 'assets/menu/bravas-noviembre-foto.png',
+      variantes: [],
+      arteMenu: true,
+    })));
   }
   const index = PAQUETES.findIndex((p) => p.id === 'cruji-pilon-octubre-2026');
   if (index >= 0) PAQUETES.splice(index, 1);

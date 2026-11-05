@@ -99,11 +99,11 @@ function renderFeed() {
     <div class="november-promo-copy">
       <h1>Noviembre con <span>“N”</span><br>de NO PARAMOS.</h1>
       <h2>Gajos Bravas Habaneras <em>GRATIS</em></h2>
-      <p class="november-promo-condition">En la compra de 12 piezas CRUJI o ROSTI.</p>
+      <p class="november-promo-condition">Solo 12 piezas CRUJI o ROSTI + gajos Bravas gratis.</p>
       <p class="november-promo-flavor">Habanero, paprika y toque cítrico. Un nuevo sabor para acompañar tu pollo favorito.</p>
       <div class="november-promo-options">
-      <button type="button" data-promo-choice="paquete-3">Elegir ROSTI &middot; ${formatoMoneda(PAQUETES.find(p => p.id === 'paquete-3').precio)}</button>
-      <button type="button" data-promo-choice="paquete-4">Elegir CRUJI &middot; ${formatoMoneda(PAQUETES.find(p => p.id === 'paquete-4').precio)}</button>
+      <button type="button" data-promo-choice="bravas-rosti-noviembre-2026">Elegir ROSTI &middot; ${formatoMoneda(PAQUETES.find(p => p.id === 'bravas-rosti-noviembre-2026').precio)}</button>
+      <button type="button" data-promo-choice="bravas-cruji-noviembre-2026">Elegir CRUJI &middot; ${formatoMoneda(PAQUETES.find(p => p.id === 'bravas-cruji-noviembre-2026').precio)}</button>
       </div>
       <p class="november-promo-validity">Exclusivo por la app · Válido todo NOVIEMBRE 2026</p>
     </div></div>
