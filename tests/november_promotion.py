@@ -10,6 +10,8 @@ with sync_playwright() as p:
  if(activeCampaign(date)?.id!=='noviembre-2026') throw Error('Falta campa?a noviembre');
  const item=(id,n=1)=>({tipo:'paquete',refId:id,cantidad:n,precioUnitario:254});
  const cart=[item('paquete-3',2),item('paquete-4'),item('paquete-9')];
+ if(applyPromotion([item('paquete-3')],date)[0].precioUnitario!==229)throw Error('Precio antiguo en carrito');
+ if(applyPromotion([{...item('paquete-4'),precioUnitario:229}],new Date('2026-12-01T06:00:00Z'))[0].precioUnitario!==254)throw Error('Precio fuera de vigencia');
  const gifted=applyPromotion(cart,date), gift=gifted.find(i=>i.tipo==='promocion');
  if(gift?.cantidad!==3||!gift.nombre.includes('Bravas Habaneras'))throw Error('Regalo o cantidad incorrecta');
  if(applyPromotion(gifted,date).filter(i=>i.tipo==='promocion').length!==1)throw Error('Regalo duplicado');

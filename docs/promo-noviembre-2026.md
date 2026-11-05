@@ -1,3 +1,9 @@
+## Correccion de precio - 5 noviembre 2026
+
+Miguel confirma $229, no $254, para la promo de 12 piezas ROSTI o CRUJI con gajos Bravas Habaneras gratis. Aplica durante noviembre (CDMX), en botones, seleccion, carrito, checkout y WhatsApp; corrige carritos existentes. Al terminar noviembre vuelve el precio regular. Esta indicacion sustituye la conservacion de $254 indicada en el cierre anterior. Los artes del menu regular conservan su precio impreso; la seccion promocional y el cobro usan $229.
+
+---
+
 # Noviembre 2026 — No paramos · Bravas Habaneras
 
 ## Acuerdo y arte vigente

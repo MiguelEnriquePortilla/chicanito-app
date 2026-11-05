@@ -30,14 +30,15 @@ try:
    assert page.locator('.november-promo-options').evaluate('(el)=>el.getBoundingClientRect().bottom<=innerHeight')
    artifacts=ROOT/'docs/promo-noviembre';artifacts.mkdir(exist_ok=True)
    page.screenshot(path=str(artifacts/f'inicio-{width}.png'))
+   expect(page.locator('.november-promo-options')).not_to_contain_text('$254')
    page.locator(f'[data-promo-choice="{product}"]').click()
    for group in page.locator('.variant-group').all():group.locator('.variant-option').first.click()
    page.locator('#modal-add-btn').click()
    page.locator('#open-cart-btn').click()
    expect(page.locator('.promo-gift')).to_contain_text('Bravas Habaneras')
-   expect(page.locator('#cart-subtotal')).to_have_text('$254')
+   expect(page.locator('#cart-subtotal')).to_have_text('$229')
    page.locator('.qty-btn[data-delta="1"]').click()
-   expect(page.locator('#cart-subtotal')).to_have_text('$508')
+   expect(page.locator('#cart-subtotal')).to_have_text('$458')
    page.reload();page.locator('#open-cart-btn').click()
    expect(page.locator('.promo-gift')).to_have_count(1)
    page.locator('#checkout-btn').click();page.wait_for_url('**/checkout.html')
@@ -45,7 +46,7 @@ try:
    page.locator('#nombre').fill('Prueba local noviembre');page.locator('#telefono').fill('5555555555')
    page.locator('#opt-recoger').click();page.locator('#confirm-btn').click()
    page.wait_for_url('**/confirmacion.html')
-   expect(page.locator('#summary-total')).to_have_text('$508')
+   expect(page.locator('#summary-total')).to_have_text('$458')
    message=parse_qs(urlparse(page.locator('#send-whatsapp-btn').get_attribute('href')).query)['text'][0]
    assert 'Bravas Habaneras' in message
    assert saved and next(i for i in saved[0]['cart'] if i['tipo']=='promocion')['cantidad']==2

@@ -7,6 +7,7 @@ const CAMPAIGNS = [
     message: 'Gajos Bravas Habaneras GRATIS en la compra de 12 piezas CRUJI o ROSTI. Pide por la app. Válido todo NOVIEMBRE 2026.',
     productId: 'noviembre-2026', ctaLabel: 'Ver promo', ctaAction: 'show-promo',
     productIds: ['paquete-3', 'paquete-4', 'cruji-jueves'],
+    price: 229,
     giftName: 'Gajos Bravas Habaneras GRATIS',
     giftDetail: '250 g por paquete de 12 piezas. Sazón seco de habanero, paprika y toque cítrico. Promo noviembre 2026.',
   },
@@ -46,7 +47,12 @@ function applyPromotion(cart, now = new Date()) {
     .map((item) => item.refId === 'cruji-pilon-octubre-2026' ? {
       ...item, nombre: 'Cruji con pilón · 12 piezas crujientes', precioUnitario: 229,
       detalleVariantes: 'Salsa de la casa + 250 g de papas gajo GRATIS por paquete',
-    } : item);
+    } : { ...item });
+  for (const item of paidItems) {
+    if (item.tipo !== 'paquete' || !CAMPAIGNS[0].productIds.includes(item.refId)) continue;
+    const regularPrice = item.refId === 'cruji-jueves' ? 229 : 254;
+    item.precioUnitario = campaign?.id === 'noviembre-2026' ? campaign.price : regularPrice;
+  }
   if (campaign?.id === 'noviembre-2026') {
     const cantidad = paidItems.reduce((sum, item) => sum + (
       item.tipo === 'paquete' && campaign.productIds.includes(item.refId) && item.cantidad > 0
@@ -70,6 +76,12 @@ function applyPromotion(cart, now = new Date()) {
 // Producto independiente: el paquete habitual conserva precio y guarniciones.
 function refreshSeasonalProducts() {
   if (typeof PAQUETES === 'undefined') return;
+  const campaign = activeCampaign();
+  for (const product of PAQUETES) {
+    if (!CAMPAIGNS[0].productIds.includes(product.id)) continue;
+    product.precioRegular ??= product.precio;
+    product.precio = campaign?.id === 'noviembre-2026' ? campaign.price : product.precioRegular;
+  }
   const index = PAQUETES.findIndex((p) => p.id === 'cruji-pilon-octubre-2026');
   if (index >= 0) PAQUETES.splice(index, 1);
   if (activeCampaign()?.id === 'octubre-2026') PAQUETES.unshift({
