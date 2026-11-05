@@ -1,3 +1,19 @@
+## Cierre definitivo aceptado - 5 noviembre 2026
+
+Miguel confirma: "LISTO. DOCUMENTA. GUARDA. CIERRA".
+
+**Oferta definitiva: $229 por solo 12 piezas ROSTI o CRUJI + gajos Bravas Habaneras gratis. Sin arroz, adobo, salsa ni opciones.** Este acuerdo sustituye cualquier indicacion anterior de conservar variantes o acompanamientos.
+
+Commit funcional publicado: 6e9d5286ed78b42a69ca08d7b41fd912bc13aad1. Vercel success confirmado. Pruebas locales aprobadas en celular y escritorio: agregado sin modal, carrito $229/$458, gajos gratis, checkout y WhatsApp sin acompanamientos. Migracion de carritos anteriores y vencimiento comprobados; regresion octubre aprobada. Paquetes regulares conservan precio y opciones. Sin pedidos reales ni mensajes enviados.
+
+La ultima comprobacion en navegador publico fue bloqueada por un error del entorno local; no confundir las pruebas locales con verificacion visual de produccion. El despliegue se verifico por GitHub/Vercel y Miguel acepto el resultado.
+
+Solicitud original de correccion: "las 12 piezas NO llevan NADA - NADA. Son solo las piezas = las papas gajo bravas grtais (le pusiste opciones)". Se implementaron dos productos independientes de promocion, sin variantes.
+
+Sesion cerrada. Sin pendientes funcionales; esperar nuevas instrucciones. La sincronizacion de README locales quedo bloqueada por permisos del entorno; este documento remoto es la continuidad vigente.
+
+---
+
 ## Correccion vigente - 5 noviembre 2026: SOLO piezas y gajos
 
 Miguel aclara que la promo de $229 incluye exclusivamente 12 piezas ROSTI o CRUJI y los gajos Bravas Habaneras gratis. No incluye arroz, adobo, salsa ni opciones. Esta aclaracion sustituye la indicacion anterior de conservar variantes y acompanamientos del paquete regular.
