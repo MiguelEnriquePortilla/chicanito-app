@@ -30,17 +30,46 @@ const CAMPAIGNS = [
   },
 ];
 
-function activeCampaign(now = new Date()) {
+function businessDate(now = new Date()) {
   const parts = new Intl.DateTimeFormat('en-US', {
     timeZone: 'America/Mexico_City', year: 'numeric', month: '2-digit', day: '2-digit',
   }).formatToParts(now);
   const part = (type) => parts.find((p) => p.type === type).value;
-  const date = `${part('year')}-${part('month')}-${part('day')}`;
+  return `${part('year')}-${part('month')}-${part('day')}`;
+}
+
+const CRUJI_DIP_FLAVORS = ['Diablo Chicanito', 'BBQ JOJUTOWN', 'Limón Pimienta',
+  'Ranch Jalapeño', 'Miel Picante', 'Buffalo', 'Parmesano'];
+
+function isCrujiDipPromotion(now = new Date()) {
+  const date = businessDate(now);
+  return '2026-11-01' <= date && date <= '2026-11-30';
+}
+
+function activeCampaign(now = new Date()) {
+  const date = businessDate(now);
   return CAMPAIGNS.find((c) => c.startsOn <= date && date <= c.endsOn) || null;
 }
 
 // Derivar el regalo evita duplicarlo al recargar o cambiar cantidades.
 function applyPromotion(cart, now = new Date()) {
+  const items = applySeasonalPromotion(cart, now);
+  if (!isCrujiDipPromotion(now)) return items;
+  const quantities = new Map();
+  for (const item of items) {
+    if (item.tipo !== 'paquete' || item.refId !== 'paquete-4' ||
+        !CRUJI_DIP_FLAVORS.includes(item.crujiDip) || !(item.cantidad > 0)) continue;
+    quantities.set(item.crujiDip, (quantities.get(item.crujiDip) || 0) + item.cantidad);
+  }
+  return [...items, ...Array.from(quantities, ([flavor, cantidad]) => ({
+    uid: `promo-crujidip-${CRUJI_DIP_FLAVORS.indexOf(flavor)}`,
+    tipo: 'promocion', refId: 'crujidip-noviembre-2026',
+    nombre: `CrujiDip GRATIS · ${flavor}`, cantidad, precioUnitario: 0,
+    detalleVariantes: 'Uno por Cruji Doce. Válido hasta el 30 de noviembre de 2026.',
+  }))];
+}
+
+function applySeasonalPromotion(cart, now = new Date()) {
   const campaign = activeCampaign(now);
   const paidItems = cart.filter((item) => item.tipo !== 'promocion' &&
     (item.refId !== 'cruji-pilon-octubre-2026' || campaign?.id === 'octubre-2026') &&
@@ -82,9 +111,22 @@ function applyPromotion(cart, now = new Date()) {
 }
 
 // Producto independiente: el paquete habitual conserva precio y guarniciones.
-function refreshSeasonalProducts() {
+function refreshSeasonalProducts(now = new Date()) {
   if (typeof PAQUETES === 'undefined') return;
-  const campaign = activeCampaign();
+  const campaign = activeCampaign(now);
+  const doce = PAQUETES.find(p => p.id === 'paquete-4');
+  if (doce) {
+    doce.variantes = doce.variantes.filter(g => g.id !== 'crujiDip');
+    doce.caption = '';
+    doce.imagen = 'assets/menu/octubre-2026/cruji-doce-254-45x80-qr.png';
+    doce.descripcionCorta = '12 piezas, salsa grande y papas gajo grandes.';
+    if (isCrujiDipPromotion(now)) {
+      doce.variantes.push({id: 'crujiDip', label: 'CrujiDip GRATIS a elegir', opciones: CRUJI_DIP_FLAVORS});
+      doce.caption = 'CrujiDip GRATIS a elegir';
+      doce.imagen = 'assets/menu/cruji-doce-dip-noviembre-2026.png';
+      doce.descripcionCorta += ' + 1 CrujiDip GRATIS. Todo noviembre 2026.';
+    }
+  }
   for (let i = PAQUETES.length - 1; i >= 0; i--) {
     if (PAQUETES[i].id.startsWith('bravas-')) PAQUETES.splice(i, 1);
   }
@@ -104,7 +146,7 @@ function refreshSeasonalProducts() {
   }
   const index = PAQUETES.findIndex((p) => p.id === 'cruji-pilon-octubre-2026');
   if (index >= 0) PAQUETES.splice(index, 1);
-  if (activeCampaign()?.id === 'octubre-2026') PAQUETES.unshift({
+  if (campaign?.id === 'octubre-2026') PAQUETES.unshift({
     id: 'cruji-pilon-octubre-2026', categoria: 'crujientes',
     nombre: 'Cruji con pilón · 12 piezas', precio: 229,
     caption: '¡250 g de papas gajo GRATIS!',

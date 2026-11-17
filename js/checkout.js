@@ -145,6 +145,12 @@ document.getElementById('confirm-btn').addEventListener('click', async () => {
   // Revalidar al confirmar: el carrito puede haber cambiado en otra pestaña
   // o la campaña haber terminado mientras esta pantalla estaba abierta.
   const currentCart = getCart();
+  if (isCrujiDipPromotion() && currentCart.some(item => item.tipo === 'paquete' &&
+      item.refId === 'paquete-4' && !CRUJI_DIP_FLAVORS.includes(item.crujiDip))) {
+    alert('Tu Cruji Doce incluye un CrujiDip GRATIS. Vuelve al carrito y pulsa Elegir CrujiDip gratis para escoger tu sabor.');
+    window.location.href = 'index.html#feed-paquete-4';
+    return;
+  }
   if (JSON.stringify(currentCart) !== JSON.stringify(cart)) {
     alert('Tu carrito o la promoción cambió. Actualizaremos el resumen antes de continuar.');
     window.location.reload();

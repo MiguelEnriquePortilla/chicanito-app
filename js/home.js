@@ -204,6 +204,7 @@ function flyToCart(originEl) {
 // ---------- Agregar al carrito desde el corazón ----------
 let modalPaquete = null;
 let modalSeleccion = {};
+let modalCartUid = null;
 
 const variantModal = document.getElementById('variant-modal');
 const modalItemName = document.getElementById('modal-item-name');
@@ -230,10 +231,13 @@ function onHeartTap(id, originEl) {
   abrirModalVariantes(paquete);
 }
 
-function abrirModalVariantes(paquete) {
+function abrirModalVariantes(paquete, cartUid = null) {
+  refreshSeasonalProducts();
+  modalCartUid = cartUid;
   modalPaquete = paquete;
   modalSeleccion = {};
   modalItemName.textContent = paquete.nombre;
+  modalAddBtn.textContent = cartUid ? 'Guardar elección' : 'Agregar al carrito';
   modalItemPrice.textContent = formatoMoneda(paquete.precio);
   modalVariants.innerHTML = paquete.variantes
     .map(
@@ -271,14 +275,23 @@ function checkModalComplete() {
 }
 
 modalAddBtn.addEventListener('click', () => {
-  const detalle = modalPaquete.variantes.map((g) => `${g.label}: ${modalSeleccion[g.id]}`).join(' · ');
-  addToCart({
+  refreshSeasonalProducts();
+  if (!modalPaquete.variantes.every(g => modalSeleccion[g.id])) return;
+  const detalle = modalPaquete.variantes.filter(g => g.id !== 'crujiDip')
+    .map((g) => `${g.label}: ${modalSeleccion[g.id]}`).join(' · ');
+  const selectedItem = {
     tipo: 'paquete',
     refId: modalPaquete.id,
     nombre: modalPaquete.nombre,
     precioUnitario: precioSeleccion(modalPaquete, modalSeleccion),
     detalleVariantes: detalle,
-  });
+    crujiDip: isCrujiDipPromotion() && modalPaquete.id === 'paquete-4' ? modalSeleccion.crujiDip : undefined,
+  };
+  if (modalCartUid) {
+    saveCart(getCart().map(item => item.uid === modalCartUid ? {...item, ...selectedItem} : item));
+  } else {
+    addToCart(selectedItem);
+  }
   flyToCart(modalAddBtn); // medir posición antes de ocultar el modal
   variantModal.classList.add('hidden');
   refreshCartUI();
@@ -428,7 +441,7 @@ function renderCartItems(cart) {
     .map(
       (it) => it.tipo === 'promocion' ? `
         <div class="cart-item promo-gift" role="status">
-          <strong>${it.nombre} · $0</strong>
+          <strong>${it.cantidad}x ${it.nombre} · $0</strong>
           <p>${it.detalleVariantes}</p>
         </div>
       ` : `
@@ -438,6 +451,7 @@ function renderCartItems(cart) {
             <button class="remove-btn" data-uid="${it.uid}" type="button">Quitar</button>
           </div>
           ${it.detalleVariantes ? `<div class="cart-item-detail">${it.detalleVariantes}</div>` : ''}
+          ${isCrujiDipPromotion() && it.refId === 'paquete-4' ? `<button type="button" class="btn dip-choice-btn" data-uid="${it.uid}">${CRUJI_DIP_FLAVORS.includes(it.crujiDip) ? 'Cambiar CrujiDip gratis' : 'Elegir CrujiDip gratis'}</button>` : ''}
           <div class="cart-item-bottom">
             <div class="qty-control">
               <button class="qty-btn" data-uid="${it.uid}" data-delta="-1" type="button">−</button>
@@ -451,6 +465,12 @@ function renderCartItems(cart) {
     )
     .join('');
 
+  cartItemsEl.querySelectorAll('.dip-choice-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      closeCart();
+      abrirModalVariantes(PAQUETES.find(p => p.id === 'paquete-4'), btn.dataset.uid);
+    });
+  });
   cartItemsEl.querySelectorAll('.remove-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       removeFromCart(btn.dataset.uid);
