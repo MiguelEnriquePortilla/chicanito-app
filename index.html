@@ -2,7 +2,7 @@
 <html lang="es-MX">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Chicanito App — Very Facilito, Rapidito y Sabrosito!</title>
 <meta name="description" content="Arma tu pedido directo en la app, sin costo extra.">
 <link rel="icon" href="assets/icons/sello-2026.svg">
@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261118dipbanner">
+<link rel="stylesheet" href="styles.css?v=20261118catalogo">
 <script src="js/meta-pixel.js"></script>
 </head>
 <body>
@@ -91,7 +91,7 @@
     <button type="button" id="seasonal-cta">Ver Dúo</button>
   </section>
 
-  <nav class="tabs" id="tabs"></nav>
+  <nav class="tabs" id="tabs" aria-label="Categorías del menú"></nav>
 </div>
 
 <main>
@@ -102,9 +102,16 @@
     <div id="alacarta-container"></div>
   </section>
 </main>
+<footer class="order-bar">
+  <div class="order-bar-inner">
+    <div class="order-summary" aria-live="polite">
+      <strong id="order-subtotal">$0</strong>
+      <span id="order-count">Sin productos</span>
+    </div>
+    <button id="review-order-btn" type="button" disabled>Revisar pedido</button>
+  </div>
+</footer>
 
-<!-- Burst de corazón al hacer doble-tap -->
-<div class="heart-burst" id="heart-burst">❤️</div>
 
 <!-- Toast simple para mensajes cortos -->
 <div class="toast" id="toast"></div>
@@ -139,10 +146,10 @@
 
 <script src="js/transitions.js"></script>
 <script src="js/menu.js?v=20261016menu"></script>
-<script src="js/promotions.js?v=20261118dipbanner"></script>
+<script src="js/promotions.js?v=20261118catalogo"></script>
 <script src="js/cart.js?v=20261016menu"></script>
 <script src="js/hours.js"></script>
 <script src="js/shipping.js"></script>
-<script src="js/home.js?v=20261118dipbanner"></script>
+<script src="js/home.js?v=20261118catalogo"></script>
 </body>
 </html>

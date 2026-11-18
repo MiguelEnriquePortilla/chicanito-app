@@ -5,7 +5,6 @@ const tabsEl = document.getElementById('tabs');
 const feedContainerEl = document.getElementById('feed-container');
 const alacartaContainerEl = document.getElementById('alacarta-container');
 const hoursBannerEl = document.getElementById('hours-banner');
-const heartBurstEl = document.getElementById('heart-burst');
 const toastEl = document.getElementById('toast');
 
 function formatoMoneda(v) {
@@ -37,21 +36,24 @@ function categoriasALaCarta() {
 }
 
 // ---------- Tabs ----------
-// Mueve el scroll DENTRO de #feed-container únicamente, sin tocar el scroll
-// de la página exterior (scrollIntoView normal a veces también mueve la
-// página exterior cuando el objetivo vive en una caja de scroll anidada,
-// desalineando todo contra el header fijo).
 function scrollFeedCardIntoView(cardEl) {
-  const containerRect = feedContainerEl.getBoundingClientRect();
-  const cardRect = cardEl.getBoundingClientRect();
-  const delta = cardRect.top - containerRect.top;
-  feedContainerEl.scrollTo({ top: feedContainerEl.scrollTop + delta, behavior: 'auto' });
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  cardEl.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
 }
 
 function renderTabs() {
   const todas = [...categoriasPaquetes(), ...categoriasALaCarta()];
+  const mobileLabels = {
+    crujientes: 'Cruji',
+    rostizados: 'Rosti',
+    costillas: 'Costi',
+    complementos: 'Extras',
+    salsas: 'Salsas',
+  };
   tabsEl.innerHTML = todas
-    .map((cat, i) => `<button class="tab-btn${i === 0 ? ' is-active' : ''}" data-cat="${cat}" type="button">${CATEGORIAS[cat]}</button>`)
+    .map((cat, i) => `<button class="tab-btn${i === 0 ? ' is-active' : ''}" data-cat="${cat}" type="button" aria-label="${CATEGORIAS[cat]}">
+      <span class="tab-label-full">${CATEGORIAS[cat]}</span><span class="tab-label-mobile">${mobileLabels[cat] || CATEGORIAS[cat]}</span>
+    </button>`)
     .join('');
 
   tabsEl.querySelectorAll('.tab-btn').forEach((btn) => {
@@ -60,37 +62,16 @@ function renderTabs() {
       btn.classList.add('is-active');
       const cat = btn.dataset.cat;
       if (cat === 'complementos' || cat === 'salsas') {
-        document.getElementById(`alacarta-${cat}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const section = document.getElementById(`alacarta-${cat}`);
+        if (section) scrollFeedCardIntoView(section);
         return;
       }
-      const primerPaquete = PAQUETES.find((p) => p.categoria === cat);
-      const cardEl = primerPaquete && document.getElementById(`feed-${primerPaquete.id}`);
-      if (cardEl) {
-        scrollFeedCardIntoView(cardEl);
-      }
+      const section = document.getElementById(`menu-${cat}`);
+      if (section) scrollFeedCardIntoView(section);
     });
   });
 }
 
-// ---------- Separadores entre paquetes ----------
-const FEED_DIVIDER_TAGLINES = [
-  'Very Sabrosito 🐔',
-  'Recién hecho para ti 🔥',
-  'El sabor que ya conoces 💙',
-  'Directo del carrito a tu casa 🛵',
-];
-
-function renderFeedDivider(index) {
-  const tagline = FEED_DIVIDER_TAGLINES[index % FEED_DIVIDER_TAGLINES.length];
-  return `
-    <div class="feed-divider">
-      <img src="assets/brand/chicanito-mascot-cutout.png" alt="Chicanito" class="feed-divider-mascot">
-      <span class="feed-divider-text">${tagline}</span>
-    </div>
-  `;
-}
-
-// ---------- Feed de paquetes ----------
 function renderFeed() {
   const dipBanner = isCrujiDipPromotion() ? `
     <div class="crujidip-banner">
@@ -100,108 +81,76 @@ function renderFeed() {
       </button>
     </div>
   ` : '';
-  feedContainerEl.innerHTML = dipBanner + PAQUETES.map(
-    (p, i) => `
-      <article class="feed-card${p.arteMenu ? ' menu-art-card' : ''}" id="feed-${p.id}" data-id="${p.id}">
-        <img class="feed-card-img" src="${p.imagen}" alt="${p.nombre}" loading="${i === 0 ? 'eager' : 'lazy'}">
-        <div class="feed-card-gradient"></div>
-        <div class="feed-card-content">
-          <span class="feed-card-category">${CATEGORIAS[p.categoria]}</span>
-          <h2 class="feed-card-name">${p.nombre}</h2>
-          ${p.caption ? `<p class="feed-card-caption">${p.caption}</p>` : ''}
-          <p class="feed-card-desc">${p.descripcionCorta}</p>
-          <p class="feed-card-price"><span>${formatoMoneda(p.precio)}</span></p>
-        </div>
-        <div class="feed-card-actions">
-          <button class="feed-action-btn heart-btn" data-id="${p.id}" type="button" aria-label="Agregar ${p.nombre} al carrito" ${productoDisponible(p) ? '' : 'disabled title="Disponible los jueves"'}>
-            <span class="icon heart-icon">🤍</span>
-            <span class="heart-count">${productoDisponible(p) ? '0' : 'Solo jueves'}</span>
-          </button>
-          <button class="feed-action-btn share-btn" data-id="${p.id}" type="button" aria-label="Compartir">
-            <span class="icon">🔗</span>
-            <span>Compartir</span>
-          </button>
-        </div>
-      </article>
-      ${i < PAQUETES.length - 1 ? renderFeedDivider(i) : ''}
-    `
-  ).join('');
+  const renderPackage = (p) => `
+    <article class="catalog-item" id="feed-${p.id}" data-id="${p.id}">
+      <img src="${p.imagen}" alt="" loading="lazy" width="60" height="76">
+      <div class="catalog-copy">
+        <h3>${p.nombre}</h3>
+        ${p.caption ? `<p class="feed-card-caption">${p.caption}</p>` : ''}
+        <p class="catalog-description">${p.descripcionCorta}</p>
+        <strong class="catalog-price">${formatoMoneda(p.precio)}</strong>
+        <button class="catalog-share" type="button" aria-label="Compartir ${p.nombre}">Compartir</button>
+        ${p.soloJueves ? '<small>Solo jueves</small>' : ''}
+      </div>
+      <div class="catalog-actions">
+        <button class="catalog-minus" type="button" aria-label="Quitar una unidad de ${p.nombre}" disabled>&minus;</button>
+        <span class="heart-count">0</span>
+        <button class="heart-btn catalog-plus" data-id="${p.id}" type="button" aria-label="Agregar ${p.nombre}" ${productoDisponible(p) ? '' : 'disabled'}>+</button>
+      </div>
+    </article>
+  `;
+  feedContainerEl.innerHTML = `
+    <section class="catalog-intro${dipBanner ? ' has-promo' : ''}">
+      <div>
+        <h1>Arma tu pedido</h1>
+        <p>Elige tus favoritos, revisa el total y envía tu pedido por WhatsApp.</p>
+      </div>
+      ${dipBanner}
+    </section>
+    ${categoriasPaquetes().map(cat => `
+      <section class="catalog-section" id="menu-${cat}">
+        <h2>${CATEGORIAS[cat]}</h2>
+        <div class="catalog-grid">${PAQUETES.filter(p => p.categoria === cat).map(renderPackage).join('')}</div>
+      </section>
+    `).join('')}
+  `;
 
-  feedContainerEl.querySelector('#crujidip-banner-btn')?.addEventListener('click', (event) => {
+  feedContainerEl.querySelector('#crujidip-banner-btn')?.addEventListener('click', () => {
     if (!isCrujiDipPromotion()) {
       renderSeasonalBanner();
       return;
     }
-    onHeartTap('paquete-4', event.currentTarget);
+    onHeartTap('paquete-4');
   });
   feedContainerEl.querySelectorAll('.heart-btn').forEach((btn) => {
-    btn.addEventListener('click', () => onHeartTap(btn.dataset.id, btn));
+    btn.addEventListener('click', () => onHeartTap(btn.dataset.id));
   });
-  feedContainerEl.querySelectorAll('.share-btn').forEach((btn) => {
-    btn.addEventListener('click', () => onShare(btn.dataset.id));
+  feedContainerEl.querySelectorAll('.catalog-share').forEach((btn) => {
+    btn.addEventListener('click', () => onShare(btn.closest('.catalog-item').dataset.id));
   });
-  feedContainerEl.querySelectorAll('.feed-card-img').forEach((img) => {
-    img.addEventListener('dblclick', () => {
-      const id = img.closest('.feed-card').dataset.id;
-      onHeartTap(id);
-      dispararHeartBurst();
+  feedContainerEl.querySelectorAll('.catalog-minus').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.closest('.catalog-item').dataset.id;
+      const items = getCart().filter(item => item.tipo === 'paquete' && item.refId === id);
+      if (items.length > 1) {
+        openCart();
+        return;
+      }
+      const item = items[0];
+      if (!item) return;
+      if (item.cantidad === 1) removeFromCart(item.uid);
+      else updateCantidad(item.uid, item.cantidad - 1);
+      refreshCartUI();
     });
   });
+  refreshFeedHearts();
+
 }
 
-function dispararHeartBurst() {
-  heartBurstEl.classList.remove('is-bursting');
-  // Forzar reflow para reiniciar la animación si se dispara varias veces seguidas.
-  void heartBurstEl.offsetWidth;
-  heartBurstEl.classList.add('is-bursting');
-}
-
-// ---------- Animación "vuela al carrito" al agregar un producto ----------
-function punchCart() {
-  openCartBtn.classList.remove('is-pulsing');
-  void openCartBtn.offsetWidth;
-  openCartBtn.classList.add('is-pulsing');
-  cartCountEl.classList.remove('is-popping');
-  void cartCountEl.offsetWidth;
-  cartCountEl.classList.add('is-popping');
-}
-
-function flyToCart(originEl) {
-  if (!originEl || typeof originEl.animate !== 'function') {
-    punchCart();
-    return;
-  }
-  const originRect = originEl.getBoundingClientRect();
-  const targetRect = openCartBtn.getBoundingClientRect();
-  const chip = document.createElement('div');
-  chip.className = 'fly-chip';
-  chip.textContent = '✓';
-  chip.style.left = `${originRect.left + originRect.width / 2 - 13}px`;
-  chip.style.top = `${originRect.top + originRect.height / 2 - 13}px`;
-  document.body.appendChild(chip);
-
-  const dx = targetRect.left + targetRect.width / 2 - (originRect.left + originRect.width / 2);
-  const dy = targetRect.top + targetRect.height / 2 - (originRect.top + originRect.height / 2);
-
-  const anim = chip.animate(
-    [
-      { transform: 'translate(0, 0) scale(1)', opacity: 1, offset: 0 },
-      { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 60}px) scale(1.1)`, opacity: 1, offset: 0.5 },
-      { transform: `translate(${dx}px, ${dy}px) scale(0.4)`, opacity: 0, offset: 1 },
-    ],
-    { duration: 550, easing: 'cubic-bezier(0.3, 0.8, 0.4, 1)' }
-  );
-  anim.onfinish = () => {
-    chip.remove();
-    punchCart();
-  };
-}
-
-// ---------- Agregar al carrito desde el corazón ----------
+// ---------- Selector de variantes ----------
 let modalPaquete = null;
 let modalSeleccion = {};
 let modalCartUid = null;
-
 const variantModal = document.getElementById('variant-modal');
 const modalItemName = document.getElementById('modal-item-name');
 const modalItemPrice = document.getElementById('modal-item-price');
@@ -209,7 +158,7 @@ const modalVariants = document.getElementById('modal-variants');
 const modalAddBtn = document.getElementById('modal-add-btn');
 const closeModalBtn = document.getElementById('close-modal-btn');
 
-function onHeartTap(id, originEl) {
+function onHeartTap(id) {
   const paquete = PAQUETES.find((p) => p.id === id);
   if (!productoDisponible(paquete)) { mostrarToast('Este producto solo está disponible los jueves.'); return; }
   if (!paquete.variantes || paquete.variantes.length === 0) {
@@ -221,7 +170,6 @@ function onHeartTap(id, originEl) {
       detalleVariantes: paquete.detalleFijo || '',
     });
     refreshCartUI();
-    flyToCart(originEl || feedContainerEl.querySelector(`.heart-btn[data-id="${id}"]`));
     return;
   }
   abrirModalVariantes(paquete);
@@ -288,7 +236,6 @@ modalAddBtn.addEventListener('click', () => {
   } else {
     addToCart(selectedItem);
   }
-  flyToCart(modalAddBtn); // medir posición antes de ocultar el modal
   variantModal.classList.add('hidden');
   refreshCartUI();
 });
@@ -322,14 +269,16 @@ async function onShare(id) {
 function refreshFeedHearts() {
   const cart = getCart();
   PAQUETES.forEach((p) => {
-    const cantidad = cart
-      .filter((it) => it.tipo === 'paquete' && it.refId === p.id)
-      .reduce((sum, it) => sum + it.cantidad, 0);
+    const items = cart.filter(item => item.tipo === 'paquete' && item.refId === p.id);
+    const cantidad = items.reduce((sum, item) => sum + item.cantidad, 0);
     const btn = feedContainerEl.querySelector(`.heart-btn[data-id="${p.id}"]`);
     if (!btn) return;
-    btn.classList.toggle('is-active', cantidad > 0);
-    btn.querySelector('.heart-icon').textContent = cantidad > 0 ? '❤️' : '🤍';
-    btn.querySelector('.heart-count').textContent = cantidad;
+    const card = btn.closest('.catalog-item');
+    card.querySelector('.heart-count').textContent = cantidad;
+    const minus = card.querySelector('.catalog-minus');
+    minus.disabled = cantidad === 0;
+    const hasChoices = items.length > 1;
+    minus.setAttribute('aria-label', hasChoices ? `Revisar opciones de ${p.nombre} en el carrito` : `Quitar una unidad de ${p.nombre}`);
   });
 }
 
@@ -385,7 +334,6 @@ function renderALaCarta() {
       });
       refreshCartUI();
       flashAdded(row.querySelector('.add-btn'));
-      flyToCart(row.querySelector('.add-btn'));
     });
   });
 }
@@ -411,6 +359,9 @@ const cartSubtotalEl = document.getElementById('cart-subtotal');
 const cartEnvioEl = document.getElementById('cart-envio');
 const cartTotalEl = document.getElementById('cart-total');
 const checkoutBtn = document.getElementById('checkout-btn');
+const reviewOrderBtn = document.getElementById('review-order-btn');
+
+reviewOrderBtn.addEventListener('click', openCart);
 
 function openCart() {
   cartOverlay.classList.remove('hidden');
@@ -490,11 +441,25 @@ function renderCartItems(cart) {
 
 function refreshCartUI() {
   const cart = getCart();
-  cartCountEl.textContent = getCartCount(cart);
+  const count = getCartCount(cart);
+  cartCountEl.textContent = count;
   renderCartItems(cart);
   const subtotal = getSubtotal(cart);
   const envio = cart.length ? calcularEnvio() : 0;
   cartSubtotalEl.textContent = formatoMoneda(subtotal);
+  const orderSubtotal = document.getElementById('order-subtotal');
+  const subtotalText = formatoMoneda(subtotal);
+  if (orderSubtotal.textContent !== subtotalText) {
+    orderSubtotal.textContent = subtotalText;
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      orderSubtotal.getAnimations().forEach(animation => animation.cancel());
+      orderSubtotal.animate([{ transform: 'translateY(3px)' }, { transform: 'translateY(0)' }], {
+        duration: 180, easing: 'cubic-bezier(.2,.8,.2,1)',
+      });
+    }
+  }
+  document.getElementById('order-count').textContent = count ? `${count} ${count === 1 ? 'producto' : 'productos'}` : 'Sin productos';
+  reviewOrderBtn.disabled = !count;
   cartEnvioEl.textContent = envio === 0 ? 'Gratis' : 'Por confirmar';
   cartTotalEl.textContent = envio === 0 ? formatoMoneda(subtotal) : `${formatoMoneda(subtotal)} + envío`;
   document.getElementById('cart-envio-nota').style.display = envio === 0 ? 'none' : 'block';
@@ -550,7 +515,7 @@ function renderSeasonalBanner() {
         return;
       }
       if (campaign.ctaAction === 'add-to-cart') {
-        onHeartTap(campaign.productId, document.getElementById('seasonal-cta'));
+        onHeartTap(campaign.productId);
         const paquete = PAQUETES.find((p) => p.id === campaign.productId);
         if (!paquete.variantes?.length) openCart();
         return;
