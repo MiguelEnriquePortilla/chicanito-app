@@ -92,7 +92,15 @@ function renderFeedDivider(index) {
 
 // ---------- Feed de paquetes ----------
 function renderFeed() {
-  feedContainerEl.innerHTML = PAQUETES.map(
+  const dipBanner = isCrujiDipPromotion() ? `
+    <div class="crujidip-banner">
+      <button id="crujidip-banner-btn" type="button" aria-label="Elegir Cruji Doce de $254 con CrujiDip mediano de 4 oz gratis">
+        <img src="assets/menu/crujidip-gratis-4oz-banner.webp" width="1536" height="1024" alt="">
+        <span>Elegir Cruji Doce &middot; $254</span>
+      </button>
+    </div>
+  ` : '';
+  feedContainerEl.innerHTML = dipBanner + PAQUETES.map(
     (p, i) => `
       <article class="feed-card${p.arteMenu ? ' menu-art-card' : ''}" id="feed-${p.id}" data-id="${p.id}">
         <img class="feed-card-img" src="${p.imagen}" alt="${p.nombre}" loading="${i === 0 ? 'eager' : 'lazy'}">
@@ -119,6 +127,13 @@ function renderFeed() {
     `
   ).join('');
 
+  feedContainerEl.querySelector('#crujidip-banner-btn')?.addEventListener('click', (event) => {
+    if (!isCrujiDipPromotion()) {
+      renderSeasonalBanner();
+      return;
+    }
+    onHeartTap('paquete-4', event.currentTarget);
+  });
   feedContainerEl.querySelectorAll('.heart-btn').forEach((btn) => {
     btn.addEventListener('click', () => onHeartTap(btn.dataset.id, btn));
   });

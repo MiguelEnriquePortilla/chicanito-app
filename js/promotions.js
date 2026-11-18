@@ -93,7 +93,6 @@ function refreshSeasonalProducts(now = new Date()) {
     if (isCrujiDipPromotion(now)) {
       doce.variantes.push({id: 'crujiDip', label: 'CrujiDip mediano (4 oz) GRATIS a elegir', opciones: CRUJI_DIP_FLAVORS});
       doce.caption = 'CrujiDip mediano (4 oz) GRATIS a elegir';
-      doce.imagen = 'assets/menu/cruji-doce-dip-noviembre-2026.png';
       doce.descripcionCorta += ' Promoción válida hasta el 30 de noviembre de 2026.';
     }
   }

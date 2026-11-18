@@ -724,3 +724,35 @@ body.is-leaving {
 .menu-art-card .feed-card-img{position:relative;inset:auto;height:auto;max-height:62vh;padding:12px 18px 0;flex-shrink:0;object-fit:contain}
 .menu-art-card .feed-card-gradient{display:none}.menu-art-card .feed-card-content{padding-top:14px}
 .feed-action-btn:disabled{opacity:.5;cursor:not-allowed}.menu-art-card .heart-count{font-size:12px}
+
+.crujidip-banner {
+  display: grid;
+  place-items: center;
+  padding: 16px 18px 24px;
+  scroll-snap-align: start;
+}
+.crujidip-banner button {
+  width: min(100%, 680px, 84vh);
+  overflow: hidden;
+  border: 0;
+  border-radius: 14px;
+  padding: 0;
+  background: var(--navy);
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.crujidip-banner button:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 4px;
+}
+.crujidip-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.crujidip-banner span {
+  display: block;
+  padding: 12px 16px;
+}
