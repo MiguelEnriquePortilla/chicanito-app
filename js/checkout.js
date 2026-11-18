@@ -147,7 +147,7 @@ document.getElementById('confirm-btn').addEventListener('click', async () => {
   const currentCart = getCart();
   if (isCrujiDipPromotion() && currentCart.some(item => item.tipo === 'paquete' &&
       item.refId === 'paquete-4' && !CRUJI_DIP_FLAVORS.includes(item.crujiDip))) {
-    alert('Tu Cruji Doce incluye un CrujiDip GRATIS. Vuelve al carrito y pulsa Elegir CrujiDip gratis para escoger tu sabor.');
+    alert('Tu Cruji Doce incluye un CrujiDip mediano (4 oz) GRATIS. Vuelve al carrito y pulsa Elegir CrujiDip gratis para escoger tu sabor.');
     window.location.href = 'index.html#feed-paquete-4';
     return;
   }

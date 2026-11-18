@@ -26,7 +26,9 @@ try:
             page.goto(f'http://127.0.0.1:{server.server_port}')
             page.locator('#splash').wait_for(state='detached')
             card=page.locator('#feed-paquete-4')
-            expect(card).to_contain_text('CrujiDip GRATIS a elegir')
+            expect(page.locator('#feed-noviembre-2026, [data-id^="bravas-"]')).to_have_count(0)
+            expect(page.locator('.feed-card-caption').filter(has_text='GRATIS')).to_have_count(1)
+            expect(card).to_contain_text('CrujiDip mediano (4 oz) GRATIS a elegir')
             card.scroll_into_view_if_needed()
             page.wait_for_function("document.querySelector('#feed-paquete-4 img').naturalWidth>0")
             card.locator('.heart-btn').click()
@@ -54,7 +56,7 @@ try:
             expect(page.locator('#cart-subtotal')).to_have_text('$508')
             page.locator('#checkout-btn').click()
             page.wait_for_url('**/checkout.html')
-            expect(page.locator('#order-summary')).to_contain_text('2x CrujiDip GRATIS · Miel Picante')
+            expect(page.locator('#order-summary')).to_contain_text('2x CrujiDip mediano (4 oz) GRATIS · Miel Picante')
             page.locator('#nombre').fill('Prueba local CrujiDip')
             page.locator('#telefono').fill('5555555555')
             page.locator('#opt-recoger').click()
@@ -62,7 +64,7 @@ try:
             page.wait_for_url('**/confirmacion.html')
             expect(page.locator('#summary-total')).to_have_text('$508')
             message=parse_qs(urlparse(page.locator('#send-whatsapp-btn').get_attribute('href')).query)['text'][0]
-            assert '2x CrujiDip GRATIS · Miel Picante ($0 c/u)' in message
+            assert '2x CrujiDip mediano (4 oz) GRATIS · Miel Picante ($0 c/u)' in message
             assert 'Salsa: Verde' in message
             assert saved and saved[0]['total']==508
             gift=next(i for i in saved[0]['cart'] if i['tipo']=='promocion')

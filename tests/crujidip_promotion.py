@@ -27,8 +27,15 @@ with sync_playwright() as p:
       assert(applyPromotion(result,date).filter(i=>i.refId==='crujidip-noviembre-2026').length===2, 'Regalos duplicados');
       assert(!applyPromotion([item('paquete-3')],date).some(i=>i.refId==='crujidip-noviembre-2026'), 'Paquete no elegible');
       assert(!applyPromotion([item('paquete-4',1,'Inventado')],date).some(i=>i.tipo==='promocion'), 'Sabor inválido');
-      const both=applyPromotion([item('paquete-4'),{...item('bravas-cruji-noviembre-2026'),precioUnitario:229}],date);
-      assert(both.filter(i=>i.tipo==='promocion').length===2, 'Se perdió promo Bravas');
+      const previousBravas = [
+        item('bravas-cruji-noviembre-2026'),
+        item('bravas-rosti-noviembre-2026'),
+        {...item('paquete-3'), precioUnitario:229},
+        {...item('paquete-4'), precioUnitario:229},
+        {tipo:'promocion', refId:'noviembre-2026'}
+      ];
+      assert(applyPromotion(previousBravas,date).length===0, 'Quedaron Bravas en el carrito');
+      assert(!PAQUETES.some(p=>p.id.startsWith('bravas-')), 'Quedaron fichas Bravas');
       for(const at of ['2026-11-01T05:59:59Z','2026-12-01T06:00:00Z','2027-11-17T18:00:00Z']) {
         const expired=applyPromotion(result,new Date(at));
         assert(!expired.some(i=>i.refId==='crujidip-noviembre-2026'), 'Regalo fuera de vigencia');
@@ -37,6 +44,6 @@ with sync_playwright() as p:
       }
       for(const at of ['2026-11-01T06:00:00Z','2026-12-01T05:59:59Z'])
         assert(applyPromotion([item('paquete-4')],new Date(at)).some(i=>i.refId==='crujidip-noviembre-2026'), 'Límite CDMX incorrecto');
-      return 'PASS CrujiDip: sabores, cantidad, cero costo, idempotencia, exclusión, coexistencia y vigencia CDMX';
+      return 'PASS CrujiDip: sabores, cantidad, cero costo, idempotencia, exclusión, retiro de Bravas y vigencia CDMX';
     }'''))
     browser.close()

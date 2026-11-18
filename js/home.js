@@ -92,23 +92,7 @@ function renderFeedDivider(index) {
 
 // ---------- Feed de paquetes ----------
 function renderFeed() {
-  const november = activeCampaign()?.id === 'noviembre-2026';
-  const promo = november ? `<article class="feed-card november-promo-card" id="feed-noviembre-2026" aria-label="Promoción noviembre 2026">
-    <div class="november-promo-layout">
-    <div class="november-promo-visual"><img class="november-promo-art" src="assets/menu/bravas-noviembre-foto.png" alt="Gajos Bravas Habaneras con sazón seco de habanero, paprika y toque cítrico." fetchpriority="high"></div>
-    <div class="november-promo-copy">
-      <h1>Noviembre con <span>“N”</span><br>de NO PARAMOS.</h1>
-      <h2>Gajos Bravas Habaneras <em>GRATIS</em></h2>
-      <p class="november-promo-condition">Solo 12 piezas CRUJI o ROSTI + gajos Bravas gratis.</p>
-      <p class="november-promo-flavor">Habanero, paprika y toque cítrico. Un nuevo sabor para acompañar tu pollo favorito.</p>
-      <div class="november-promo-options">
-      <button type="button" data-promo-choice="bravas-rosti-noviembre-2026">Elegir ROSTI &middot; ${formatoMoneda(PAQUETES.find(p => p.id === 'bravas-rosti-noviembre-2026').precio)}</button>
-      <button type="button" data-promo-choice="bravas-cruji-noviembre-2026">Elegir CRUJI &middot; ${formatoMoneda(PAQUETES.find(p => p.id === 'bravas-cruji-noviembre-2026').precio)}</button>
-      </div>
-      <p class="november-promo-validity">Exclusivo por la app · Válido todo NOVIEMBRE 2026</p>
-    </div></div>
-  </article>` : '';
-  feedContainerEl.innerHTML = promo + PAQUETES.map(
+  feedContainerEl.innerHTML = PAQUETES.map(
     (p, i) => `
       <article class="feed-card${p.arteMenu ? ' menu-art-card' : ''}" id="feed-${p.id}" data-id="${p.id}">
         <img class="feed-card-img" src="${p.imagen}" alt="${p.nombre}" loading="${i === 0 ? 'eager' : 'lazy'}">
@@ -135,9 +119,6 @@ function renderFeed() {
     `
   ).join('');
 
-  feedContainerEl.querySelectorAll('[data-promo-choice]').forEach((btn) => {
-    btn.addEventListener('click', () => onHeartTap(btn.dataset.promoChoice, btn));
-  });
   feedContainerEl.querySelectorAll('.heart-btn').forEach((btn) => {
     btn.addEventListener('click', () => onHeartTap(btn.dataset.id, btn));
   });
@@ -533,11 +514,15 @@ ajustarAlturaTopBar();
 function renderSeasonalBanner() {
   const previous = PAQUETES[0]?.id;
   refreshSeasonalProducts();
-  const november = activeCampaign()?.id === 'noviembre-2026';
-  if (previous !== PAQUETES[0]?.id || Boolean(document.getElementById('feed-noviembre-2026')) !== november) { renderTabs(); renderFeed(); }
+  const dipCaption = PAQUETES.find(p => p.id === 'paquete-4')?.caption;
+  const renderedCaption = document.querySelector('#feed-paquete-4 .feed-card-caption')?.textContent;
+  if (previous !== PAQUETES[0]?.id || (dipCaption || '') !== (renderedCaption || '')) {
+    renderTabs();
+    renderFeed();
+  }
   const campaign = activeCampaign();
   const banner = document.getElementById('seasonal-banner');
-  banner.hidden = !campaign || campaign.id === 'noviembre-2026';
+  banner.hidden = !campaign;
   if (campaign) {
     document.getElementById('seasonal-title').textContent = campaign.title;
     document.getElementById('seasonal-message').textContent = campaign.message;
@@ -558,7 +543,7 @@ function renderSeasonalBanner() {
       const card = document.getElementById(`feed-${campaign.productId}`);
       if (card) {
         scrollFeedCardIntoView(card);
-        (card.querySelector('.heart-btn') || card.querySelector('[data-promo-choice]'))?.focus({ preventScroll: true });
+        card.querySelector('.heart-btn')?.focus({ preventScroll: true });
       }
     };
   }

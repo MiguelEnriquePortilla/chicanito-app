@@ -2,16 +2,6 @@
 // Agrega la campaña siguiente aquí; no se repite septiembre en años futuros.
 const CAMPAIGNS = [
   {
-    id: 'noviembre-2026', startsOn: '2026-11-01', endsOn: '2026-11-30',
-    title: 'Noviembre con N de NO PARAMOS',
-    message: 'Gajos Bravas Habaneras GRATIS en la compra de 12 piezas CRUJI o ROSTI. Pide por la app. Válido todo NOVIEMBRE 2026.',
-    productId: 'noviembre-2026', ctaLabel: 'Ver promo', ctaAction: 'show-promo',
-    productIds: ['bravas-rosti-noviembre-2026', 'bravas-cruji-noviembre-2026'],
-    price: 229,
-    giftName: 'Gajos Bravas Habaneras GRATIS',
-    giftDetail: '250 g por paquete de 12 piezas. Sazón seco de habanero, paprika y toque cítrico. Promo noviembre 2026.',
-  },
-  {
     id: 'octubre-2026', startsOn: '2026-10-08', endsOn: '2026-10-31',
     title: '¡Sin miedito, pide con piloncito!',
     message: '12 piezas crujientes con salsa de la casa por $229. ¡250 g de papas gajo GRATIS! Exclusivo por la app hasta el 31 de octubre.',
@@ -64,7 +54,7 @@ function applyPromotion(cart, now = new Date()) {
   return [...items, ...Array.from(quantities, ([flavor, cantidad]) => ({
     uid: `promo-crujidip-${CRUJI_DIP_FLAVORS.indexOf(flavor)}`,
     tipo: 'promocion', refId: 'crujidip-noviembre-2026',
-    nombre: `CrujiDip GRATIS · ${flavor}`, cantidad, precioUnitario: 0,
+    nombre: `CrujiDip mediano (4 oz) GRATIS · ${flavor}`, cantidad, precioUnitario: 0,
     detalleVariantes: 'Uno por Cruji Doce. Válido hasta el 30 de noviembre de 2026.',
   }))];
 }
@@ -73,33 +63,13 @@ function applySeasonalPromotion(cart, now = new Date()) {
   const campaign = activeCampaign(now);
   const paidItems = cart.filter((item) => item.tipo !== 'promocion' &&
     (item.refId !== 'cruji-pilon-octubre-2026' || campaign?.id === 'octubre-2026') &&
-    (!item.refId?.startsWith('bravas-') || campaign?.id === 'noviembre-2026'))
+    !item.refId?.startsWith('bravas-') &&
+    !(item.tipo === 'paquete' && item.precioUnitario === 229 &&
+      ['paquete-3', 'paquete-4'].includes(item.refId)))
     .map((item) => item.refId === 'cruji-pilon-octubre-2026' ? {
       ...item, nombre: 'Cruji con pilón · 12 piezas crujientes', precioUnitario: 229,
       detalleVariantes: 'Salsa de la casa + 250 g de papas gajo GRATIS por paquete',
     } : { ...item });
-  // Normalizar promos ya guardadas, retirando las opciones del paquete anterior.
-  for (const item of paidItems) {
-    if (item.tipo !== 'paquete' || campaign?.id !== 'noviembre-2026') continue;
-    const legacy = { 'paquete-3': 'rosti', 'paquete-4': 'cruji' }[item.refId];
-    if (legacy && item.precioUnitario === campaign.price) {
-      item.refId = `bravas-${legacy}-noviembre-2026`;
-    }
-    if (!campaign.productIds.includes(item.refId)) continue;
-    item.nombre = `Promo Bravas - 12 piezas ${item.refId.includes('-rosti-') ? 'ROSTI' : 'CRUJI'}`;
-    item.precioUnitario = campaign.price;
-    item.detalleVariantes = 'Solo 12 piezas.';
-  }
-  if (campaign?.id === 'noviembre-2026') {
-    const cantidad = paidItems.reduce((sum, item) => sum + (
-      item.tipo === 'paquete' && campaign.productIds.includes(item.refId) && item.cantidad > 0
-        ? item.cantidad : 0), 0);
-    return cantidad ? [...paidItems, {
-      uid: `promo-${campaign.id}`, tipo: 'promocion', refId: campaign.id,
-      nombre: campaign.giftName, cantidad, precioUnitario: 0,
-      detalleVariantes: campaign.giftDetail,
-    }] : paidItems;
-  }
   if (!campaign || !campaign.giftName || !paidItems.some((item) =>
     item.tipo === 'paquete' && item.refId === campaign.productId && item.cantidad > 0
   )) return paidItems;
@@ -110,7 +80,7 @@ function applySeasonalPromotion(cart, now = new Date()) {
   }];
 }
 
-// Producto independiente: el paquete habitual conserva precio y guarniciones.
+// Actualizar las ofertas del catálogo según su vigencia.
 function refreshSeasonalProducts(now = new Date()) {
   if (typeof PAQUETES === 'undefined') return;
   const campaign = activeCampaign(now);
@@ -121,28 +91,11 @@ function refreshSeasonalProducts(now = new Date()) {
     doce.imagen = 'assets/menu/octubre-2026/cruji-doce-254-45x80-qr.png';
     doce.descripcionCorta = '12 piezas, salsa grande y papas gajo grandes.';
     if (isCrujiDipPromotion(now)) {
-      doce.variantes.push({id: 'crujiDip', label: 'CrujiDip GRATIS a elegir', opciones: CRUJI_DIP_FLAVORS});
-      doce.caption = 'CrujiDip GRATIS a elegir';
+      doce.variantes.push({id: 'crujiDip', label: 'CrujiDip mediano (4 oz) GRATIS a elegir', opciones: CRUJI_DIP_FLAVORS});
+      doce.caption = 'CrujiDip mediano (4 oz) GRATIS a elegir';
       doce.imagen = 'assets/menu/cruji-doce-dip-noviembre-2026.png';
-      doce.descripcionCorta += ' + 1 CrujiDip GRATIS. Todo noviembre 2026.';
+      doce.descripcionCorta += ' Promoción válida hasta el 30 de noviembre de 2026.';
     }
-  }
-  for (let i = PAQUETES.length - 1; i >= 0; i--) {
-    if (PAQUETES[i].id.startsWith('bravas-')) PAQUETES.splice(i, 1);
-  }
-  if (campaign?.id === 'noviembre-2026') {
-    PAQUETES.unshift(...['rosti', 'cruji'].map((kind) => ({
-      id: `bravas-${kind}-noviembre-2026`,
-      categoria: kind === 'rosti' ? 'rostizados' : 'crujientes',
-      nombre: `Promo Bravas - 12 piezas ${kind.toUpperCase()}`,
-      precio: campaign.price,
-      caption: 'Gajos Bravas Habaneras GRATIS',
-      descripcionCorta: 'Solo 12 piezas + gajos Bravas Habaneras gratis.',
-      detalleFijo: 'Solo 12 piezas.',
-      imagen: 'assets/menu/bravas-noviembre-foto.png',
-      variantes: [],
-      arteMenu: true,
-    })));
   }
   const index = PAQUETES.findIndex((p) => p.id === 'cruji-pilon-octubre-2026');
   if (index >= 0) PAQUETES.splice(index, 1);
