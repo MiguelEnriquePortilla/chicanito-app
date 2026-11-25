@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Política de Privacidad y Términos de Servicio de la aplicación oficial de Chicken Chicanito para TikTok. Jojutla, Morelos, México." />
+    <link rel="icon" href="data:," />
+    <title>Chicken Chicanito — Privacidad y Términos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2rem; }
+
+      :root{
+        --bg:#fdfcf9;
+        --surface:#ffffff;
+        --surface-2:#f6f1e7;
+        --ink:#1c2434;
+        --ink-soft:#4a5468;
+        --line:#e4ddd0;
+        --red:#c8102e;
+        --red-dark:#9c0c24;
+        --red-soft:#fdeef0;
+        --navy:#16263f;
+        --navy-soft:#22385c;
+        --gold:#e9a13b;
+        --gold-soft:#fdf3e0;
+        --header-bg:#c8102e;
+        --header-ink:#ffffff;
+        --shadow:0 1px 2px rgba(22,38,63,.06),0 10px 30px -18px rgba(22,38,63,.25);
+        color-scheme: light dark;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#10151f;
+          --surface:#171e2c;
+          --surface-2:#1e2739;
+          --ink:#eef1f6;
+          --ink-soft:#aeb9cc;
+          --line:#2b364d;
+          --red:#ff5b74;
+          --red-dark:#ff8a9b;
+          --red-soft:#33161d;
+          --navy:#0c1322;
+          --navy-soft:#aeb9cc;
+          --gold:#f0b45a;
+          --gold-soft:#33270f;
+          --header-bg:#8f0a20;
+          --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -18px rgba(0,0,0,.6);
+        }
+      }
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{
+        margin:0;
+        background:var(--bg);
+        color:var(--ink);
+        font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+        font-size:16.5px;
+        line-height:1.65;
+        -webkit-font-smoothing:antialiased;
+      }
+      a{color:var(--red);text-underline-offset:3px}
+      a:hover{color:var(--red-dark)}
+      :focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:4px}
+
+      /* ---------- Header ---------- */
+      .topbar{
+        background:var(--header-bg);
+        color:var(--header-ink);
+        background-image:repeating-linear-gradient(-45deg,rgba(255,255,255,.05) 0 14px,transparent 14px 28px);
+      }
+      .topbar-inner{
+        max-width:880px;margin:0 auto;
+        padding:26px 20px 30px;
+        display:flex;gap:18px;align-items:flex-start;
+      }
+      .badge{
+        flex:0 0 auto;
+        width:62px;height:62px;border-radius:16px;
+        background:var(--navy);
+        color:#fff;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        border:2px solid rgba(255,255,255,.35);
+        box-shadow:0 6px 16px -6px rgba(0,0,0,.45);
+      }
+      .badge .cc{font-family:"Archivo",sans-serif;font-weight:900;font-size:24px;line-height:1;letter-spacing:.5px}
+      .badge .sub{font-size:8.5px;font-weight:700;letter-spacing:2.5px;margin-top:3px;color:var(--gold)}
+      .topbar h1{
+        font-family:"Archivo",sans-serif;font-weight:900;
+        font-size:clamp(26px,5.4vw,38px);line-height:1.08;margin:2px 0 6px;letter-spacing:-.01em;
+      }
+      .topbar .place{margin:0;font-size:15px;opacity:.92;font-weight:600}
+      .topbar .tag{margin:8px 0 0;font-size:14.5px;opacity:.85;max-width:56ch}
+
+      /* ---------- Toolbar ---------- */
+      .toolbar{
+        position:sticky;top:0;z-index:20;
+        background:color-mix(in srgb,var(--bg) 88%,transparent);
+        backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+        border-bottom:1px solid var(--line);
+      }
+      .toolbar-inner{
+        max-width:880px;margin:0 auto;padding:10px 20px;
+        display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+      }
+      .navchips{display:flex;flex-wrap:wrap;gap:8px}
+      .chip{
+        display:inline-flex;align-items:center;min-height:40px;
+        padding:6px 14px;border-radius:999px;
+        border:1.5px solid var(--line);background:var(--surface);
+        color:var(--ink);font-weight:700;font-size:14px;text-decoration:none;
+      }
+      .chip:hover{border-color:var(--red);color:var(--red)}
+      .chip.active{background:var(--red);border-color:var(--red);color:#fff}
+      .langtoggle{
+        display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface);
+      }
+      .langtoggle button{
+        min-height:40px;padding:6px 16px;border:0;background:transparent;cursor:pointer;
+        font:inherit;font-weight:700;font-size:14px;color:var(--ink-soft);
+      }
+      .langtoggle button[aria-pressed="true"]{background:var(--navy);color:#fff}
+      @media (prefers-color-scheme: dark){
+        .langtoggle button[aria-pressed="true"]{background:var(--gold);color:#23180a}
+      }
+
+      /* ---------- Layout ---------- */
+      main{max-width:880px;margin:0 auto;padding:28px 20px 12px}
+      .intro{
+        background:var(--surface);border:1px solid var(--line);border-radius:14px;
+        box-shadow:var(--shadow);padding:22px 24px;margin-bottom:26px;
+      }
+      .intro h2{font-family:"Archivo",sans-serif;font-weight:800;font-size:20px;margin:0 0 8px;line-height:1.25}
+      .intro p{margin:0 0 10px;color:var(--ink-soft)}
+      .intro p:last-child{margin-bottom:0}
+      .factrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+      .fact{
+        font-size:13.5px;font-weight:700;padding:7px 12px;border-radius:8px;
+        background:var(--surface-2);color:var(--ink);border:1px solid var(--line);
+      }
+      .fact b{color:var(--red)}
+
+      section.doc{
+        background:var(--surface);border:1px solid var(--line);border-radius:14px;
+        box-shadow:var(--shadow);padding:28px 26px;margin-bottom:26px;
+        scroll-margin-top:84px;
+      }
+      .doc-kicker{
+        display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--red);background:var(--red-soft);padding:5px 11px;border-radius:6px;margin-bottom:12px;
+      }
+      section.doc.terms .doc-kicker{color:#8a5a10;background:var(--gold-soft)}
+      @media (prefers-color-scheme: dark){
+        section.doc.terms .doc-kicker{color:var(--gold)}
+      }
+      .doc h2{
+        font-family:"Archivo",sans-serif;font-weight:900;letter-spacing:-.01em;
+        font-size:clamp(24px,4.6vw,32px);line-height:1.15;margin:0 0 6px;
+      }
+      .updated{color:var(--ink-soft);font-size:14px;margin:0 0 20px;font-weight:600}
+      .doc h3{
+        font-family:"Archivo",sans-serif;font-weight:800;font-size:18px;
+        margin:26px 0 8px;line-height:1.3;
+        display:flex;gap:10px;align-items:baseline;
+      }
+      .doc h3 .n{
+        flex:0 0 auto;font-size:13px;font-weight:900;color:#fff;background:var(--red);
+        width:24px;height:24px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;
+        transform:translateY(3px);
+      }
+      section.doc.terms h3 .n{background:var(--gold);color:#23180a}
+      .doc p{margin:0 0 12px}
+      .doc ul{margin:0 0 12px;padding-left:22px}
+      .doc li{margin-bottom:7px}
+      .doc li::marker{color:var(--red);font-weight:700}
+      section.doc.terms li::marker{color:#b97e1e}
+      .callout{
+        border:1px solid var(--line);background:var(--surface-2);border-radius:10px;
+        padding:14px 16px;margin:14px 0;font-size:15.5px;
+      }
+      .callout p{margin:0}
+      code{
+        font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.88em;
+        background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;
+      }
+
+      /* ---------- Contact ---------- */
+      .contact{
+        background:var(--navy);color:#eef1f6;border-radius:14px;padding:26px;
+        margin-bottom:30px;scroll-margin-top:84px;
+      }
+      @media (prefers-color-scheme: dark){.contact{background:#0c1322;border:1px solid var(--line)}}
+      .contact h2{font-family:"Archivo",sans-serif;font-weight:800;font-size:21px;margin:0 0 6px}
+      .contact p{margin:0 0 16px;color:#c3cede;max-width:60ch}
+      .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+      .contact a{
+        display:flex;flex-direction:column;gap:2px;text-decoration:none;
+        background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);
+        border-radius:10px;padding:13px 15px;min-height:64px;justify-content:center;
+      }
+      .contact a:hover{background:rgba(255,255,255,.12)}
+      .contact .lbl{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+      .contact .val{color:#fff;font-weight:700;font-size:16px}
+
+      footer{
+        max-width:880px;margin:0 auto;padding:6px 20px 44px;
+        color:var(--ink-soft);font-size:13.5px;text-align:center;
+      }
+      footer .rule{width:52px;height:4px;border-radius:2px;background:var(--red);margin:0 auto 16px}
+
+      [hidden]{display:none !important}
+      @media (max-width:560px){
+        .topbar-inner{padding:22px 16px 24px}
+        main{padding:22px 14px 8px}
+        section.doc{padding:22px 18px}
+        .intro{padding:18px}
+        .toolbar-inner{padding:10px 14px}
+        body{font-size:16px}
+      }
+      @media (prefers-reduced-motion: reduce){
+        html{scroll-behavior:auto}
+      }
+    </style>
+  </head>
+  <body>
+
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="badge" aria-hidden="true"><span class="cc">CC</span><span class="sub">JOJUTLA</span></div>
+        <div>
+          <h1>Chicken Chicanito</h1>
+          <p class="place" data-es>Privacidad y Términos · Jojutla, Morelos, México</p>
+          <p class="place" data-en hidden>Privacy &amp; Terms · Jojutla, Morelos, Mexico</p>
+          <p class="tag" data-es>Documentos legales oficiales de la aplicación de Chicken Chicanito para TikTok: la herramienta con la que publicamos videos en nuestra propia cuenta, @chicken.chicanito.</p>
+          <p class="tag" data-en hidden>Official legal documents for the Chicken Chicanito TikTok application: the tool we use to publish videos to our own account, @chicken.chicanito.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <div class="toolbar-inner">
+        <nav class="navchips" aria-label="Secciones">
+          <a class="chip" href="#privacidad" data-es>Política de Privacidad</a>
+          <a class="chip" href="#privacidad" data-en hidden>Privacy Policy</a>
+          <a class="chip" href="#terminos" data-es>Términos de Servicio</a>
+          <a class="chip" href="#terminos" data-en hidden>Terms of Service</a>
+          <a class="chip" href="#contacto" data-es>Contacto</a>
+          <a class="chip" href="#contacto" data-en hidden>Contact</a>
+        </nav>
+        <div class="langtoggle" role="group" aria-label="Idioma / Language">
+          <button type="button" id="btn-es" aria-pressed="true">Español</button>
+          <button type="button" id="btn-en" aria-pressed="false">English</button>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <!-- ================= INTRO ================= -->
+      <div class="intro">
+        <div data-es>
+          <h2>¿Qué es esta página?</h2>
+          <p>Chicken Chicanito es un restaurante de pollo rostizado y pollo crujiente (CRUJI) ubicado en el exterior del Mercado Benito Juárez, en Jojutla, Morelos, México. Esta página publica la <strong>Política de Privacidad</strong> y los <strong>Términos de Servicio</strong> de nuestra aplicación registrada en TikTok for Developers.</p>
+          <p>La aplicación es una herramienta interna del negocio: sirve únicamente para conectar <strong>nuestra propia cuenta de TikTok</strong> y publicar en ella los videos que nosotros mismos producimos, usando las herramientas oficiales de TikTok (Login Kit y Content Posting API). No es una app para el público y no ofrece cuentas a terceros.</p>
+        </div>
+        <div data-en hidden>
+          <h2>What is this page?</h2>
+          <p>Chicken Chicanito is a roasted and crispy chicken (CRUJI) restaurant located outside the Benito Juárez Market in Jojutla, Morelos, Mexico. This page publishes the <strong>Privacy Policy</strong> and <strong>Terms of Service</strong> of our application registered with TikTok for Developers.</p>
+          <p>The application is an internal business tool: its sole purpose is to connect <strong>our own TikTok account</strong> and publish to it the videos we produce ourselves, using TikTok's official tools (Login Kit and Content Posting API). It is not a public app and does not offer accounts to third parties.</p>
+        </div>
+        <div class="factrow">
+          <span class="fact">TikTok · <b>@chicken.chicanito</b></span>
+          <span class="fact">Instagram · <b>@chickenchicanito</b></span>
+          <span class="fact" data-es>Ubicación · <b>Jojutla, Morelos</b></span>
+          <span class="fact" data-en hidden>Location · <b>Jojutla, Morelos</b></span>
+        </div>
+      </div>
+
+      <!-- ================= PRIVACIDAD ES ================= -->
+      <section class="doc" id="privacidad" data-es aria-labelledby="priv-title-es">
+        <span class="doc-kicker">Documento 1 de 2</span>
+        <h2 id="priv-title-es">Política de Privacidad</h2>
+        <p class="updated">Última actualización: 25 de noviembre de 2026 · Vigente desde la misma fecha</p>
+
+        <h3><span class="n">1</span> Responsable</h3>
+        <p>El responsable del tratamiento de los datos es <strong>Chicken Chicanito</strong>, restaurante ubicado en el exterior del Mercado Benito Juárez, Jojutla, Morelos, México (en adelante, «Chicken Chicanito», «nosotros»). Esta política aplica a la aplicación de Chicken Chicanito registrada en TikTok for Developers (la «Aplicación») y a esta página web.</p>
+
+        <h3><span class="n">2</span> Qué hace la Aplicación</h3>
+        <p>La Aplicación permite al propietario y al equipo autorizado de Chicken Chicanito iniciar sesión con la cuenta oficial de TikTok del negocio (<strong>@chicken.chicanito</strong>) y publicar videos producidos por el propio negocio en esa misma cuenta, a través de la API oficial de TikTok (Login Kit y Content Posting API). La Aplicación no publica en cuentas de terceros ni presta servicios al público.</p>
+
+        <h3><span class="n">3</span> Datos a los que accedemos</h3>
+        <p>Cuando el titular de la cuenta autoriza la Aplicación mediante TikTok Login Kit, TikTok nos comparte únicamente los datos correspondientes a los permisos aprobados:</p>
+        <ul>
+          <li><strong>Información básica del perfil</strong> (permiso <code>user.info.basic</code>): identificador abierto de la cuenta (open ID), nombre para mostrar y foto de perfil de nuestra propia cuenta.</li>
+          <li><strong>Permiso de publicación</strong> (permiso <code>video.publish</code>): autorización para subir y publicar videos en nuestra propia cuenta, junto con el estado de cada publicación (en proceso, publicada o con error).</li>
+          <li><strong>Tokens de acceso</strong> que TikTok emite para mantener la autorización vigente.</li>
+        </ul>
+        <p>No solicitamos acceso a mensajes directos, contactos, ubicación, datos de pago ni a la información de seguidores u otros usuarios de TikTok.</p>
+
+        <h3><span class="n">4</span> Para qué usamos los datos</h3>
+        <ul>
+          <li>Verificar que quien inicia sesión es el titular autorizado de la cuenta oficial de Chicken Chicanito.</li>
+          <li>Publicar en TikTok los videos y textos (títulos y descripciones) que el propio negocio prepara.</li>
+          <li>Confirmar que cada publicación se haya completado correctamente.</li>
+        </ul>
+        <p>No usamos los datos para publicidad de terceros, perfiles comerciales de usuarios, ni para ninguna finalidad distinta de operar nuestra propia cuenta de TikTok.</p>
+
+        <h3><span class="n">5</span> Lo que nunca hacemos</h3>
+        <ul>
+          <li><strong>No vendemos</strong> datos personales a nadie.</li>
+          <li><strong>No compartimos</strong> los datos con terceros, salvo con TikTok mismo como parte del funcionamiento de su API.</li>
+          <li><strong>No recopilamos</strong> datos de clientes, seguidores o visitantes a través de la Aplicación.</li>
+        </ul>
+
+        <h3><span class="n">6</span> Almacenamiento y seguridad</h3>
+        <p>Los tokens de acceso se guardan en un entorno restringido, accesible solo para el equipo autorizado de Chicken Chicanito, y se transmiten siempre por conexiones cifradas (HTTPS). Las claves de la Aplicación (client key y client secret) se mantienen confidenciales y nunca se publican en esta página ni en materiales públicos.</p>
+
+        <h3><span class="n">7</span> Conservación y eliminación</h3>
+        <p>Conservamos la autorización únicamente mientras la Aplicación siga en uso. El titular de la cuenta puede <strong>revocar el acceso en cualquier momento</strong> desde la configuración de TikTok (Ajustes y privacidad → Seguridad y permisos → Aplicaciones y servicios). Al revocarse el acceso, los tokens dejan de funcionar y los eliminamos. También puedes pedir la eliminación de cualquier dato asociado escribiéndonos por WhatsApp al <a href="https://wa.me/527341260080">734 126 0080</a>; atendemos la solicitud en un plazo máximo de 15 días hábiles.</p>
+
+        <h3><span class="n">8</span> Esta página web</h3>
+        <p>Esta página es un documento informativo estático: <strong>no usa cookies de rastreo, no tiene formularios, no crea cuentas y no recopila datos de sus visitantes</strong>. Los enlaces externos (TikTok, Instagram y WhatsApp) se rigen por las políticas de privacidad de cada plataforma.</p>
+
+        <h3><span class="n">9</span> Menores de edad</h3>
+        <p>La Aplicación es una herramienta interna de trabajo operada por adultos del equipo de Chicken Chicanito. No está dirigida a menores de edad ni recopila datos de menores.</p>
+
+        <h3><span class="n">10</span> Tus derechos</h3>
+        <p>De acuerdo con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (México), tienes derecho a acceder, rectificar, cancelar u oponerte al tratamiento de tus datos personales (derechos ARCO). Para ejercerlos, contáctanos por WhatsApp al <a href="https://wa.me/527341260080">734 126 0080</a> identificando tu solicitud.</p>
+
+        <h3><span class="n">11</span> Cambios a esta política</h3>
+        <p>Si esta política cambia, publicaremos la nueva versión en esta misma página e indicaremos la fecha de actualización. Los cambios aplican desde su publicación.</p>
+
+        <h3><span class="n">12</span> Contacto</h3>
+        <p>Para cualquier duda sobre esta política: Chicken Chicanito, exterior del Mercado Benito Juárez, Jojutla, Morelos, México · WhatsApp <a href="https://wa.me/527341260080">734 126 0080</a> · TikTok <a href="https://www.tiktok.com/@chicken.chicanito">@chicken.chicanito</a>.</p>
+      </section>
+
+      <!-- ================= PRIVACY EN ================= -->
+      <section class="doc" data-en hidden aria-labelledby="priv-title-en">
+        <span class="doc-kicker">Document 1 of 2</span>
+        <h2 id="priv-title-en">Privacy Policy</h2>
+        <p class="updated">Last updated: November 25, 2026 · Effective the same date</p>
+
+        <h3><span class="n">1</span> Who we are</h3>
+        <p>The data controller is <strong>Chicken Chicanito</strong>, a restaurant located outside the Benito Juárez Market, Jojutla, Morelos, Mexico ("Chicken Chicanito", "we"). This policy applies to the Chicken Chicanito application registered with TikTok for Developers (the "App") and to this website.</p>
+
+        <h3><span class="n">2</span> What the App does</h3>
+        <p>The App lets the owner and authorized team of Chicken Chicanito sign in with the business's official TikTok account (<strong>@chicken.chicanito</strong>) and publish videos produced by the business itself to that same account, through TikTok's official API (Login Kit and Content Posting API). The App does not post to third-party accounts and is not offered to the public.</p>
+
+        <h3><span class="n">3</span> Data we access</h3>
+        <p>When the account holder authorizes the App through TikTok Login Kit, TikTok shares with us only the data covered by the approved scopes:</p>
+        <ul>
+          <li><strong>Basic profile information</strong> (scope <code>user.info.basic</code>): the account's open ID, display name, and avatar of our own account.</li>
+          <li><strong>Publishing permission</strong> (scope <code>video.publish</code>): authorization to upload and publish videos to our own account, plus the status of each post (processing, published, or failed).</li>
+          <li><strong>Access tokens</strong> issued by TikTok to keep the authorization active.</li>
+        </ul>
+        <p>We do not request access to direct messages, contacts, location, payment data, or information about followers or other TikTok users.</p>
+
+        <h3><span class="n">4</span> How we use the data</h3>
+        <ul>
+          <li>To verify that the person signing in is the authorized holder of Chicken Chicanito's official account.</li>
+          <li>To publish on TikTok the videos and captions the business itself prepares.</li>
+          <li>To confirm that each post completed successfully.</li>
+        </ul>
+        <p>We do not use the data for third-party advertising, user profiling, or any purpose other than operating our own TikTok account.</p>
+
+        <h3><span class="n">5</span> What we never do</h3>
+        <ul>
+          <li><strong>We never sell</strong> personal data to anyone.</li>
+          <li><strong>We do not share</strong> data with third parties, other than TikTok itself as part of how its API works.</li>
+          <li><strong>We do not collect</strong> data from customers, followers, or visitors through the App.</li>
+        </ul>
+
+        <h3><span class="n">6</span> Storage and security</h3>
+        <p>Access tokens are stored in a restricted environment, accessible only to Chicken Chicanito's authorized team, and are always transmitted over encrypted connections (HTTPS). The App's credentials (client key and client secret) are kept confidential and are never published on this page or in public materials.</p>
+
+        <h3><span class="n">7</span> Retention and deletion</h3>
+        <p>We keep the authorization only while the App remains in use. The account holder can <strong>revoke access at any time</strong> in TikTok's settings (Settings and privacy → Security &amp; permissions → Apps and services). Once access is revoked, the tokens stop working and we delete them. You may also request deletion of any associated data by messaging us on WhatsApp at <a href="https://wa.me/527341260080">+52 734 126 0080</a>; we handle requests within 15 business days.</p>
+
+        <h3><span class="n">8</span> This website</h3>
+        <p>This page is a static informational document: <strong>it uses no tracking cookies, has no forms, creates no accounts, and collects no data from its visitors</strong>. External links (TikTok, Instagram, and WhatsApp) are governed by each platform's own privacy policy.</p>
+
+        <h3><span class="n">9</span> Children</h3>
+        <p>The App is an internal work tool operated by adults on the Chicken Chicanito team. It is not directed at children and does not collect data from minors.</p>
+
+        <h3><span class="n">10</span> Your rights</h3>
+        <p>Under Mexico's Federal Law on the Protection of Personal Data Held by Private Parties, you have the right to access, rectify, cancel, or object to the processing of your personal data (ARCO rights). To exercise them, contact us on WhatsApp at <a href="https://wa.me/527341260080">+52 734 126 0080</a>.</p>
+
+        <h3><span class="n">11</span> Changes to this policy</h3>
+        <p>If this policy changes, we will publish the new version on this same page and update the date above. Changes apply from the moment they are published.</p>
+
+        <h3><span class="n">12</span> Contact</h3>
+        <p>For any question about this policy: Chicken Chicanito, outside the Benito Juárez Market, Jojutla, Morelos, Mexico · WhatsApp <a href="https://wa.me/527341260080">+52 734 126 0080</a> · TikTok <a href="https://www.tiktok.com/@chicken.chicanito">@chicken.chicanito</a>.</p>
+      </section>
+
+      <!-- ================= TÉRMINOS ES ================= -->
+      <section class="doc terms" id="terminos" data-es aria-labelledby="terms-title-es">
+        <span class="doc-kicker">Documento 2 de 2</span>
+        <h2 id="terms-title-es">Términos de Servicio</h2>
+        <p class="updated">Última actualización: 25 de noviembre de 2026 · Vigentes desde la misma fecha</p>
+
+        <h3><span class="n">1</span> Aceptación</h3>
+        <p>Al autorizar y usar la aplicación de Chicken Chicanito para TikTok (la «Aplicación»), aceptas estos Términos de Servicio. La Aplicación es propiedad de Chicken Chicanito, de Jojutla, Morelos, México, y su uso está reservado al propietario del negocio y a su equipo autorizado.</p>
+
+        <h3><span class="n">2</span> Descripción del servicio</h3>
+        <p>La Aplicación es una herramienta interna que permite publicar videos producidos por Chicken Chicanito en su cuenta oficial de TikTok, <strong>@chicken.chicanito</strong>, utilizando el Login Kit y la Content Posting API de TikTok. La Aplicación no es un servicio abierto al público, no crea cuentas para terceros y no publica contenido en cuentas ajenas a Chicken Chicanito.</p>
+
+        <h3><span class="n">3</span> Cuenta y autorización</h3>
+        <ul>
+          <li>El acceso se realiza únicamente con la cuenta oficial de TikTok de Chicken Chicanito, mediante la autorización oficial de TikTok (OAuth).</li>
+          <li>El titular puede revocar la autorización en cualquier momento desde la configuración de TikTok; al revocarla, la Aplicación deja de funcionar de inmediato.</li>
+          <li>Las credenciales de la Aplicación son confidenciales y solo el equipo autorizado puede usarlas.</li>
+        </ul>
+
+        <h3><span class="n">4</span> Uso aceptable</h3>
+        <p>Quien opere la Aplicación se compromete a:</p>
+        <ul>
+          <li>Publicar únicamente contenido propio o con derechos de uso de Chicken Chicanito.</li>
+          <li>Cumplir los <a href="https://www.tiktok.com/legal/page/global/terms-of-service/es">Términos de Servicio de TikTok</a>, sus <a href="https://www.tiktok.com/community-guidelines">Normas de la Comunidad</a> y las políticas para desarrolladores de TikTok.</li>
+          <li>No usar la Aplicación para enviar spam, contenido engañoso ni material que infrinja derechos de terceros.</li>
+          <li>No intentar acceder a datos o funciones de TikTok fuera de los permisos aprobados para la Aplicación.</li>
+        </ul>
+
+        <h3><span class="n">5</span> Propiedad intelectual</h3>
+        <p>Los videos, imágenes, textos y marcas publicados mediante la Aplicación (incluidos el nombre Chicken Chicanito, el CRUJI y los Cruji Dips) pertenecen a Chicken Chicanito o a sus licenciantes. TikTok y su logotipo son marcas de TikTok Pte. Ltd.; esta Aplicación no está patrocinada ni respaldada por TikTok, solo usa sus herramientas oficiales para desarrolladores.</p>
+
+        <h3><span class="n">6</span> Disponibilidad y cambios</h3>
+        <p>La Aplicación se ofrece «tal cual», para uso interno. Podemos modificarla, suspenderla o dejar de usarla en cualquier momento, y su funcionamiento depende de la disponibilidad de la plataforma y las APIs de TikTok, ajenas a nuestro control.</p>
+
+        <h3><span class="n">7</span> Limitación de responsabilidad</h3>
+        <p>En la medida que permite la ley mexicana, Chicken Chicanito no será responsable por daños indirectos derivados del uso de la Aplicación o de interrupciones de la plataforma TikTok. Nada en estos términos limita los derechos que la ley otorga a los consumidores.</p>
+
+        <h3><span class="n">8</span> Terminación</h3>
+        <p>Estos términos dejan de aplicar cuando se revoca la autorización de la Aplicación en TikTok o cuando Chicken Chicanito deja de usarla. Las obligaciones sobre propiedad intelectual y responsabilidad sobreviven a la terminación.</p>
+
+        <h3><span class="n">9</span> Ley aplicable</h3>
+        <p>Estos términos se rigen por las leyes de los Estados Unidos Mexicanos. Cualquier controversia se resolverá ante los tribunales competentes del estado de Morelos, México, salvo que la ley disponga otro fuero.</p>
+
+        <h3><span class="n">10</span> Cambios a estos términos</h3>
+        <p>Publicaremos cualquier cambio en esta misma página, con su fecha de actualización. El uso continuado de la Aplicación después de un cambio implica la aceptación de los nuevos términos.</p>
+
+        <h3><span class="n">11</span> Contacto</h3>
+        <p>Chicken Chicanito, exterior del Mercado Benito Juárez, Jojutla, Morelos, México · WhatsApp <a href="https://wa.me/527341260080">734 126 0080</a> · TikTok <a href="https://www.tiktok.com/@chicken.chicanito">@chicken.chicanito</a> · Instagram <a href="https://www.instagram.com/chickenchicanito">@chickenchicanito</a>.</p>
+      </section>
+
+      <!-- ================= TERMS EN ================= -->
+      <section class="doc terms" data-en hidden aria-labelledby="terms-title-en">
+        <span class="doc-kicker">Document 2 of 2</span>
+        <h2 id="terms-title-en">Terms of Service</h2>
+        <p class="updated">Last updated: November 25, 2026 · Effective the same date</p>
+
+        <h3><span class="n">1</span> Acceptance</h3>
+        <p>By authorizing and using the Chicken Chicanito TikTok application (the "App"), you accept these Terms of Service. The App is owned by Chicken Chicanito, of Jojutla, Morelos, Mexico, and its use is restricted to the business owner and their authorized team.</p>
+
+        <h3><span class="n">2</span> Service description</h3>
+        <p>The App is an internal tool that publishes videos produced by Chicken Chicanito to its official TikTok account, <strong>@chicken.chicanito</strong>, using TikTok's Login Kit and Content Posting API. The App is not a public service, does not create accounts for third parties, and does not post content to accounts other than Chicken Chicanito's own.</p>
+
+        <h3><span class="n">3</span> Account and authorization</h3>
+        <ul>
+          <li>Access is granted only with Chicken Chicanito's official TikTok account, through TikTok's official authorization flow (OAuth).</li>
+          <li>The account holder may revoke the authorization at any time in TikTok's settings; once revoked, the App stops working immediately.</li>
+          <li>The App's credentials are confidential and may only be used by the authorized team.</li>
+        </ul>
+
+        <h3><span class="n">4</span> Acceptable use</h3>
+        <p>Anyone operating the App agrees to:</p>
+        <ul>
+          <li>Publish only content owned by, or licensed to, Chicken Chicanito.</li>
+          <li>Comply with TikTok's <a href="https://www.tiktok.com/legal/page/global/terms-of-service/en">Terms of Service</a>, its <a href="https://www.tiktok.com/community-guidelines">Community Guidelines</a>, and TikTok's developer policies.</li>
+          <li>Not use the App to send spam, deceptive content, or material that infringes third-party rights.</li>
+          <li>Not attempt to access TikTok data or features beyond the scopes approved for the App.</li>
+        </ul>
+
+        <h3><span class="n">5</span> Intellectual property</h3>
+        <p>The videos, images, texts, and brands published through the App (including the Chicken Chicanito name, CRUJI, and the Cruji Dips) belong to Chicken Chicanito or its licensors. TikTok and its logo are trademarks of TikTok Pte. Ltd.; this App is not sponsored or endorsed by TikTok — it only uses TikTok's official developer tools.</p>
+
+        <h3><span class="n">6</span> Availability and changes</h3>
+        <p>The App is provided "as is" for internal use. We may modify, suspend, or discontinue it at any time, and its operation depends on the availability of TikTok's platform and APIs, which are beyond our control.</p>
+
+        <h3><span class="n">7</span> Limitation of liability</h3>
+        <p>To the extent permitted by Mexican law, Chicken Chicanito is not liable for indirect damages arising from use of the App or from interruptions of the TikTok platform. Nothing in these terms limits consumer rights granted by law.</p>
+
+        <h3><span class="n">8</span> Termination</h3>
+        <p>These terms cease to apply when the App's authorization is revoked in TikTok or when Chicken Chicanito stops using it. Obligations regarding intellectual property and liability survive termination.</p>
+
+        <h3><span class="n">9</span> Governing law</h3>
+        <p>These terms are governed by the laws of the United Mexican States. Any dispute will be resolved before the competent courts of the state of Morelos, Mexico, unless the law provides otherwise.</p>
+
+        <h3><span class="n">10</span> Changes to these terms</h3>
+        <p>We will publish any change on this same page, with its updated date. Continued use of the App after a change implies acceptance of the new terms.</p>
+
+        <h3><span class="n">11</span> Contact</h3>
+        <p>Chicken Chicanito, outside the Benito Juárez Market, Jojutla, Morelos, Mexico · WhatsApp <a href="https://wa.me/527341260080">+52 734 126 0080</a> · TikTok <a href="https://www.tiktok.com/@chicken.chicanito">@chicken.chicanito</a> · Instagram <a href="https://www.instagram.com/chickenchicanito">@chickenchicanito</a>.</p>
+      </section>
+
+      <!-- ================= CONTACTO ================= -->
+      <div class="contact" id="contacto">
+        <h2 data-es>Contacto</h2>
+        <h2 data-en hidden>Contact</h2>
+        <p data-es>Para ejercer tus derechos sobre tus datos, pedir la eliminación de información o resolver dudas sobre estos documentos, escríbenos. Somos el equipo de Chicken Chicanito en Jojutla.</p>
+        <p data-en hidden>To exercise your data rights, request deletion of information, or ask about these documents, message us. We are the Chicken Chicanito team in Jojutla.</p>
+        <div class="contact-grid">
+          <a href="https://wa.me/527341260080">
+            <span class="lbl">WhatsApp</span>
+            <span class="val">734 126 0080</span>
+          </a>
+          <a href="https://www.tiktok.com/@chicken.chicanito">
+            <span class="lbl">TikTok</span>
+            <span class="val">@chicken.chicanito</span>
+          </a>
+          <a href="https://www.instagram.com/chickenchicanito">
+            <span class="lbl">Instagram</span>
+            <span class="val">@chickenchicanito</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="rule" aria-hidden="true"></div>
+      <p data-es>Chicken Chicanito · Exterior del Mercado Benito Juárez, Jojutla, Morelos, México<br />Política de Privacidad y Términos de Servicio de la aplicación oficial de Chicken Chicanito para TikTok · Actualizados el 25 de noviembre de 2026</p>
+      <p data-en hidden>Chicken Chicanito · Outside the Benito Juárez Market, Jojutla, Morelos, Mexico<br />Privacy Policy and Terms of Service of the official Chicken Chicanito TikTok application · Updated November 25, 2026</p>
+    </footer>
+
+    <script>
+      (function(){
+        var btnEs = document.getElementById('btn-es');
+        var btnEn = document.getElementById('btn-en');
+        // The Spanish sections carry the anchor ids by default; when English
+        // is shown, move the ids to the English sections so the nav chips
+        // (#privacidad / #terminos) always land on the visible document.
+        var esPriv = document.getElementById('privacidad');
+        var esTerms = document.getElementById('terminos');
+        var enPriv = document.querySelector('section[data-en][aria-labelledby="priv-title-en"]');
+        var enTerms = document.querySelector('section[data-en][aria-labelledby="terms-title-en"]');
+        function setLang(lang){
+          var showEs = lang === 'es';
+          document.documentElement.lang = showEs ? 'es' : 'en';
+          document.querySelectorAll('[data-es]').forEach(function(el){ el.hidden = !showEs; });
+          document.querySelectorAll('[data-en]').forEach(function(el){ el.hidden = showEs; });
+          if (showEs){
+            esPriv.id = 'privacidad'; esTerms.id = 'terminos';
+            enPriv.removeAttribute('id'); enTerms.removeAttribute('id');
+          } else {
+            enPriv.id = 'privacidad'; enTerms.id = 'terminos';
+            esPriv.removeAttribute('id'); esTerms.removeAttribute('id');
+          }
+          btnEs.setAttribute('aria-pressed', String(showEs));
+          btnEn.setAttribute('aria-pressed', String(!showEs));
+        }
+        btnEs.addEventListener('click', function(){ setLang('es'); });
+        btnEn.addEventListener('click', function(){ setLang('en'); });
+
+        // Highlight the nav chip of the section in view.
+        var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+        function markActive(id){
+          chips.forEach(function(c){
+            c.classList.toggle('active', c.getAttribute('href') === '#' + id && !c.hidden);
+          });
+        }
+        if ('IntersectionObserver' in window){
+          var seen = {};
+          var obs = new IntersectionObserver(function(entries){
+            entries.forEach(function(e){
+              seen[e.target.id] = e.isIntersecting;
+              if (e.isIntersecting) markActive(e.target.id);
+            });
+          }, { rootMargin: '-30% 0px -55% 0px' });
+          ['privacidad','terminos','contacto'].forEach(function(id){
+            var t = document.getElementById(id);
+            if (t) obs.observe(t);
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
