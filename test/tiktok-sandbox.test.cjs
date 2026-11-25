@@ -83,3 +83,22 @@ test('Callback rewrite preserves the registered URI without the code-display pag
   const c=require('../vercel.json');
   assert.deepEqual(c.rewrites,[{source:'/tiktok-callback.html',destination:'/api/tiktok-sandbox?op=callback'}]);
 });
+
+test('Supabase storage is pinned to the isolated project and uses parameterized queries', async () => {
+  const { createSupabaseStore } = require('../api/tiktok-sandbox.js');
+  const calls=[];
+  class Pool {
+    constructor(options){ assert.equal(options.port,6543);assert.equal(options.ssl.rejectUnauthorized,true); }
+    async query(sql,params){ calls.push({sql,params});return {rows:[{enc:'sealed',expires:9999}],rowCount:1};}
+  }
+  const correct='postgresql://tiktok_panel.uvacqokoiewifowdxwhw:not-a-real-secret@aws-0-us-east-1.pooler.supabase.com:6543/postgres';
+  assert.throws(()=>createSupabaseStore(correct.replace('uvacqokoiewifowdxwhw','different-project'),Pool));
+  assert.throws(()=>createSupabaseStore(correct.replace('tiktok_panel.','postgres.'),Pool));
+  const db=createSupabaseStore(correct,Pool);
+  await db.save('opaque-id','ciphertext',9999);
+  assert.equal((await db.load('opaque-id')).enc,'sealed');
+  assert.equal(await db.reserve('opaque-id'),true);
+  await db.remove('opaque-id');
+  assert.equal(calls.length,4);
+  assert.ok(calls.every(c=>c.sql.includes('public.chicanito_tiktok_sandbox_sessions') && c.params[0]==='opaque-id' && !c.sql.includes('opaque-id')));
+});

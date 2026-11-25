@@ -23,12 +23,7 @@ function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,
     !!env.TIKTOK_SANDBOX_CLIENT_SECRET && (env.TIKTOK_SANDBOX_ADMIN_PASSWORD||'').length>=24 &&
     !!env.TIKTOK_SANDBOX_DATABASE_URL;
   if (!save && settings) {
-    const {neon}=require('@neondatabase/serverless');
-    const sql=neon(env.TIKTOK_SANDBOX_DATABASE_URL);
-    save=(id,enc,expires)=>sql`INSERT INTO chicanito_tiktok_sandbox_sessions(id, enc, expires) VALUES(${id}, ${enc}, ${expires}) ON CONFLICT (id) DO UPDATE SET enc=EXCLUDED.enc,expires=EXCLUDED.expires`;
-    load=async id=>(await sql`SELECT enc,expires FROM chicanito_tiktok_sandbox_sessions WHERE id=${id} AND expires>${Date.now()}`)[0];
-    remove=id=>sql`DELETE FROM chicanito_tiktok_sandbox_sessions WHERE id=${id}`;
-    reserve=async id=>(await sql`UPDATE chicanito_tiktok_sandbox_sessions SET upload_started=true WHERE id=${id} AND NOT upload_started AND expires>${Date.now()} RETURNING id`).length===1;
+    ({save,load,remove,reserve}=createSupabaseStore(env.TIKTOK_SANDBOX_DATABASE_URL,require('pg').Pool));
   }
   const seal=value=>{
     const iv=crypto.randomBytes(12), c=crypto.createCipheriv('aes-256-gcm',key,iv);
@@ -196,6 +191,30 @@ document.querySelector('#check').onclick=()=>run('status');
   return `<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Sandbox TikTok | Chicken Chicanito</title><style nonce="${nonce}">*{box-sizing:border-box}body{background:#fff7ec;color:#17213e;font:17px/1.5 system-ui;margin:0;padding:5vh 18px}main{background:white;border-radius:20px;max-width:680px;margin:auto;padding:clamp(18px,5vw,48px);border-top:8px solid #e30613}h1{line-height:1.1}button{background:#b2040f;color:white;border:0;border-radius:8px;padding:12px;font:700 15px system-ui;margin:8px 8px 8px 0;cursor:pointer}button:disabled{opacity:.6}input{max-width:100%;display:block;margin:9px 0;padding:9px}small{letter-spacing:.12em;font-weight:800}form:last-of-type{margin-top:14px}</style><main><small>CHICKEN CHICANITO · SANDBOX</small><h1>Conexión de TikTok</h1>${note}${body}${user?'<form method="POST" action="'+API+'?op=logout"><button>Salir</button></form>':''}</main>${script}</html>`;
 }
 
+function createSupabaseStore(uri, Pool){
+  const u = new URL(uri);
+  if (!['postgresql:','postgres:'].includes(u.protocol) ||
+      !/^aws-[0-9]+-[a-z0-9-]+\.pooler\.supabase\.com$/.test(u.hostname) ||
+      u.port!=='6543' || u.pathname!=='/postgres' ||
+      decodeURIComponent(u.username)!=='tiktok_panel.uvacqokoiewifowdxwhw' || !u.password)
+    throw new Error('Invalid isolated Supabase connection');
+  const pool=new Pool({host:u.hostname,port:6543,database:'postgres',
+    user:decodeURIComponent(u.username),password:decodeURIComponent(u.password),
+    ssl:{rejectUnauthorized:true},max:2,idleTimeoutMillis:5000,connectionTimeoutMillis:5000,query_timeout:5000});
+  pool.on?.('error',()=>{}); // An idle socket error must not crash the function or log credentials.
+  const table='public.chicanito_tiktok_sandbox_sessions';
+  return {
+    save:(id,enc,expires)=>pool.query('INSERT INTO '+table+' (id, enc, expires) VALUES($1,$2,$3) ON CONFLICT (id) DO UPDATE SET enc=EXCLUDED.enc,expires=EXCLUDED.expires',[id,enc,expires]),
+    load:async id=>(await pool.query('SELECT enc,expires FROM '+table+' WHERE id=$1 AND expires>$2',[id,Date.now()])).rows[0],
+    remove:id=>pool.query('DELETE FROM '+table+' WHERE id=$1',[id]),
+    reserve:async id=>(await pool.query('UPDATE '+table+' SET upload_started=true WHERE id=$1 AND NOT upload_started AND expires>$2 RETURNING id',[id,Date.now()])).rowCount===1
+  };
+}
+
 let handler;
-module.exports=(req,res)=>(handler ||= createHandler())(req,res);
+module.exports=(req,res)=>{
+  try { return (handler ||= createHandler())(req,res); }
+  catch { res.statusCode=503; res.setHeader('Cache-Control','no-store'); res.end('Sandbox no configurado.'); }
+};
 module.exports.createHandler=createHandler;
+module.exports.createSupabaseStore=createSupabaseStore;
