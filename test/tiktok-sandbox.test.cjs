@@ -92,7 +92,13 @@ test('Supabase storage is pinned to the isolated project and uses parameterized 
   const { createSupabaseStore } = require('../api/tiktok-sandbox.js');
   const calls=[];
   class Pool {
-    constructor(options){ assert.equal(options.port,6543);assert.equal(options.ssl.rejectUnauthorized,true); }
+    constructor(options){
+      assert.equal(options.port,6543);
+      assert.equal(options.ssl.rejectUnauthorized,true);
+      const { X509Certificate }=require('node:crypto');
+      const certificate=new X509Certificate(options.ssl.ca);
+      assert.equal(certificate.fingerprint256,'80:70:25:AD:50:D4:ED:21:9D:2C:9C:7D:29:9C:00:4F:82:4E:B0:0C:F7:F6:5A:FE:F6:07:D0:7B:72:E6:CA:FA');
+    }
     async query(sql,params){ calls.push({sql,params});return {rows:[{enc:'sealed',expires:9999}],rowCount:1};}
   }
   const correct='postgresql://tiktok_panel.uvacqokoiewifowdxwhw:not-a-real-secret@aws-0-us-east-1.pooler.supabase.com:6543/postgres';

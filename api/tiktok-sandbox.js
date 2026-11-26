@@ -1,6 +1,7 @@
 'use strict';
 
 const crypto = require('node:crypto');
+const supabaseCA = require('../lib/tiktok-supabase-ca.cjs');
 const ORIGIN = 'https://www.chicanito.app';
 const CALLBACK = ORIGIN + '/tiktok-callback.html';
 const API = '/api/tiktok-sandbox';
@@ -38,6 +39,7 @@ function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,
       return v.exp>Date.now()?v:null;
     }catch{return null;}
   };
+  let storeVerified=false;
   const loadUser=async id=>{const row=await load(id);return row&&Number(row.expires)>Date.now()?unseal(row.enc):null;};
   const provider=async(url,options)=>{
     let r;
@@ -100,6 +102,7 @@ function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,
           console.error('[tiktok-sandbox] session lookup failed:',code);
           return end(503,'No se pudo conectar a la base de prueba. No se ha enviado nada a TikTok.','text/plain; charset=utf-8');
         }
+        if(!storeVerified){ storeVerified=true; console.info('[tiktok-sandbox] session store reachable'); }
         return end(200,page(nonce,user||{},url.searchParams.get('notice')));
       }
       if(op==='connect'){
@@ -211,7 +214,7 @@ function createSupabaseStore(uri, Pool){
     throw new Error('Invalid isolated Supabase connection');
   const pool=new Pool({host:u.hostname,port:6543,database:'postgres',
     user:decodeURIComponent(u.username),password:decodeURIComponent(u.password),
-    ssl:{rejectUnauthorized:true},max:2,idleTimeoutMillis:5000,connectionTimeoutMillis:5000,query_timeout:5000});
+    ssl:{ca:supabaseCA, rejectUnauthorized:true},max:2,idleTimeoutMillis:5000,connectionTimeoutMillis:5000,query_timeout:5000});
   pool.on?.('error',()=>{}); // An idle socket error must not crash the function or log credentials.
   const table='public.chicanito_tiktok_sandbox_sessions';
   return {
