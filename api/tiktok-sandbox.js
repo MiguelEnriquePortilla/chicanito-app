@@ -27,8 +27,8 @@ function getUploadDestination(init){
   if(dest.protocol!=='https:'||dest.port||dest.username||dest.password||dest.hash)return {reason:'url_security'};
   const regional=/^open-upload[.-][a-z0-9-]{1,28}\.tiktokapis\.com$/;
   if(!UPLOAD_HOSTS.has(dest.hostname)&&!regional.test(dest.hostname))return {reason:'url_host'};
-  if(!['/video/','/video'].includes(dest.pathname))return {reason:'url_path'};
-  return {publishId,dest};
+  // TikTok assigns the upload route; trust the verified media origin, not an example path.
+  return {publishId,dest,uploadUrl:init.upload_url};
 }
 
 function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,remove,reserve,release=async()=>{}}={}) {
@@ -164,7 +164,7 @@ function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,
         return json(415,{error:'MP4_REQUIRED'});
       if(!await reserve(id))return json(409,{error:'ONE_DRAFT_PER_SESSION'});
       const init=(await api('/v2/post/publish/inbox/video/init/',user.access,{source_info:{source:'FILE_UPLOAD',video_size:bytes.length,chunk_size:bytes.length,total_chunk_count:1}})).data;
-      const {publishId,dest,reason}=getUploadDestination(init);
+      const {publishId,dest,uploadUrl,reason}=getUploadDestination(init);
       if(!dest){
         console.warn('[tiktok-sandbox] rejected upload initialization:',reason);
         // No media bytes or publish ID have been stored or sent at this point.
@@ -172,7 +172,7 @@ function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,
         return json(502,{error:'INVALID_TIKTOK_UPLOAD_RESPONSE'});
       }
       await save(id,seal({...user,last:publishId}),user.exp);
-      await provider(dest.href,{method:'PUT',binary:true,body:bytes,headers:{
+      await provider(uploadUrl,{method:'PUT',binary:true,body:bytes,headers:{
         'Content-Type':'video/mp4','Content-Length':String(bytes.length),'Content-Range':'bytes 0-'+(bytes.length-1)+'/'+bytes.length
       }});
       return json(202,{status:'PROCESSING_UPLOAD'});

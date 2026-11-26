@@ -141,7 +141,9 @@ test('Upload routing accepts TikTok regional media hosts and rejects unrelated d
   const data={publish_id:'v_inbox_file~v2.1234',upload_url:'https://open-upload-us.tiktokapis.com/video?upload_id=123&upload_token=test'};
   assert.equal(getUploadDestination(data).dest.hostname,'open-upload-us.tiktokapis.com');
   assert.equal(getUploadDestination({...data,upload_url:'https://open-upload.us.tiktokapis.com/video/?upload_id=123'}).dest.hostname,'open-upload.us.tiktokapis.com');
-  for(const url of ['https://open-upload.tiktokapis.com.evil.example/video/','https://open-upload.tiktokapis.com@evil.example/video/','http://open-upload.tiktokapis.com/video/','https://open-upload.tiktokapis.com/not-video','https://open-upload.tiktokapis.com:8080/video/','https://open-upload.tiktokapis.com/video/#unsafe','not a URL']){
+  const assigned='https://open-upload.tiktokapis.com/v2/media/inbox/asset?upload_token=a%2Fb%2Bc';
+  assert.equal(getUploadDestination({...data,upload_url:assigned}).dest.href,assigned);
+  for(const url of ['https://open-upload.tiktokapis.com.evil.example/video/','https://open-upload.tiktokapis.com@evil.example/video/','http://open-upload.tiktokapis.com/video/','https://open-upload.tiktokapis.com:8080/video/','https://open-upload.tiktokapis.com/video/#unsafe','not a URL']){
     assert.equal(getUploadDestination({...data,upload_url:url}).dest,undefined);
   }
   assert.equal(getUploadDestination({...data,publish_id:''}).dest,undefined);
