@@ -92,7 +92,16 @@ function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,
         res.setHeader('Set-Cookie',[cookie(SESSION,'',0),cookie(STATE,'',0)]);
         return redirect(API);
       }
-      if(op==='panel')return end(200,page(nonce,await loadUser(id)||{},url.searchParams.get('notice')));
+      if(op==='panel'){
+        let user;
+        try { user=await loadUser(id); }
+        catch (e) {
+          const code=machine(e.code)||(/timeout/i.test(e.message||'')?'DB_TIMEOUT':'UNCLASSIFIED');
+          console.error('[tiktok-sandbox] session lookup failed:',code);
+          return end(503,'No se pudo conectar a la base de prueba. No se ha enviado nada a TikTok.','text/plain; charset=utf-8');
+        }
+        return end(200,page(nonce,user||{},url.searchParams.get('notice')));
+      }
       if(op==='connect'){
         const state=rand();
         res.setHeader('Set-Cookie',cookie(STATE,seal({id,state,exp:Date.now()+600_000}),600));

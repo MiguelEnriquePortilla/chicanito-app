@@ -106,3 +106,20 @@ test('Supabase storage is pinned to the isolated project and uses parameterized 
   assert.equal(calls.length,4);
   assert.ok(calls.every(c=>c.sql.includes('public.chicanito_tiktok_sandbox_sessions') && c.params[0]==='opaque-id' && !c.sql.includes('opaque-id')));
 });
+
+test('Database failures produce a safe diagnostic without exposing the driver error', async (t) => {
+  const handler=createHandler({
+    env:{TIKTOK_SANDBOX_CLIENT_KEY:'sbaw_test',TIKTOK_SANDBOX_CLIENT_SECRET:'test-secret',TIKTOK_SANDBOX_ADMIN_PASSWORD:'a'.repeat(28),TIKTOK_SANDBOX_SESSION_KEY:Buffer.alloc(32,1).toString('base64'),TIKTOK_SANDBOX_DATABASE_URL:'postgres://test'},
+    save:async()=>{},load:async()=>{throw Object.assign(new Error('private driver details'),{code:'SELF_SIGNED_CERT_IN_CHAIN'});},
+    fetch:async()=>{assert.fail('external TikTok request');}
+  });
+  const server=createServer(handler).listen(0,'127.0.0.1'); t.after(()=>server.close());
+  await once(server,'listening');
+  const base='http://127.0.0.1:'+server.address().port+'/api/tiktok-sandbox';
+  const login=await fetch(base+'?op=login',{method:'POST',headers:{Origin:origin},body:'password='+'a'.repeat(28),redirect:'manual'});
+  const response=await fetch(base,{headers:{Cookie:login.headers.get('set-cookie').split(';')[0]}});
+  assert.equal(response.status,503);
+  const body=await response.text();
+  assert.match(body,/No se pudo conectar a la base de prueba/);
+  assert.doesNotMatch(body,/private driver details|SELF_SIGNED_CERT_IN_CHAIN/);
+});
