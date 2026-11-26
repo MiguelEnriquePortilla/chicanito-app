@@ -37,7 +37,11 @@ test('Sandbox login, OAuth state, exact callback, media upload and inbox status'
   const base='http://127.0.0.1:'+server.address().port;
   const req=(op,opts={})=>fetch(base+'/api/tiktok-sandbox?op='+op,{redirect:'manual',...opts});
   const post=(op,body,cookie,type='application/x-www-form-urlencoded',site=origin)=>req(op,{method:'POST',body,headers:{Origin:site,'Content-Type':type,...(cookie?{Cookie:cookie}:{})}});
-  assert.equal((await req('panel')).status,401);
+  const loginPage=await req('panel');
+  assert.equal(loginPage.status,401);
+  assert.equal(loginPage.headers.get('referrer-policy'),'same-origin');
+  assert.equal((await req('callback&code=synthetic')).headers.get('referrer-policy'),'no-referrer');
+  assert.equal((await post('login','password=unused',null,undefined,'null')).status,403);
   assert.equal((await post('login','password='+ 'a'.repeat(28),null,undefined,'https://untrusted.test')).status,403);
   const login=await post('login','password='+ 'a'.repeat(28));
   assert.equal(login.status,303);

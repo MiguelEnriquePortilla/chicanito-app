@@ -63,7 +63,8 @@ function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,
   return async(req,res)=>{
     const nonce=rand();
     res.setHeader('Cache-Control','no-store');
-    res.setHeader('Referrer-Policy','no-referrer');
+    // Chromium serializes a native POST Origin as null under no-referrer.
+    res.setHeader('Referrer-Policy','same-origin');
     res.setHeader('X-Content-Type-Options','nosniff');
     res.setHeader('X-Robots-Tag','noindex, nofollow');
     res.setHeader('Content-Security-Policy',"default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self' https://www.tiktok.com; connect-src 'self'; style-src 'nonce-"+nonce+"'; script-src 'nonce-"+nonce+"'");
@@ -72,6 +73,7 @@ function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,
     const redirect=location=>{res.statusCode=303;res.setHeader('Location',location);res.end();};
     if(!settings)return end(503,'Sandbox no configurado. No se inició ninguna conexión.','text/plain; charset=utf-8');
     const url=new URL(req.url,ORIGIN), op=url.searchParams.get('op')||'panel';
+    if(op==='callback')res.setHeader('Referrer-Policy','no-referrer');
     if(!['panel','login','connect','callback','upload','status','logout'].includes(op))return json(404,{error:'NOT_FOUND'});
     if(req.method!==(['panel','callback'].includes(op)?'GET':'POST'))return json(405,{error:'METHOD_NOT_ALLOWED'});
     if(req.method==='POST'&&req.headers.origin!==ORIGIN)return json(403,{error:'ORIGIN_NOT_ALLOWED'});
