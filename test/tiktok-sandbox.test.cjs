@@ -14,6 +14,7 @@ test('Sandbox login, OAuth state, exact callback, media upload and inbox status'
     load:async id=>rows.get(id),
     remove:async id=>rows.delete(id),
     reserve:async id=>{const row=rows.get(id); if(!row||row.locked) return false;row.locked=true;return true},
+    release:async id=>{const row=rows.get(id);if(row)row.locked=false},
     fetch:async (url, init) => {
       const path = new URL(url).pathname;
       calls.push(path);
@@ -25,6 +26,7 @@ test('Sandbox login, OAuth state, exact callback, media upload and inbox status'
       if(path==='/v2/user/info/') return Response.json({data:{user:{display_name:'Chicken Chicanito',open_id:'abc'}},error:{code:'ok'}});
       if(path==='/v2/post/publish/inbox/video/init/'){
         assert.equal(init.headers.Authorization,'Bearer '+token);
+        if(calls.filter(x=>x===path).length===1)return Response.json({data:{publish_id:'draftRejected',upload_url:'https://unrelated.example/video/'},error:{code:'ok'}});
         return Response.json({data:{publish_id:'draft123',upload_url:'https://open-upload.tiktokapis.com/video/?signed=private'},error:{code:'ok'}});
       }
       if(path==='/video/'){assert.equal(init.headers['Content-Range'],'bytes 0-23/24');return new Response(null,{status:201})}
@@ -64,6 +66,10 @@ test('Sandbox login, OAuth state, exact callback, media upload and inbox status'
   const bad=await post('upload',Buffer.alloc(24),session,'video/mp4');
   assert.equal(bad.status,415);
   const mp4=Buffer.alloc(24); mp4.writeUInt32BE(24); mp4.write('ftyp',4);
+  const rejected=await post('upload',mp4,session,'video/mp4');
+  assert.equal(rejected.status,502);
+  assert.equal((await rejected.json()).error,'INVALID_TIKTOK_UPLOAD_RESPONSE');
+  assert.ok(!calls.includes('/video/'));
   const output=await post('upload',mp4,session,'video/mp4');
   assert.equal(output.status,202);
   assert.equal((await output.json()).status,'PROCESSING_UPLOAD');
@@ -128,4 +134,15 @@ test('Database failures produce a safe diagnostic without exposing the driver er
   const body=await response.text();
   assert.match(body,/No se pudo conectar a la base de prueba/);
   assert.doesNotMatch(body,/private driver details|SELF_SIGNED_CERT_IN_CHAIN/);
+});
+
+test('Upload routing accepts TikTok regional media hosts and rejects unrelated destinations', () => {
+  const { getUploadDestination }=require('../api/tiktok-sandbox.js');
+  const data={publish_id:'v_inbox_file~v2.1234',upload_url:'https://open-upload-us.tiktokapis.com/video?upload_id=123&upload_token=test'};
+  assert.equal(getUploadDestination(data).dest.hostname,'open-upload-us.tiktokapis.com');
+  assert.equal(getUploadDestination({...data,upload_url:'https://open-upload.us.tiktokapis.com/video/?upload_id=123'}).dest.hostname,'open-upload.us.tiktokapis.com');
+  for(const url of ['https://open-upload.tiktokapis.com.evil.example/video/','https://open-upload.tiktokapis.com@evil.example/video/','http://open-upload.tiktokapis.com/video/','https://open-upload.tiktokapis.com/not-video','https://open-upload.tiktokapis.com:8080/video/','https://open-upload.tiktokapis.com/video/#unsafe','not a URL']){
+    assert.equal(getUploadDestination({...data,upload_url:url}).dest,undefined);
+  }
+  assert.equal(getUploadDestination({...data,publish_id:''}).dest,undefined);
 });

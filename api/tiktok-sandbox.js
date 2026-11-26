@@ -18,13 +18,26 @@ const asText = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'
 const machine = s => typeof s==='string' && /^[a-zA-Z0-9~_.-]{1,80}$/.test(s) ? s : '';
 const cookie = (name,value,age) => name+'='+value+'; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age='+age;
 
-function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,remove,reserve}={}) {
+function getUploadDestination(init){
+  const publishId=init?.publish_id;
+  if(typeof publishId!=='string'||!/^[!-~]{1,256}$/.test(publishId))return {reason:'publish_id'};
+  if(typeof init?.upload_url!=='string'||init.upload_url.length>2048)return {reason:'url_missing'};
+  let dest;
+  try { dest=new URL(init.upload_url); } catch { return {reason:'url_parse'}; }
+  if(dest.protocol!=='https:'||dest.port||dest.username||dest.password||dest.hash)return {reason:'url_security'};
+  const regional=/^open-upload[.-][a-z0-9-]{1,28}\.tiktokapis\.com$/;
+  if(!UPLOAD_HOSTS.has(dest.hostname)&&!regional.test(dest.hostname))return {reason:'url_host'};
+  if(!['/video/','/video'].includes(dest.pathname))return {reason:'url_path'};
+  return {publishId,dest};
+}
+
+function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,remove,reserve,release=async()=>{}}={}) {
   const key=Buffer.from(env.TIKTOK_SANDBOX_SESSION_KEY || '', 'base64');
   const settings=key.length===32 && /^sbaw/.test(env.TIKTOK_SANDBOX_CLIENT_KEY||'') &&
     !!env.TIKTOK_SANDBOX_CLIENT_SECRET && (env.TIKTOK_SANDBOX_ADMIN_PASSWORD||'').length>=24 &&
     !!env.TIKTOK_SANDBOX_DATABASE_URL;
   if (!save && settings) {
-    ({save,load,remove,reserve}=createSupabaseStore(env.TIKTOK_SANDBOX_DATABASE_URL,require('pg').Pool));
+    ({save,load,remove,reserve,release}=createSupabaseStore(env.TIKTOK_SANDBOX_DATABASE_URL,require('pg').Pool));
   }
   const seal=value=>{
     const iv=crypto.randomBytes(12), c=crypto.createCipheriv('aes-256-gcm',key,iv);
@@ -151,10 +164,13 @@ function createHandler({env=process.env,fetch:remote=globalThis.fetch,save,load,
         return json(415,{error:'MP4_REQUIRED'});
       if(!await reserve(id))return json(409,{error:'ONE_DRAFT_PER_SESSION'});
       const init=(await api('/v2/post/publish/inbox/video/init/',user.access,{source_info:{source:'FILE_UPLOAD',video_size:bytes.length,chunk_size:bytes.length,total_chunk_count:1}})).data;
-      const publishId=machine(init?.publish_id);
-      const dest=new URL(init?.upload_url);
-      if(!publishId||dest.protocol!=='https:'||!UPLOAD_HOSTS.has(dest.hostname)||dest.port||dest.username||dest.password||dest.pathname!=='/video/')
+      const {publishId,dest,reason}=getUploadDestination(init);
+      if(!dest){
+        console.warn('[tiktok-sandbox] rejected upload initialization:',reason);
+        // No media bytes or publish ID have been stored or sent at this point.
+        await release(id);
         return json(502,{error:'INVALID_TIKTOK_UPLOAD_RESPONSE'});
+      }
       await save(id,seal({...user,last:publishId}),user.exp);
       await provider(dest.href,{method:'PUT',binary:true,body:bytes,headers:{
         'Content-Type':'video/mp4','Content-Length':String(bytes.length),'Content-Range':'bytes 0-'+(bytes.length-1)+'/'+bytes.length
@@ -221,6 +237,7 @@ function createSupabaseStore(uri, Pool){
     save:(id,enc,expires)=>pool.query('INSERT INTO '+table+' (id, enc, expires) VALUES($1,$2,$3) ON CONFLICT (id) DO UPDATE SET enc=EXCLUDED.enc,expires=EXCLUDED.expires',[id,enc,expires]),
     load:async id=>(await pool.query('SELECT enc,expires FROM '+table+' WHERE id=$1 AND expires>$2',[id,Date.now()])).rows[0],
     remove:id=>pool.query('DELETE FROM '+table+' WHERE id=$1',[id]),
+    release:id=>pool.query('UPDATE '+table+' SET upload_started=false WHERE id=$1 AND upload_started',[id]),
     reserve:async id=>(await pool.query('UPDATE '+table+' SET upload_started=true WHERE id=$1 AND NOT upload_started AND expires>$2 RETURNING id',[id,Date.now()])).rowCount===1
   };
 }
@@ -232,3 +249,4 @@ module.exports=(req,res)=>{
 };
 module.exports.createHandler=createHandler;
 module.exports.createSupabaseStore=createSupabaseStore;
+module.exports.getUploadDestination=getUploadDestination;
